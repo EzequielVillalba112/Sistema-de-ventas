@@ -3,7 +3,7 @@ import './index.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Rutas from "./page/controlRuta/Rutas"
 import Vender from "./page/vender/Vender"
-import Productos from "./page/producto/Productos"
+import AgregarProducto from "./page/agregarProducto/AgregarProducto"
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           {/*Routes: validar si el usuario inicio secion, en el caso de que no iniciara secion no puede ingresar a la app */}
           <Route path="/rutas" element={<Rutas />}>
             <Route path="vender" element={<Vender/>}/>
-            <Route path="productos" element={<Productos/>}/>
+            <Route path="agregarProducto" element={<AgregarProducto/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

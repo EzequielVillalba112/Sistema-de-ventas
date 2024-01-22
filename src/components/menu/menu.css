@@ -1,0 +1,143 @@
+.container-menu {
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 300px;
+    min-height: 100vh;
+    background-color: #353333;
+
+}
+
+.logo-menu {
+    width: 90%;
+    height: 100px;
+    display: flex;
+    margin: 10px auto;
+    border-radius: 16px;
+    align-items: center;
+    background-color: #121212;
+}
+
+.logo-menu img {
+    width: 80px;
+    height: 80px;
+    margin-left: 20px;
+}
+
+.logo-menu h1 {
+    margin-left: 10px;
+    display: flex;
+    align-items: end;
+    color: #FFFFFF;
+    font-size: 40px;
+}
+
+.punto {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 5px;
+    background-color: #FF0000;
+}
+
+.container-items_menu {
+    position: relative;
+    width: 90%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    background-color: #767676;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.item-menu {
+    width: 90%;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.item-menu img {
+    width: 30px;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.item-menu h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #414141;
+    text-decoration: none;
+}
+
+.item-vender a {
+    text-decoration: none;
+    color: #414141;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 36%;
+}
+
+.arrow-item {
+    color: #414141;
+    margin-right: 10px;
+}
+
+.lista-option {
+    width: 90%;
+    background-color: #FFFFFF;
+    margin-top: -9px;
+    border-radius: 16px;
+}
+
+.lista-option ul {
+    width: 100%;
+    list-style: none;
+}
+
+.lista-option ul li {
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lista-option ul li:hover {
+    background-color: #767676;
+    color: #FFFFFF;
+}
+
+.lista-option ul li a {
+    text-decoration: none;
+}
+
+.user {
+    margin-top: 100px;
+    margin-bottom: 20px;
+    width: 90%;
+    height: 50px;
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #767676;
+}
+
+.active {
+    display: flex;
+}
+
+.desact {
+    display: none;
+}
