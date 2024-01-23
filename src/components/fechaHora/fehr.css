@@ -1,0 +1,18 @@
+.container-date{
+    width:calc( 100vw - 300px);
+    height: 100px;
+    background-color: #333333;
+}
+
+.container-date-hr-dt{
+    margin-top: 20px;
+    margin-left: 40px;
+}
+.container-date-hr-dt input{
+    height: 50px;
+    font-size: 25px;
+    text-align: center;
+    border-radius: 16px;
+    color: #fff;
+    font-weight: 600;
+}
