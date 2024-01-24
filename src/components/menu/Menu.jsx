@@ -26,51 +26,59 @@ export default function Menu() {
       </div>
 
       <div className='container-items_menu'>
-        <div className='item-menu' onClick={() => {
+        <div className='item-list-menu' onClick={() => {
           setProductoMenu(!productoMenu)
         }}>
-          <img src={ProductoImg} />
-          <h2>Productos</h2>
-          <FaArrowDown className='arrow-item' />
-        </div>
-        {/*Opciones de menu de productos */}
-        <div className={productoMenu ? 'lista-option active' : 'desact'}>
-          <ul>
-            <li>
-              <Link to='/rutas/agregarProducto'>Agregar Producto</Link>
-            </li>
-            <li>Lista de Productos</li>
-          </ul>
+          <div className="item-menu">
+            <img src={ProductoImg} />
+            <h2>Productos</h2>
+            <FaArrowDown className='arrow-item' />
+          </div>
+
+          <div className={productoMenu ? 'lista-option active' : 'desact'}>
+            <ul>
+              <li>
+                <Link to='/rutas/agregarProducto'>Agregar Producto</Link>
+              </li>
+              <li>Lista de Productos</li>
+            </ul>
+          </div>
         </div>
 
-        <div className='item-menu' onClick={() => {
+        <div className='item-list-menu' onClick={() => {
           setCategoriaMenu(!categoriaMenu)
         }}>
-          <img src={CategoriaImg} />
-          <h2>Categorias</h2>
-          <FaArrowDown className='arrow-item' />
-        </div>
-        {/*Opciones de menu de categoria */}
-        <div className={categoriaMenu ? 'lista-option active' : 'desact'}>
-          <ul>
-            <li>Agregar Categoria</li>
-            <li>Lista de categorias</li>
-          </ul>
+          <div className="item-menu">
+            <img src={CategoriaImg} />
+            <h2>Categorias</h2>
+            <FaArrowDown className='arrow-item' />
+          </div>
+
+          <div className={categoriaMenu ? 'lista-option active' : 'desact'}>
+            <ul>
+              <li>Agregar Categoria</li>
+              <li>Lista de categorias</li>
+            </ul>
+          </div>
         </div>
 
-        <div className='item-menu'  onClick={() => {
+
+        <div className='item-list-menu' onClick={() => {
           setClienteMenu(!clienteMenu)
         }}>
-          <img src={ClientesImg} />
-          <h2>Clientes</h2>
-          <FaArrowDown className='arrow-item' />
-        </div>
-        {/*Opciones de menu de Clientes */}
-        <div className={clienteMenu ? 'lista-option active' : 'desact'}>
-          <ul>
-            <li>Agregar Cliente</li>
-            <li>Lista de Clientes</li>
-          </ul>
+          <div className="item-menu">
+            <img src={ClientesImg} />
+            <h2>Clientes</h2>
+            <FaArrowDown className='arrow-item' />
+          </div>
+
+          <div className={clienteMenu ? 'lista-option active' : 'desact'}>
+            <ul>
+              <li>Agregar Cliente</li>
+              <li>Lista de Clientes</li>
+            </ul>
+          </div>
+
         </div>
 
         <div className='item-menu item-vender'>
@@ -78,33 +86,41 @@ export default function Menu() {
           <Link to='/rutas/vender'>Vender</Link>
         </div>
 
-        <div className='item-menu' onClick={() => {
+        <div className='item-list-menu' onClick={() => {
           setRegistroMenu(!registroMenu)
         }}>
-          <img src={RegistrosImg} />
-          <h2>Registros</h2>
-          <FaArrowDown className='arrow-item' />
-        </div>
-        <div className={registroMenu ? 'lista-option active' : 'desact'}>
-          <ul>
-            <li>Ventas</li>
-            <li>Cuenta Corriente</li>
-          </ul>
+          <div className="item-menu">
+            <img src={RegistrosImg} />
+            <h2>Registros</h2>
+            <FaArrowDown className='arrow-item' />
+          </div>
+
+          <div className={registroMenu ? 'lista-option active' : 'desact'}>
+            <ul>
+              <li>Ventas</li>
+              <li>Cuenta Corriente</li>
+            </ul>
+          </div>
         </div>
 
-        <div className='item-menu' onClick={() => {
+
+        <div className='item-list-menu' onClick={() => {
           setUsuarioMenu(!usuarioMenu)
         }}>
-          <img src={UsuariosImg} />
-          <h2>Usuarios</h2>
-          <FaArrowDown className='arrow-item' />
+          <div className="item-menu">
+            <img src={UsuariosImg} />
+            <h2>Usuarios</h2>
+            <FaArrowDown className='arrow-item' />
+          </div>
+
+          <div className={usuarioMenu ? 'lista-option active' : 'desact'}>
+            <ul>
+              <li>Agregar Usuario</li>
+              <li>Lista de Usuarios</li>
+            </ul>
+          </div>
         </div>
-        <div className={usuarioMenu ? 'lista-option active' : 'desact'}>
-          <ul>
-            <li>Agregar Usuario</li>
-            <li>Lista de Usuarios</li>
-          </ul>
-        </div>
+
 
       </div>
       <div className='user'>

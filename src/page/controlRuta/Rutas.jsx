@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Menu from "../../components/menu/Menu";
 import FeHr from '../../components/fechaHora/FeHr';
 
+
 export default function Rutas() {
     return (
         <main className="app-main">
