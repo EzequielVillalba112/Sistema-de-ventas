@@ -40,7 +40,9 @@ export default function Menu() {
               <li>
                 <Link to='/rutas/agregarProducto'>Agregar Producto</Link>
               </li>
-              <li>Lista de Productos</li>
+              <li>
+                <Link to='/rutas/listarProducto'>Lista de Productos</Link>
+              </li>
             </ul>
           </div>
         </div>

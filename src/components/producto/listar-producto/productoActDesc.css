@@ -1,0 +1,32 @@
+.container-list-act-desc-pro{
+    width: 90%;
+    background-color: #999999;
+    padding: 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #ffff;
+}
+
+.container-checkbox-prod label{
+    display: flex;
+    gap: 10px;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+}
+
+.container-checkbox-prod input[type="checkbox"]{
+    width: 20px;
+}
+
+.container-list-act-desc-pro button{
+    min-width: 100px;
+    height: 30px;
+    border-style: none;
+    border-radius: 6px;
+    color: #ffff;
+    background-color: #0085FF;
+    font-size: 17px;
+    letter-spacing: 1.5px;
+}

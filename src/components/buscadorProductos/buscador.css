@@ -1,0 +1,25 @@
+.buscador-productos{
+    width: 90%;
+    background-color: #999999;
+    padding: 10px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.buscador-productos input{
+    width: 80%;
+    height: 30px;
+    border-style: none;
+    border-radius: 6px;
+    padding-left: 10px;
+}
+
+.buscador-productos button{
+    width: 18%;
+    max-width: 150px;
+    background-color: #0085FF;
+    color: #fff;
+    border-style: none;
+    border-radius: 6px;
+}

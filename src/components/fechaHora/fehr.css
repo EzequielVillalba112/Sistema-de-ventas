@@ -1,5 +1,5 @@
 .container-date-carrito{
-    width:calc( 100vw - 300px);
+    width:100%;
     height: 100px;
     display: flex;
     justify-content: space-between;

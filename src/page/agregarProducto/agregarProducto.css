@@ -1,0 +1,12 @@
+.canatainer-add-product {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    border-radius: 10px;
+    height: max-content;
+    background-color: #cfcfcf;
+    flex-direction: column;
+    padding: 20px;
+}
