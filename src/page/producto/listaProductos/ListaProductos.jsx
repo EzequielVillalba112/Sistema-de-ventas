@@ -1,8 +1,9 @@
 import { useState } from "react";
-import BuscadorProducto from "../../components/buscadorProductos/BuscadorProducto";
+
 import "./listaproductos.css";
-import ProductoActDesc from "../../components/producto/listar-producto/ProductoActDesc";
-import SinImg from "../../img/camera.png";
+import SinImg from "../../../img/camera.png";
+import ProductoActDesc from "../../../components/producto/listar-producto/ProductoActDesc";
+import BuscadorProducto from "../../../components/buscadorProductos/BuscadorProducto";
 
 export default function ListaProductos() {
   const [resultSearch, setResultSearch] = useState("");
@@ -26,13 +27,13 @@ export default function ListaProductos() {
   return (
     <div className="container-lista-productos">
       <h1>Lista de Productos</h1>
-      <BuscadorProducto search={setResultSearch} />
+      <BuscadorProducto search={setResultSearch}/>
       <ProductoActDesc />
       <div className="lista-productos">
         <ul>
           {prductList.map((product, i) => (
             <li key={i}>
-              <div className="data-product">
+              <div className="data-list">
                 {product.img == "" ? (
                   <img src={SinImg} />
                 ) : (
@@ -41,23 +42,21 @@ export default function ListaProductos() {
                 <div className="data">
                   <div className="data-item">
                     <p>Nombre: </p>
-                    <p>{product.nombre}</p>
+                    <p className="data-prin">{product.nombre}</p>
                   </div>
                   <div className="data-item">
                     <p>Precio: </p>
-                    <p>{product.precio}</p>
+                    <p className="data-prin">{product.precio}</p>
                   </div>
                   <div className="data-item">
                     <p>Cantidad: </p>
-                    <p>{product.cantidad}</p>
+                    <p className="data-prin">{product.cantidad}</p>
                   </div>
                 </div>
-                <button>Detalles</button>
+                <button className="btn-detalles">Detalles</button>
               </div>
             </li>
           ))}
-
-         
         </ul>
       </div>
     </div>

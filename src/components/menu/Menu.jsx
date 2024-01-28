@@ -1,15 +1,15 @@
-import './menu.css'
-import Logo from '../../img/logo.png'
-import ProductoImg from '../../img/producto.png'
-import CategoriaImg from '../../img/categoria.png'
-import ClientesImg from '../../img/clientes.png'
-import VenderImg from '../../img/caja_registradora.png'
-import RegistrosImg from '../../img/lista_venta.png'
-import UsuariosImg from '../../img/perfiles_de_usuario.png'
+import "./menu.css";
+import Logo from "../../img/logo.png";
+import ProductoImg from "../../img/producto.png";
+import CategoriaImg from "../../img/categoria.png";
+import ClientesImg from "../../img/clientes.png";
+import VenderImg from "../../img/caja_registradora.png";
+import RegistrosImg from "../../img/lista_venta.png";
+import UsuariosImg from "../../img/perfiles_de_usuario.png";
 import { FaArrowDown } from "react-icons/fa6";
 import { FaUserTie } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useState } from 'react'
+import { useState } from "react";
 
 export default function Menu() {
   const [productoMenu, setProductoMenu] = useState(false);
@@ -20,84 +20,98 @@ export default function Menu() {
 
   return (
     <div className="container-menu">
-      <div className='logo-menu'>
+      <div className="logo-menu">
         <img src={Logo} />
-        <h1>El rojo<div className='punto'></div></h1>
+        <h1>
+          El rojo<div className="punto"></div>
+        </h1>
       </div>
 
-      <div className='container-items_menu'>
-        <div className='item-list-menu' onClick={() => {
-          setProductoMenu(!productoMenu)
-        }}>
+      <div className="container-items_menu">
+        <div
+          className="item-list-menu"
+          onClick={() => {
+            setProductoMenu(!productoMenu);
+          }}
+        >
           <div className="item-menu">
             <img src={ProductoImg} />
             <h2>Productos</h2>
-            <FaArrowDown className='arrow-item' />
+            <FaArrowDown className="arrow-item" />
           </div>
 
-          <div className={productoMenu ? 'lista-option active' : 'desact'}>
+          <div className={productoMenu ? "lista-option active" : "desact"}>
             <ul>
               <li>
-                <Link to='/rutas/agregarProducto'>Agregar Producto</Link>
+                <Link to="/rutas/agregarProducto">Agregar Producto</Link>
               </li>
               <li>
-                <Link to='/rutas/listarProducto'>Lista de Productos</Link>
+                <Link to="/rutas/listarProducto">Lista de Productos</Link>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className='item-list-menu' onClick={() => {
-          setCategoriaMenu(!categoriaMenu)
-        }}>
+        <div
+          className="item-list-menu"
+          onClick={() => {
+            setCategoriaMenu(!categoriaMenu);
+          }}
+        >
           <div className="item-menu">
             <img src={CategoriaImg} />
             <h2>Categorias</h2>
-            <FaArrowDown className='arrow-item' />
+            <FaArrowDown className="arrow-item" />
           </div>
 
-          <div className={categoriaMenu ? 'lista-option active' : 'desact'}>
+          <div className={categoriaMenu ? "lista-option active" : "desact"}>
             <ul>
-              <li>Agregar Categoria</li>
-              <li>Lista de categorias</li>
+              <li>
+                <Link to="/rutas/agregarCategoria">Agregar Categoria</Link>
+              </li>
+        
             </ul>
           </div>
         </div>
 
-
-        <div className='item-list-menu' onClick={() => {
-          setClienteMenu(!clienteMenu)
-        }}>
+        <div
+          className="item-list-menu"
+          onClick={() => {
+            setClienteMenu(!clienteMenu);
+          }}
+        >
           <div className="item-menu">
             <img src={ClientesImg} />
             <h2>Clientes</h2>
-            <FaArrowDown className='arrow-item' />
+            <FaArrowDown className="arrow-item" />
           </div>
 
-          <div className={clienteMenu ? 'lista-option active' : 'desact'}>
+          <div className={clienteMenu ? "lista-option active" : "desact"}>
             <ul>
               <li>Agregar Cliente</li>
               <li>Lista de Clientes</li>
             </ul>
           </div>
-
         </div>
 
-        <div className='item-menu item-vender'>
+        <div className="item-menu item-vender">
           <img src={VenderImg} />
-          <Link to='/rutas/vender'>Vender</Link>
+          <Link to="/rutas/vender">Vender</Link>
         </div>
 
-        <div className='item-list-menu' onClick={() => {
-          setRegistroMenu(!registroMenu)
-        }}>
+        <div
+          className="item-list-menu"
+          onClick={() => {
+            setRegistroMenu(!registroMenu);
+          }}
+        >
           <div className="item-menu">
             <img src={RegistrosImg} />
             <h2>Registros</h2>
-            <FaArrowDown className='arrow-item' />
+            <FaArrowDown className="arrow-item" />
           </div>
 
-          <div className={registroMenu ? 'lista-option active' : 'desact'}>
+          <div className={registroMenu ? "lista-option active" : "desact"}>
             <ul>
               <li>Ventas</li>
               <li>Cuenta Corriente</li>
@@ -105,30 +119,30 @@ export default function Menu() {
           </div>
         </div>
 
-
-        <div className='item-list-menu' onClick={() => {
-          setUsuarioMenu(!usuarioMenu)
-        }}>
+        <div
+          className="item-list-menu"
+          onClick={() => {
+            setUsuarioMenu(!usuarioMenu);
+          }}
+        >
           <div className="item-menu">
             <img src={UsuariosImg} />
             <h2>Usuarios</h2>
-            <FaArrowDown className='arrow-item' />
+            <FaArrowDown className="arrow-item" />
           </div>
 
-          <div className={usuarioMenu ? 'lista-option active' : 'desact'}>
+          <div className={usuarioMenu ? "lista-option active" : "desact"}>
             <ul>
               <li>Agregar Usuario</li>
               <li>Lista de Usuarios</li>
             </ul>
           </div>
         </div>
-
-
       </div>
-      <div className='user'>
-        <FaUserTie size='2rem' color='#FF0000' className='iconLogin' />
+      <div className="user">
+        <FaUserTie size="2rem" color="#FF0000" className="iconLogin" />
         <h2>Admin.</h2>
       </div>
     </div>
-  )
+  );
 }

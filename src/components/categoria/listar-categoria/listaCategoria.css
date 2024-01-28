@@ -1,0 +1,27 @@
+.container-list-categoria{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-list-categoria ul{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    height: 100%;
+    padding-top: 10px;
+}
+
+.container-list-categoria ul li{
+    background-color: #ffff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.data-prin{
+    font-weight: bold;
+}

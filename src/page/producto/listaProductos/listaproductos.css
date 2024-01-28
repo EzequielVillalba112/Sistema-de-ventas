@@ -40,7 +40,7 @@
     padding: 10px;
 }
 
-.data-product {
+.data-list {
     width: 100%;
     display: flex;
     gap: 10px;
@@ -48,7 +48,7 @@
     align-items: center;
 }
 
-.data-product img {
+.data-list img {
     width: 60px;
     height: 60px;
 }
@@ -59,7 +59,7 @@
     display: flex;
 }
 
-.data-product button {
+.btn-detalles {
     width: 100px;
     height: 30px;
     border-style: none;
@@ -68,4 +68,9 @@
     border-radius: 6px;
     font-weight: bold;
     letter-spacing: 1.5px;
+    cursor: pointer;
+}
+
+.btn-detalles:hover{
+    opacity: 0.9;
 }
