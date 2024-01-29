@@ -61,6 +61,7 @@ h1 {
     letter-spacing: 1.5px;
     border-style: none;
     border-radius: 6px;
+    cursor: pointer;
 }
 
 .btn-guardar:hover {

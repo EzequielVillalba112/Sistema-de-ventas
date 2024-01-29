@@ -22,4 +22,9 @@
     color: #fff;
     border-style: none;
     border-radius: 6px;
+    cursor: pointer;
+}
+
+.buscador-productos button:hover{
+    background-color: #3d96e9;
 }

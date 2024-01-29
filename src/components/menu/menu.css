@@ -89,12 +89,16 @@
     text-decoration: none;
 }
 
+
+
 .item-vender a {
     text-decoration: none;
     color: #414141;
     font-size: 18px;
     font-weight: bold;
-    margin-right: 36%;
+    margin-right: 16%;
+    text-align: center;
+    width: 100%;
 }
 
 .arrow-item {

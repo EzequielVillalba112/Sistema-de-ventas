@@ -3,17 +3,17 @@ import "./productoActDesc.css";
 
 export default function ProductoActDesc() {
   const [productActiv, setProductActiv] = useState(false);
-  const [productDesc, setProductDesc] = useState(false);
+  const [c, setc] = useState(false);
 
   const handleProductActivChange = () => {
     setProductActiv(!productActiv);
-    if (productDesc == true) {
-      setProductDesc(false);
+    if (c == true) {
+      setc(false);
     }
   };
 
-  const handleProductDescChange = () => {
-    setProductDesc(!productDesc);
+  const handlecChange = () => {
+    setc(!c);
     if (productActiv == true) {
       setProductActiv(false);
     }
@@ -36,8 +36,8 @@ export default function ProductoActDesc() {
         <label>
           <input
             type="checkbox"
-            checked={productDesc}
-            onChange={handleProductDescChange}
+            checked={c}
+            onChange={handlecChange}
           />
           Productos Inactivos
         </label>

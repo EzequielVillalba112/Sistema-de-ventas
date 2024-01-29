@@ -1,9 +1,7 @@
-export default class AgregarCliente{
-  render() {
-    return (
-      <div>
-        agregarCategoria
-      </div>
-    )
-  }
+export default function AgregarCliente() {
+  return (
+    <div>
+      Agregar Cliente
+    </div>
+  )
 }

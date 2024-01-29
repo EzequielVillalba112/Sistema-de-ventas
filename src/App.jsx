@@ -6,6 +6,8 @@ import Vender from "./page/vender/Vender";
 import AddProduct from "./page/producto/agregarProducto/AddProduct";
 import ListaProductos from "./page/producto/listaProductos/ListaProductos";
 import AgregarCategoria from "./page/categoria/AgregarCategoria";
+import AgregarCliente from "./page/cliente/agregar-cliente/AgregarCliente";
+import ListarCliente from "./page/cliente/listar-cliente/ListarCliente";
 
 function App() {
   return (
@@ -24,9 +26,10 @@ function App() {
 
             {/*Categoria armar Context */}
             <Route path="agregarCategoria" element={<AgregarCategoria />} />
-          
+
             {/*Cliente armar Context */}
-            <Route path="agregarCliente" element={}/>
+            <Route path="agregarCliente" element={<AgregarCliente />} />
+            <Route path="listarCliente" element={<ListarCliente />} />
           </Route>
         </Routes>
       </BrowserRouter>

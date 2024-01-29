@@ -1,142 +1,108 @@
 import "./menu.css";
-import Logo from "../../img/logo.png";
 import ProductoImg from "../../img/producto.png";
 import CategoriaImg from "../../img/categoria.png";
 import ClientesImg from "../../img/clientes.png";
 import VenderImg from "../../img/caja_registradora.png";
 import RegistrosImg from "../../img/lista_venta.png";
 import UsuariosImg from "../../img/perfiles_de_usuario.png";
-import { FaArrowDown } from "react-icons/fa6";
-import { FaUserTie } from "react-icons/fa";
+import Logo from "../../img/logo.png";
+import { FaArrowDown, FaUserTie } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function Menu() {
-  const [productoMenu, setProductoMenu] = useState(false);
-  const [categoriaMenu, setCategoriaMenu] = useState(false);
-  const [clienteMenu, setClienteMenu] = useState(false);
-  const [registroMenu, setRegistroMenu] = useState(false);
-  const [usuarioMenu, setUsuarioMenu] = useState(false);
+  const [menus, setMenus] = useState({
+    producto: false,
+    categoria: false,
+    cliente: false,
+    registro: false,
+    usuario: false,
+  });
+
+  const toggleMenu = (menuKey) => {
+    setMenus((prevMenus) => ({ ...prevMenus, [menuKey]: !prevMenus[menuKey] }));
+  };
+
+  const menuItems = [
+    {
+      img: ProductoImg,
+      key: "producto",
+      label: "Productos",
+      links: [
+        { name: "Agregar Producto", url: "/rutas/agregarProducto" },
+        { name: "Listar Producto", url: "/rutas/listarProducto" },
+      ],
+    },
+    {
+      img: CategoriaImg,
+      key: "categoria",
+      label: "Categorias",
+      links: [{ name: "Agregar Categoria", url: "/rutas/agregarCategoria" }],
+    },
+    {
+      img: ClientesImg,
+      key: "cliente",
+      label: "Clientes",
+      links: [
+        { name: "Agregar Cliente", url: "/rutas/agregarCliente" },
+        { name: "Listar Cliente", url: "/rutas/listarCliente" },
+      ],
+    },
+    {
+      img: RegistrosImg,
+      key: "registro",
+      label: "Registros",
+      links: [
+        { name: "Ventas", url: "" },
+        { name: "Cuenta Corriente", url: "" },
+      ],
+    },
+    {
+      img: UsuariosImg,
+      key: "usuario",
+      label: "Usuarios",
+      links: [
+        { name: "Agregar Usuario", url: "" },
+        { name: "Listar Usuario", url: "" },
+      ],
+    },
+  ];
 
   return (
     <div className="container-menu">
       <div className="logo-menu">
-        <img src={Logo} />
+        <img src={Logo} alt="Logo" />
         <h1>
           El rojo<div className="punto"></div>
         </h1>
       </div>
 
       <div className="container-items_menu">
-        <div
-          className="item-list-menu"
-          onClick={() => {
-            setProductoMenu(!productoMenu);
-          }}
-        >
-          <div className="item-menu">
-            <img src={ProductoImg} />
-            <h2>Productos</h2>
-            <FaArrowDown className="arrow-item" />
+        {menuItems.map(({ img, key, label, links }) => (
+          <div
+            key={key}
+            className="item-list-menu"
+            onClick={() => toggleMenu(key)}
+          >
+            <div className="item-menu">
+              <img src={img} alt={label} />
+              <h2>{label}</h2>
+              <FaArrowDown className="arrow-item" />
+            </div>
+            <div className={menus[key] ? "lista-option active" : "desact"}>
+              <ul>
+                {links.map((link, index) => (
+                  <li key={index}>
+                    <Link to={link.url}>{link.name}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-
-          <div className={productoMenu ? "lista-option active" : "desact"}>
-            <ul>
-              <li>
-                <Link to="/rutas/agregarProducto">Agregar Producto</Link>
-              </li>
-              <li>
-                <Link to="/rutas/listarProducto">Lista de Productos</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div
-          className="item-list-menu"
-          onClick={() => {
-            setCategoriaMenu(!categoriaMenu);
-          }}
-        >
-          <div className="item-menu">
-            <img src={CategoriaImg} />
-            <h2>Categorias</h2>
-            <FaArrowDown className="arrow-item" />
-          </div>
-
-          <div className={categoriaMenu ? "lista-option active" : "desact"}>
-            <ul>
-              <li>
-                <Link to="/rutas/agregarCategoria">Agregar Categoria</Link>
-              </li>
-        
-            </ul>
-          </div>
-        </div>
-
-        <div
-          className="item-list-menu"
-          onClick={() => {
-            setClienteMenu(!clienteMenu);
-          }}
-        >
-          <div className="item-menu">
-            <img src={ClientesImg} />
-            <h2>Clientes</h2>
-            <FaArrowDown className="arrow-item" />
-          </div>
-
-          <div className={clienteMenu ? "lista-option active" : "desact"}>
-            <ul>
-              <li>Agregar Cliente</li>
-              <li>Lista de Clientes</li>
-            </ul>
-          </div>
-        </div>
-
+        ))}
         <div className="item-menu item-vender">
           <img src={VenderImg} />
           <Link to="/rutas/vender">Vender</Link>
-        </div>
-
-        <div
-          className="item-list-menu"
-          onClick={() => {
-            setRegistroMenu(!registroMenu);
-          }}
-        >
-          <div className="item-menu">
-            <img src={RegistrosImg} />
-            <h2>Registros</h2>
-            <FaArrowDown className="arrow-item" />
-          </div>
-
-          <div className={registroMenu ? "lista-option active" : "desact"}>
-            <ul>
-              <li>Ventas</li>
-              <li>Cuenta Corriente</li>
-            </ul>
-          </div>
-        </div>
-
-        <div
-          className="item-list-menu"
-          onClick={() => {
-            setUsuarioMenu(!usuarioMenu);
-          }}
-        >
-          <div className="item-menu">
-            <img src={UsuariosImg} />
-            <h2>Usuarios</h2>
-            <FaArrowDown className="arrow-item" />
-          </div>
-
-          <div className={usuarioMenu ? "lista-option active" : "desact"}>
-            <ul>
-              <li>Agregar Usuario</li>
-              <li>Lista de Usuarios</li>
-            </ul>
-          </div>
         </div>
       </div>
       <div className="user">
