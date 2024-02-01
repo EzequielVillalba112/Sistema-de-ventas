@@ -1,7 +1,7 @@
 import "./buscador.css";
+import PropTypes from "prop-types";
 
 export default function BuscadorProducto({search = ""}) {
-
 
 
   return (
@@ -14,3 +14,7 @@ export default function BuscadorProducto({search = ""}) {
     </div>
   );
 }
+
+BuscadorProducto.propTypes = {
+  search: PropTypes.string.isRequired,
+};

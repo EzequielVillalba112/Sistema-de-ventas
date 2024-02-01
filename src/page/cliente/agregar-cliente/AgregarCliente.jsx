@@ -45,19 +45,15 @@ export default function AgregarCliente() {
     },
   ];
 
-  const guardarCliente = () =>{
-
-  }
+  const guardarCliente = () => {};
 
   return (
-    
-       <div className="container-form">
+    <div className="container-form">
       <FormInputs
         nameForm={nameForm}
         formItems={formItemsClient}
         saved={guardarCliente}
       />
     </div>
-    
-  )
+  );
 }

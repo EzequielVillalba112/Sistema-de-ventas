@@ -1,6 +1,5 @@
 import { useState } from "react";
 import FormInputs from "../../../components/FormInputs/FormINputs";
-import "./agregarProducto.css";
 
 export default function AddProduct() {
   const nameForm = "Producto";
