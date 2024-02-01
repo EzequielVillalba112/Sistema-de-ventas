@@ -1,0 +1,103 @@
+.container-form-inputs input,
+select {
+    font-size: 17px;
+    font-family: sans-serif;
+}
+
+.container-form-inputs h1 {
+    color: rgb(26, 26, 26);
+}
+
+.container-form-inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+
+.form-inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.input-grup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 90%;
+}
+
+.input-grup input {
+    width: 100%;
+    display: flex;
+    height: 40px;
+    gap: 20px;
+    padding-left: 10px;
+    border-style: none;
+    border-radius: 6px;
+}
+
+.file-select {
+    position: relative;
+    display: inline-block;
+}
+
+.file-select::before {
+    background-color: #5678EF;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    content: 'Seleccionar Img';
+    /* testo por defecto */
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.file-select input[type="file"] {
+    opacity: 0;
+    width: 100%;
+    height: 40px;
+    cursor: pointer;
+}
+
+.file-select:hover {
+    opacity: 0.9;
+}
+
+.input-grup select {
+    width: 100%;
+    height: 40px;
+    border-style: none;
+    border-radius: 6px;
+}
+
+.btn{
+    width: 50%;
+    height: 40px;
+    border-style: none;
+    border-radius: 6px;
+    color: #ffff;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+}
+
+.btn:hover{
+    opacity: 0.9;
+}
+
+.btn-guardar{
+    background-color: #0d75ec;
+}
