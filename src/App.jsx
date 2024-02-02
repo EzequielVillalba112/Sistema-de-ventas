@@ -8,7 +8,6 @@ import ListaProductos from "./page/producto/listaProductos/ListaProductos";
 import AgregarCategoria from "./page/categoria/AgregarCategoria";
 import AgregarCliente from "./page/cliente/agregar-cliente/AgregarCliente";
 import ListarCliente from "./page/cliente/listar-cliente/ListarCliente";
-import FormInputs from "./components/FormInputs/FormINputs";
 
 function App() {
   return (
