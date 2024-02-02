@@ -3,10 +3,12 @@ import FormInputs from "../../../components/FormInputs/FormINputs";
 
 export default function AgregarCliente() {
   const nameForm = "Cliente";
+  
   const [nombreCliente, setNombreCliente] = useState();
   const [apellidoCliente, setApellidoCliente] = useState();
   const [limitCc, setLimitCc] = useState();
   const [telefono, setTelefono] = useState();
+
   const formItemsClient = [
     {
       class: "input-grup",
