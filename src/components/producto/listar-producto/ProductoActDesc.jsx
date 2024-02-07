@@ -1,8 +1,9 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import "./productoActDesc.css";
 
-export default function ProductoActDesc() {
-  const [productActiv, setProductActiv] = useState(false);
+export default function ProductoActDesc({ submit, name }) {
+  const [productActiv, setProductActiv] = useState(true);
   const [c, setc] = useState(false);
 
   const handleProductActivChange = () => {
@@ -19,6 +20,7 @@ export default function ProductoActDesc() {
     }
   };
 
+
   return (
     <div className="container-list-act-desc-pro">
       <div className="container-checkbox-prod">
@@ -28,23 +30,22 @@ export default function ProductoActDesc() {
             checked={productActiv}
             onChange={handleProductActivChange}
           />
-          Productos Activos
+          {name} Activos
         </label>
 
         <br />
 
         <label>
-          <input
-            type="checkbox"
-            checked={c}
-            onChange={handlecChange}
-          />
-          Productos Inactivos
+          <input type="checkbox" checked={c} onChange={handlecChange} />
+          {name} Inactivos
         </label>
       </div>
-      <button>
-        Listar
-      </button>
+      <button onClick={() => submit(productActiv)}>Listar</button>
     </div>
   );
 }
+
+ProductoActDesc.propTypes = {
+  submit: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+};

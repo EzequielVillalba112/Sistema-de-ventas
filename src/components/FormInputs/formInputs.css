@@ -44,37 +44,7 @@ select {
     border-radius: 6px;
 }
 
-.file-select {
-    position: relative;
-    display: inline-block;
-}
 
-.file-select::before {
-    background-color: #5678EF;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 3px;
-    content: 'Seleccionar Img';
-    /* testo por defecto */
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-}
-
-.file-select input[type="file"] {
-    opacity: 0;
-    width: 100%;
-    height: 40px;
-    cursor: pointer;
-}
-
-.file-select:hover {
-    opacity: 0.9;
-}
 
 .input-grup select {
     width: 100%;
@@ -84,7 +54,7 @@ select {
 }
 
 .btn{
-    width: 50%;
+    width: 200px;
     height: 40px;
     border-style: none;
     border-radius: 6px;

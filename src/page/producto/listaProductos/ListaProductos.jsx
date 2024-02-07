@@ -3,10 +3,16 @@ import { useState } from "react";
 import "./listaproductos.css";
 import SinImg from "../../../img/camera.png";
 import ProductoActDesc from "../../../components/producto/listar-producto/ProductoActDesc";
-import BuscadorProducto from "../../../components/buscadorProductos/BuscadorProducto";
+import Buscador from "../../../components/buscadorProductos/Buscador";
 
 export default function ListaProductos() {
+
+  const nameTabSearch = "Producto";
+
   const [resultSearch, setResultSearch] = useState("");
+  const [productActDesc, setProductActDesc] = useState("");
+
+  console.log(productActDesc);
   const [prductList, setProductList] = useState([
     { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
     { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
@@ -24,11 +30,16 @@ export default function ListaProductos() {
     { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
   ]);
 
+  const submitAct = (data) =>{
+    console.log(data);
+    setProductActDesc(data);
+  }
+
   return (
     <div className="container-lista-productos">
       <h1>Lista de Productos</h1>
-      <BuscadorProducto search={setResultSearch}/>
-      <ProductoActDesc />
+      <Buscador search={setResultSearch} placeholder={"Buscar por nombre de producto o cod. barra"} nameTabSearch={nameTabSearch}/>
+      <ProductoActDesc submit={submitAct} name={nameTabSearch}/>
       <div className="lista-productos">
         <ul>
           {prductList.map((product, i) => (
