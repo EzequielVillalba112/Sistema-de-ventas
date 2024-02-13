@@ -38,6 +38,15 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                       </option>
                     ))}
                   </select>
+                ) : input.type == "file" ? (
+                  <input
+                    name={input.nameInput}
+                    type={input.type}
+                    placeholder={input.placeholder}
+                    onChange={(e) => {
+                      input.onchange(e.target.files[0]);
+                    }}
+                  />
                 ) : (
                   <input
                     name={input.nameInput}
@@ -52,7 +61,9 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
             ))}
           </div>
         ))}
-        <button className="btn btn-guardar" type="submit">Guardar</button>
+        <button className="btn btn-guardar" type="submit">
+          Guardar
+        </button>
       </form>
     </div>
   );

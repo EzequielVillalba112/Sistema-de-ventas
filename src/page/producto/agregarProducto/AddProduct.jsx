@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormInputs from "../../../components/FormInputs/FormINputs";
+import { useProductos } from "../../../context/ProductoContext";
 
 export default function AddProduct() {
   const nameForm = "Producto";
@@ -18,6 +19,8 @@ export default function AddProduct() {
   const [codBarProd, setCodBarProd] = useState();
   const [descripcionProd, setDescripcionProd] = useState();
   const [img, setImg] = useState("");
+
+  const { createProducto } = useProductos();
 
   const formItemsProduc = [
     {
@@ -87,14 +90,23 @@ export default function AddProduct() {
     },
   ];
 
+  
   const guardarProdu = () => {
-    console.log(nombreProd);
-    console.log(precioProd);
-    console.log(categoriaProd);
-    console.log(stockProd);
-    console.log(codBarProd);
-    console.log(descripcionProd);
-    console.log(img);
+    const formData = new FormData();
+
+    formData.append("imagen", img);
+    
+    console.log(formData);
+
+    createProducto({
+      nombre: nombreProd,
+      precio: precioProd,
+      categoria: categoriaProd,
+      stock: stockProd,
+      codBarra: codBarProd,
+      descripcion: descripcionProd,
+      img: formData,
+    });
   };
 
   return (
