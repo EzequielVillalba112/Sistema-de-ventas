@@ -90,7 +90,6 @@ export default function AddProduct() {
     },
   ];
 
-  
   const guardarProdu = () => {
     const formData = new FormData();
 
