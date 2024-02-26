@@ -1,27 +1,33 @@
-import { useContext } from "react";
-import { createContext } from "react";
-import { crearProducto } from "../api/productos";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const ProductoContext = createContext();
+import { crearProducto } from '../api/productos';
+
+const ProductoContext = React.createContext();
 
 export const useProductos = () => {
-  const context = useContext(ProductoContext);
+  const context = React.useContext(ProductoContext);
   if (!context) {
-    throw new Error("useProductos debe usarse dentro de un ProductoProvider");
+    throw new Error('useProductos debe usarse dentro de un ProductoProvider');
   }
   return context;
 };
 
 export function ProductoProvider({ children }) {
 
-    const createProducto = async (producto) => {
-        const res = await crearProducto(producto);
-        console.log(res);
-    }
+  const createProducto = async (producto) => {
+    console.log(producto);
+    const res = await crearProducto(producto);
+    console.log(res);
+  }
 
   return (
-    <ProductoContext.Provider value={{createProducto,}}>
+    <ProductoContext.Provider value={{ createProducto, children }}>
       {children}
     </ProductoContext.Provider>
   );
 }
+
+ProductoProvider.propTypes = {
+  children: PropTypes.node.isRequired
+};

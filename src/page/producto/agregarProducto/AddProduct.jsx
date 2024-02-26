@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FormInputs from "../../../components/FormInputs/FormINputs";
 import { useProductos } from "../../../context/ProductoContext";
 
@@ -18,7 +18,7 @@ export default function AddProduct() {
   const [stockProd, setStockProd] = useState();
   const [codBarProd, setCodBarProd] = useState();
   const [descripcionProd, setDescripcionProd] = useState();
-  const [img, setImg] = useState("");
+  const [img, setImg] = useState({});
 
   const { createProducto } = useProductos();
 
@@ -93,18 +93,18 @@ export default function AddProduct() {
   const guardarProdu = () => {
     const formData = new FormData();
 
-    formData.append("imagen", img);
+    formData.append("img", img);
+    formData.append("nombre", nombreProd);
+    formData.append("precio", precioProd);
+    formData.append("categoria", categoriaProd);
+    formData.append("stock", stockProd);
+    formData.append("codBarra", codBarProd);
+    formData.append("descripcion", descripcionProd);
     
-    console.log(formData);
 
     createProducto({
-      nombre: nombreProd,
-      precio: precioProd,
-      categoria: categoriaProd,
-      stock: stockProd,
-      codBarra: codBarProd,
-      descripcion: descripcionProd,
-      img: formData,
+      method: 'POST',
+      body: formData
     });
   };
 
