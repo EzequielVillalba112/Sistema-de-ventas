@@ -17,7 +17,7 @@ export function ProductoProvider({ children }) {
 
   const createProducto = async (producto) => {
     console.log(producto);
-    const res = await crearProducto(producto);
+    const res = await crearProducto(producto.body);
     console.log(res);
   }
 

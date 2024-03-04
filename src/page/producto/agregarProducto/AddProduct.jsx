@@ -100,9 +100,8 @@ export default function AddProduct() {
     formData.append("stock", stockProd);
     formData.append("codBarra", codBarProd);
     formData.append("descripcion", descripcionProd);
-    
 
-    createProducto(formData);
+    createProducto({ body: formData });
   };
 
   return (
