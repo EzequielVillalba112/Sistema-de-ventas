@@ -93,7 +93,7 @@ export default function AddProduct() {
   const guardarProdu = () => {
     const formData = new FormData();
 
-    formData.append("img", img);
+    formData.append("file", img);
     formData.append("nombre", nombreProd);
     formData.append("precio", precioProd);
     formData.append("categoria", categoriaProd);
@@ -102,10 +102,7 @@ export default function AddProduct() {
     formData.append("descripcion", descripcionProd);
     
 
-    createProducto({
-      method: 'POST',
-      body: formData
-    });
+    createProducto(formData);
   };
 
   return (
