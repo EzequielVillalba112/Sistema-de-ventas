@@ -30,8 +30,8 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                     onChange={(e) => {
                       input.onchange(e.target.value);
                     }}
+                    value={input.value}
                   >
-                    <option>Categoria</option>
                     {input.option.map((opt, i) => (
                       <option key={i} value={opt}>
                         {opt}
@@ -46,6 +46,7 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                     onChange={(e) => {
                       input.onchange(e.target.files[0]);
                     }}
+                    value={input.value}
                   />
                 ) : (
                   <input
@@ -55,6 +56,7 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                     onChange={(e) => {
                       input.onchange(e.target.value);
                     }}
+                    value={input.value}
                   />
                 )}
               </div>

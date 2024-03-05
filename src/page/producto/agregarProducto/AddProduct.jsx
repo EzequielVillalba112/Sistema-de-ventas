@@ -1,24 +1,26 @@
 import { useState } from "react";
 import FormInputs from "../../../components/FormInputs/FormINputs";
 import { useProductos } from "../../../context/ProductoContext";
+import { validFormProduct } from "../../../validation/formProducto/formProductoVal";
+import { notError, notSuccess } from "../../../components/alert/alert.jsx";
 
 export default function AddProduct() {
   const nameForm = "Producto";
 
   const [categoria, setCategoria] = useState([
+    "Categoria",
     "Lacteos",
     "Alcohol",
     "Higiene",
     "Prueba",
   ]);
-
-  const [nombreProd, setNombreProd] = useState();
-  const [precioProd, setPrecioProd] = useState();
-  const [categoriaProd, setCategoriaProd] = useState();
-  const [stockProd, setStockProd] = useState();
-  const [codBarProd, setCodBarProd] = useState();
-  const [descripcionProd, setDescripcionProd] = useState();
-  const [img, setImg] = useState({});
+  const [nombreProd, setNombreProd] = useState("");
+  const [precioProd, setPrecioProd] = useState("");
+  const [categoriaProd, setCategoriaProd] = useState("");
+  const [stockProd, setStockProd] = useState("");
+  const [codBarProd, setCodBarProd] = useState("");
+  const [descripcionProd, setDescripcionProd] = useState("");
+  const [img, setImg] = useState(null);
 
   const { createProducto } = useProductos();
 
@@ -31,12 +33,14 @@ export default function AddProduct() {
           type: "text",
           placeholder: "Nombre de Producto",
           onchange: setNombreProd,
+          value:nombreProd,
         },
         {
           nameInput: "PrecioProducto",
           type: "number",
           placeholder: "Precio",
           onchange: setPrecioProd,
+          value: precioProd,
         },
       ],
     },
@@ -49,12 +53,14 @@ export default function AddProduct() {
           type: "select",
           option: categoria,
           onchange: setCategoriaProd,
+          value:categoriaProd,
         },
         {
           nameInput: "Stock",
           type: "number",
           placeholder: "Stock",
           onchange: setStockProd,
+          value: stockProd,
         },
       ],
     },
@@ -67,12 +73,14 @@ export default function AddProduct() {
           type: "number",
           placeholder: "Cod. Barra",
           onchange: setCodBarProd,
+          value: codBarProd,
         },
         {
           nameInput: "DescripcionProducto",
           type: "text",
           placeholder: "Descripcion",
           onchange: setDescripcionProd,
+          value: descripcionProd,
         },
       ],
     },
@@ -90,19 +98,59 @@ export default function AddProduct() {
     },
   ];
 
-  const guardarProdu = () => {
-    const formData = new FormData();
+  const guardarProdu = async () => {
+    const validationForm = validFormProduct(
+      categoria,
+      nombreProd,
+      precioProd,
+      categoriaProd,
+      stockProd,
+      codBarProd,
+      descripcionProd
+    );
 
-    formData.append("file", img);
-    formData.append("nombre", nombreProd);
-    formData.append("precio", precioProd);
-    formData.append("categoria", categoriaProd);
-    formData.append("stock", stockProd);
-    formData.append("codBarra", codBarProd);
-    formData.append("descripcion", descripcionProd);
+    if (validationForm === null) {
+      const formData = new FormData();
 
-    createProducto({ body: formData });
+      if (img) {
+        formData.append("file", img);
+      }
+      formData.append("nombre", nombreProd);
+      formData.append("precio", precioProd);
+      formData.append("categoria", categoriaProd);
+      formData.append("stock", stockProd);
+      formData.append("codBarra", codBarProd);
+      formData.append("descripcion", descripcionProd);
+
+      try {
+        const response = await createProducto({ body: formData });
+        if(response){
+          clear();
+          notSuccess("Producto");
+        }
+      } catch (error) {
+        console.error("Error al crear producto:", error);
+      }
+    } else {
+      notError(validationForm);
+    }
   };
+
+  const clear = () =>{
+    setCategoria([
+      "Categoria",
+      "Lacteos",
+      "Alcohol",
+      "Higiene",
+      "Prueba",
+    ]);
+    setNombreProd("");
+    setPrecioProd("");
+    setStockProd("");
+    setCodBarProd("");
+    setDescripcionProd("");
+  }
+  
 
   return (
     <div className="container-form">
