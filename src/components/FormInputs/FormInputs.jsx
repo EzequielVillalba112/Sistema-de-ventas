@@ -48,6 +48,16 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                     }}
                     value={input.value}
                   />
+                ) : input.onKeyDown != "" ? (
+                  <input
+                    name={input.nameInput}
+                    type={input.type}
+                    placeholder={input.placeholder}
+                    onChange={(e) => {
+                      input.onchange(e.target.value);
+                    }}
+                    value={input.value}
+                  />
                 ) : (
                   <input
                     name={input.nameInput}
@@ -57,6 +67,7 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                       input.onchange(e.target.value);
                     }}
                     value={input.value}
+                    onKeyDown={input.onKeyDown}
                   />
                 )}
               </div>

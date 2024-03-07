@@ -1,7 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { crearProducto } from "../api/productos";
+import {
+  crearProducto,
+  listProductoAct,
+  listProductoDesac,
+} from "../api/productos";
+import { useState } from "react";
 
 const ProductoContext = React.createContext();
 
@@ -14,6 +19,39 @@ export const useProductos = () => {
 };
 
 export function ProductoProvider({ children }) {
+  const [listProductAct, setListProductAct] = useState([]);
+  const [listProductDesac, setListProductDesac] = useState([]);
+
+  const listProductDesactivos = async () => {
+    try {
+      const res = await listProductoDesac();
+
+      if (res.statusText === "OK") {
+        setListProductDesac(res.data);
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al listar productos:", error);
+      return false;
+    }
+  };
+
+  const listProductActivos = async () => {
+    try {
+      const res = await listProductoAct();
+
+      if (res.statusText === "OK") {
+        setListProductAct(res.data);
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al listar productos:", error);
+      return false;
+    }
+  };
+
   const createProducto = async (producto) => {
     try {
       const res = await crearProducto(producto.body);
@@ -28,7 +66,16 @@ export function ProductoProvider({ children }) {
     }
   };
   return (
-    <ProductoContext.Provider value={{ createProducto, children }}>
+    <ProductoContext.Provider
+      value={{
+        createProducto,
+        listProductActivos,
+        children,
+        listProductAct,
+        listProductDesactivos,
+        listProductDesac,
+      }}
+    >
       {children}
     </ProductoContext.Provider>
   );

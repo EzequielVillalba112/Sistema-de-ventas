@@ -1,74 +1,55 @@
-import { useState } from "react";
-
+import { useEffect, useState } from "react";
 import "./listaproductos.css";
-import SinImg from "../../../img/camera.png";
 import ProductoActDesc from "../../../components/producto/listar-producto/ProductoActDesc";
 import Buscador from "../../../components/buscadorProductos/Buscador";
+import { useProductos } from "../../../context/ProductoContext";
+import ListaProducto from "../../../components/producto/lista/ListaProducto";
+import Loader from "../../../components/loader/Loader";
 
 export default function ListaProductos() {
-
   const nameTabSearch = "Producto";
 
   const [resultSearch, setResultSearch] = useState("");
-  const [productActDesc, setProductActDesc] = useState("");
+  const [productActDesc, setProductActDesc] = useState(true);
 
-  console.log(productActDesc);
-  const [prductList, setProductList] = useState([
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-    { img: "", nombre: "Desodorante Rexona", precio: 2500, cantidad: 25 },
-  ]);
+  const {
+    listProductActivos,
+    listProductAct,
+    listProductDesactivos,
+    listProductDesac,
+  } = useProductos();
 
-  const submitAct = (data) =>{
-    console.log(data);
+  const submitAct = (data) => {
     setProductActDesc(data);
-  }
+  };
+
+  useEffect(() => {
+    listProductActivos();
+  }, []);
+
+  useEffect(() => {
+    listProductDesactivos();
+  }, [productActDesc === false]);
 
   return (
     <div className="container-lista-productos">
       <h1>Lista de Productos</h1>
-      <Buscador search={setResultSearch} placeholder={"Buscar por nombre de producto o cod. barra"} nameTabSearch={nameTabSearch}/>
-      <ProductoActDesc submit={submitAct} name={nameTabSearch}/>
+      <Buscador
+        search={setResultSearch}
+        placeholder={"Buscar por nombre de producto o cod. barra"}
+        nameTabSearch={nameTabSearch}
+      />
+      <ProductoActDesc submit={submitAct} name={nameTabSearch} />
       <div className="lista-productos">
-        <ul>
-          {prductList.map((product, i) => (
-            <li key={i}>
-              <div className="data-list">
-                {product.img == "" ? (
-                  <img src={SinImg} />
-                ) : (
-                  <img src={product.img} />
-                )}
-                <div className="data">
-                  <div className="data-item">
-                    <p>Nombre: </p>
-                    <p className="data-prin">{product.nombre}</p>
-                  </div>
-                  <div className="data-item">
-                    <p>Precio: </p>
-                    <p className="data-prin">{product.precio}</p>
-                  </div>
-                  <div className="data-item">
-                    <p>Cantidad: </p>
-                    <p className="data-prin">{product.cantidad}</p>
-                  </div>
-                </div>
-                <button className="btn-detalles">Detalles</button>
-              </div>
-            </li>
-          ))}
-        </ul>
+      {listProductAct == "" ? (
+          <Loader />
+        ) : (
+          <ListaProducto
+            productList={
+              productActDesc == true ? listProductAct : listProductDesac
+            }
+          />
+        )}
       </div>
     </div>
   );

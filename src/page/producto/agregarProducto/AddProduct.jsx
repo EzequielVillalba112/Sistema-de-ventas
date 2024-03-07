@@ -34,6 +34,7 @@ export default function AddProduct() {
           placeholder: "Nombre de Producto",
           onchange: setNombreProd,
           value:nombreProd,
+          onKeyDown: ""
         },
         {
           nameInput: "PrecioProducto",
@@ -41,6 +42,7 @@ export default function AddProduct() {
           placeholder: "Precio",
           onchange: setPrecioProd,
           value: precioProd,
+          onKeyDown: ""
         },
       ],
     },
@@ -54,6 +56,7 @@ export default function AddProduct() {
           option: categoria,
           onchange: setCategoriaProd,
           value:categoriaProd,
+          onKeyDown: ""
         },
         {
           nameInput: "Stock",
@@ -61,6 +64,7 @@ export default function AddProduct() {
           placeholder: "Stock",
           onchange: setStockProd,
           value: stockProd,
+          onKeyDown: ""
         },
       ],
     },
@@ -74,6 +78,7 @@ export default function AddProduct() {
           placeholder: "Cod. Barra",
           onchange: setCodBarProd,
           value: codBarProd,
+          onKeyDown: handleBarcodeInput()
         },
         {
           nameInput: "DescripcionProducto",
@@ -81,6 +86,7 @@ export default function AddProduct() {
           placeholder: "Descripcion",
           onchange: setDescripcionProd,
           value: descripcionProd,
+          onKeyDown: ""
         },
       ],
     },
@@ -93,6 +99,7 @@ export default function AddProduct() {
           placeholder: "Ingrese Una imagen",
           onchange: setImg,
           className: "file-select",
+          onKeyDown: ""
         },
       ],
     },
@@ -150,7 +157,17 @@ export default function AddProduct() {
     setCodBarProd("");
     setDescripcionProd("");
   }
-  
+
+  const handleBarcodeInput = (event) => {
+    // Verificar si la tecla presionada es "Enter"
+    if (event.key === 'Enter') {
+        // Prevenir el comportamiento predeterminado (enviar el formulario)
+        event.preventDefault();
+
+        // Aquí puedes agregar cualquier otra acción que desees realizar cuando se escanea un código de barras
+    
+    }
+};
 
   return (
     <div className="container-form">
