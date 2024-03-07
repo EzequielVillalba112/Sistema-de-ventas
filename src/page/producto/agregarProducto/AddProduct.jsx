@@ -24,6 +24,8 @@ export default function AddProduct() {
 
   const { createProducto } = useProductos();
 
+ 
+
   const formItemsProduc = [
     {
       class: "input-grup",
@@ -33,8 +35,8 @@ export default function AddProduct() {
           type: "text",
           placeholder: "Nombre de Producto",
           onchange: setNombreProd,
-          value:nombreProd,
-          onKeyDown: ""
+          value: nombreProd,
+          onKeyDown: "",
         },
         {
           nameInput: "PrecioProducto",
@@ -42,7 +44,7 @@ export default function AddProduct() {
           placeholder: "Precio",
           onchange: setPrecioProd,
           value: precioProd,
-          onKeyDown: ""
+          onKeyDown: "",
         },
       ],
     },
@@ -55,8 +57,8 @@ export default function AddProduct() {
           type: "select",
           option: categoria,
           onchange: setCategoriaProd,
-          value:categoriaProd,
-          onKeyDown: ""
+          value: categoriaProd,
+          onKeyDown: "",
         },
         {
           nameInput: "Stock",
@@ -64,7 +66,7 @@ export default function AddProduct() {
           placeholder: "Stock",
           onchange: setStockProd,
           value: stockProd,
-          onKeyDown: ""
+          onKeyDown: "",
         },
       ],
     },
@@ -78,7 +80,7 @@ export default function AddProduct() {
           placeholder: "Cod. Barra",
           onchange: setCodBarProd,
           value: codBarProd,
-          onKeyDown: handleBarcodeInput()
+          onKeyDown: true,
         },
         {
           nameInput: "DescripcionProducto",
@@ -86,7 +88,7 @@ export default function AddProduct() {
           placeholder: "Descripcion",
           onchange: setDescripcionProd,
           value: descripcionProd,
-          onKeyDown: ""
+          onKeyDown: "",
         },
       ],
     },
@@ -99,7 +101,7 @@ export default function AddProduct() {
           placeholder: "Ingrese Una imagen",
           onchange: setImg,
           className: "file-select",
-          onKeyDown: ""
+          onKeyDown: "",
         },
       ],
     },
@@ -131,7 +133,7 @@ export default function AddProduct() {
 
       try {
         const response = await createProducto({ body: formData });
-        if(response){
+        if (response) {
           clear();
           notSuccess("Producto");
         }
@@ -143,31 +145,14 @@ export default function AddProduct() {
     }
   };
 
-  const clear = () =>{
-    setCategoria([
-      "Categoria",
-      "Lacteos",
-      "Alcohol",
-      "Higiene",
-      "Prueba",
-    ]);
+  const clear = () => {
+    setCategoria(["Categoria", "Lacteos", "Alcohol", "Higiene", "Prueba"]);
     setNombreProd("");
     setPrecioProd("");
     setStockProd("");
     setCodBarProd("");
     setDescripcionProd("");
-  }
-
-  const handleBarcodeInput = (event) => {
-    // Verificar si la tecla presionada es "Enter"
-    if (event.key === 'Enter') {
-        // Prevenir el comportamiento predeterminado (enviar el formulario)
-        event.preventDefault();
-
-        // Aquí puedes agregar cualquier otra acción que desees realizar cuando se escanea un código de barras
-    
-    }
-};
+  };
 
   return (
     <div className="container-form">

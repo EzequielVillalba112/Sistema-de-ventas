@@ -6,6 +6,12 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
     saved();
   };
 
+  const handleBarcodeInput = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  };
+
   return (
     <div className="container-form-inputs">
       <h1>Agregar {nameForm}</h1>
@@ -48,7 +54,7 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                     }}
                     value={input.value}
                   />
-                ) : input.onKeyDown != "" ? (
+                ) : input.onKeyDown === true ? (
                   <input
                     name={input.nameInput}
                     type={input.type}
@@ -57,6 +63,7 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                       input.onchange(e.target.value);
                     }}
                     value={input.value}
+                    onKeyDown={handleBarcodeInput}
                   />
                 ) : (
                   <input
@@ -67,7 +74,6 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                       input.onchange(e.target.value);
                     }}
                     value={input.value}
-                    onKeyDown={input.onKeyDown}
                   />
                 )}
               </div>
