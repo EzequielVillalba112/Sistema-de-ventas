@@ -6,8 +6,8 @@ import ProductoActDesc from "../../../components/producto/listar-producto/Produc
 export default function ListarCliente() {
   const nameTabSearch = "Cliente";
 
-  const [resultSearch, setResultSearch] = useState("");
-  const [clientActDes, setClientActDes] = useState();
+  const [resultSearch, setResultSearch] = useState([]);
+  const [clientActDes, setClientActDes] = useState(true);
   const [clienteList, setClienteList] = useState([
     {
       id: 1,
@@ -45,6 +45,7 @@ export default function ListarCliente() {
       telefono: "00025565666",
     },
   ]);
+  const [inputSearch, setInputSearch] = useState("");
 
   const submitAct = (data) =>{
     console.log(data);
@@ -58,6 +59,9 @@ export default function ListarCliente() {
         search={setResultSearch}
         placeholder={"Buscar por nombre de cliente"}
         nameTabSearch={nameTabSearch}
+        value={inputSearch}
+        onChange={setInputSearch}
+        status={clientActDes}
       />
       <ProductoActDesc submit={submitAct} name={nameTabSearch}/>
       <ListData listItems={clienteList} />

@@ -1,12 +1,23 @@
 import PropTypes from "prop-types";
-export default function ListaProducto({ productList }) {
+import { useEffect, useState } from "react";
+export default function ListaProducto({ productList, listSearch, detail }) {
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    if (listSearch.length == 0) {
+      setList(productList);
+    } else {
+      setList(listSearch);
+    }
+  }, [listSearch]);
+
   return (
     <>
       <ul>
-        {productList.map((product, i) => (
+        {list.map((product, i) => (
           <li key={i}>
             <div className="data-list">
-              <img src={'http://localhost:3000/'+ product.img_prod} />
+              <img src={"http://localhost:3000/" + product.img_prod} />
               <div className="data">
                 <div className="data-item">
                   <p>Nombre: </p>
@@ -21,7 +32,14 @@ export default function ListaProducto({ productList }) {
                   <p className="data-prin">{product.stock}</p>
                 </div>
               </div>
-              <button className="btn-detalles">Detalles</button>
+              <button
+                className="btn-detalles"
+                onClick={() => {
+                  detail(product.id_producto);
+                }}
+              >
+                Detalles
+              </button>
             </div>
           </li>
         ))}
@@ -32,4 +50,6 @@ export default function ListaProducto({ productList }) {
 
 ListaProducto.propTypes = {
   productList: PropTypes.array.isRequired,
+  listSearch: PropTypes.array.isRequired,
+  detail: PropTypes.func.isRequired,
 };
