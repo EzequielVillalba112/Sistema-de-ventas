@@ -2,7 +2,7 @@ import { useState } from "react";
 import FormInputs from "../../../components/FormInputs/FormINputs";
 
 export default function AgregarCliente() {
-  const nameForm = "Cliente";
+  const nameForm = "Agregar Cliente";
   
   const [nombreCliente, setNombreCliente] = useState();
   const [apellidoCliente, setApellidoCliente] = useState();
@@ -45,9 +45,19 @@ export default function AgregarCliente() {
         },
       ],
     },
+    {
+      class: "button-grup",
+      inputs: [
+        {
+          className: "btn btn-guardar",
+          type: "submit",
+          text: "Guardar"
+        }
+      ]
+    }
   ];
 
-  const guardarCliente = () => {};
+  const guardarCliente = () => {alert("Cliente saved")};
 
   return (
     <div className="container-form">

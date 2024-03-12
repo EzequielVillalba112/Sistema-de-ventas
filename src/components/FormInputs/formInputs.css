@@ -53,8 +53,13 @@ select {
     border-radius: 6px;
 }
 
+.continer-buttons-modific{
+    display: flex;
+    gap: 10px;
+}
+
 .btn{
-    width: 200px;
+    width: 150px;
     height: 40px;
     border-style: none;
     border-radius: 6px;
@@ -70,4 +75,12 @@ select {
 
 .btn-guardar{
     background-color: #0d75ec;
+}
+
+.btn-eliminar{
+    background-color: #ec0d0d;
+}
+
+.btn-editar{
+    background-color: #34a525;
 }

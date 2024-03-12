@@ -46,6 +46,16 @@ export default function AgregarUsuario() {
               },
             ],
           },
+          {
+            class: "button-grup",
+            inputs: [
+              {
+                className: "btn btn-guardar",
+                type: "submit",
+                text: "Guardar"
+              }
+            ]
+          }
       ];
 
   return (

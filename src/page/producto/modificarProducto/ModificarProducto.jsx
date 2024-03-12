@@ -1,11 +1,11 @@
+import PropTypes from "prop-types";
+import { useProductos } from "../../../context/ProductoContext";
 import { useState } from "react";
 import FormInputs from "../../../components/FormInputs/FormINputs";
-import { useProductos } from "../../../context/ProductoContext";
-import { validFormProduct } from "../../../validation/formProducto/formProductoVal";
-import { notError, notSuccess } from "../../../components/alert/alert.jsx";
+import "./modificarProducto.css";
 
-export default function AddProduct() {
-  const nameForm = "Agregar Producto";
+export default function ModificarProducto({ closed }) {
+  const nameForm = "Modificar Producto";
 
   const [categoria, setCategoria] = useState([
     "Categoria",
@@ -22,7 +22,7 @@ export default function AddProduct() {
   const [descripcionProd, setDescripcionProd] = useState("");
   const [img, setImg] = useState(null);
 
-  const { createProducto } = useProductos();
+  console.log(descripcionProd);
 
   const formItemsProduc = [
     {
@@ -103,72 +103,31 @@ export default function AddProduct() {
         },
       ],
     },
-    {
-      class: "button-grup",
-      inputs: [
-        {
-          className: "btn btn-guardar",
-          type: "submit",
-          text: "Guardar"
-        }
-      ]
-    }
   ];
 
-  const guardarProdu = async () => {
-    const validationForm = validFormProduct(
-      categoria,
-      nombreProd,
-      precioProd,
-      categoriaProd,
-      stockProd,
-      codBarProd,
-      descripcionProd
-    );
-
-    if (validationForm === null) {
-      const formData = new FormData();
-
-      if (img) {
-        formData.append("file", img);
-      }
-      formData.append("nombre", nombreProd);
-      formData.append("precio", precioProd);
-      formData.append("categoria", categoriaProd);
-      formData.append("stock", stockProd);
-      formData.append("codBarra", codBarProd);
-      formData.append("descripcion", descripcionProd);
-
-      try {
-        const response = await createProducto({ body: formData });
-        if (response) {
-          clear();
-          notSuccess("Producto");
-        }
-      } catch (error) {
-        console.error("Error al crear producto:", error);
-      }
-    } else {
-      notError(validationForm);
-    }
-  };
-
-  const clear = () => {
-    setCategoria(["Categoria", "Lacteos", "Alcohol", "Higiene", "Prueba"]);
-    setNombreProd("");
-    setPrecioProd("");
-    setStockProd("");
-    setCodBarProd("");
-    setDescripcionProd("");
+  const saved = () => {
+    alert(saved);
   };
 
   return (
-    <div className="container-form">
-      <FormInputs
-        nameForm={nameForm}
-        formItems={formItemsProduc}
-        saved={guardarProdu}
-      />
+    <div className="container-modificar-producto">
+      <button
+        onClick={() => {
+          closed(false);
+        }}
+      >
+        Cerrar
+      </button>
+      <FormInputs nameForm={nameForm} formItems={formItemsProduc} />
+      <div className="continer-buttons-modific">
+        <button className="btn btn-guardar">Guardar</button>
+        <button className="btn btn-editar">Editar</button>
+        <button className="btn btn-eliminar">Elimnar</button>
+      </div>
     </div>
   );
 }
+
+ModificarProducto.propTypes = {
+  closed: PropTypes.func.isRequired,
+};

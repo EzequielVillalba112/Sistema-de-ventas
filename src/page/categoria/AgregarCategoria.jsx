@@ -26,6 +26,16 @@ export default function AgregarCategoria() {
         },
       ],
     },
+    {
+      class: "button-grup",
+      inputs: [
+        {
+          className: "btn btn-guardar",
+          type: "submit",
+          text: "Guardar"
+        }
+      ]
+    }
   ];
 
   const guardarCategoria = () => {

@@ -5,6 +5,7 @@ import Buscador from "../../../components/buscadorProductos/Buscador";
 import { useProductos } from "../../../context/ProductoContext";
 import ListaProducto from "../../../components/producto/lista/ListaProducto";
 import Loader from "../../../components/loader/Loader";
+import ModificarProducto from "../modificarProducto/ModificarProducto";
 
 export default function ListaProductos() {
   const nameTabSearch = "Producto";
@@ -18,12 +19,15 @@ export default function ListaProductos() {
     listProductAct,
     listProductDesactivos,
     listProductDesac,
+    modificarProductInterfaz,
+    modifiProductInterfaz,
+    setModifiProductInterfaz
   } = useProductos();
 
   const submitAct = (data) => {
     setProductActDesc(data);
     setInputSearch("");
-    setResultSearch([])
+    setResultSearch([]);
   };
 
   useEffect(() => {
@@ -34,35 +38,36 @@ export default function ListaProductos() {
     listProductDesactivos();
   }, [productActDesc === false]);
 
-  const detail = (id)=>{
-    alert(id)
-  }
-
   return (
     <div className="container-lista-productos">
-      <h1>Lista de Productos</h1>
-      <Buscador
-        search={setResultSearch}
-        placeholder={"Buscar por nombre de producto o cod. barra"}
-        status={productActDesc}
-        value={inputSearch}
-        onChange={setInputSearch}
-      />
-      <ProductoActDesc submit={submitAct} name={nameTabSearch} />
-      <div className="lista-productos">
-        {listProductAct == "" ? (
-          <Loader />
-        ) :  (
-          <ListaProducto
-            productList={
-              productActDesc == true ? listProductAct : listProductDesac
-            }
-            listSearch ={resultSearch}
-            detail = {detail}
+      {modifiProductInterfaz ? (
+        <ModificarProducto closed = {setModifiProductInterfaz}/>
+      ) : (
+        <>
+          <h1>Lista de Productos</h1>
+          <Buscador
+            search={setResultSearch}
+            placeholder={"Buscar por nombre de producto o cod. barra"}
+            status={productActDesc}
+            value={inputSearch}
+            onChange={setInputSearch}
           />
-        )
-        }
-      </div>
+          <ProductoActDesc submit={submitAct} name={nameTabSearch} />
+          <div className="lista-productos">
+            {listProductAct == "" ? (
+              <Loader />
+            ) : (
+              <ListaProducto
+                productList={
+                  productActDesc == true ? listProductAct : listProductDesac
+                }
+                listSearch={resultSearch}
+                detail={modificarProductInterfaz}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }

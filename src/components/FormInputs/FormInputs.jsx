@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 export default function FormInputs({ nameForm, formItems, saved = "" }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    saved();
+    if(saved != ""){
+      saved();
+    }
   };
 
   const handleBarcodeInput = (event) => {
@@ -14,24 +16,24 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
 
   return (
     <div className="container-form-inputs">
-      <h1>Agregar {nameForm}</h1>
+      <h1>{nameForm}</h1>
 
       <form onSubmit={handleSubmit} className="form-inputs">
         {formItems.map((inputForm, formIndex) => (
-          /*Divido los inputs en grupos para poder ordenar el formulario de
+            /*Divido los inputs en grupos para poder ordenar el formulario de
             una forma mas sencilla con css
             */
-          <div key={formIndex} className={inputForm.class}>
-            {/*Map el array de inputs resivido, y verifico si tiene un select
+          <div key={`inputs-form-${formIndex}`} className={inputForm.class}>
+             {/*Map el array de inputs resivido, y verifico si tiene un select
             para poder mapear todas las posibles selecciones, en el caso de que no
             encuentre un select carga un input de forma normal
             */}
             {inputForm.inputs.map((input, indexInput) => (
               <div
                 key={`${input.nameInput}-${input.type}-${indexInput}`}
-                className={input.type == "file" ? "file-select" : ""}
+                className={input.type == "file"? "file-select" : ""}
               >
-                {input.type == "select" ? (
+                {input.type == "select"? (
                   <select
                     onChange={(e) => {
                       input.onchange(e.target.value);
@@ -44,7 +46,7 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                       </option>
                     ))}
                   </select>
-                ) : input.type == "file" ? (
+                ) : input.type == "file"? (
                   <input
                     name={input.nameInput}
                     type={input.type}
@@ -54,7 +56,7 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                     }}
                     value={input.value}
                   />
-                ) : input.onKeyDown === true ? (
+                ) : input.onKeyDown === true? (
                   <input
                     name={input.nameInput}
                     type={input.type}
@@ -66,23 +68,32 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                     onKeyDown={handleBarcodeInput}
                   />
                 ) : (
-                  <input
-                    name={input.nameInput}
-                    type={input.type}
-                    placeholder={input.placeholder}
-                    onChange={(e) => {
-                      input.onchange(e.target.value);
-                    }}
-                    value={input.value}
-                  />
+                  input.type!= "submit" && (
+                    <input
+                      name={input.nameInput}
+                      type={input.type}
+                      placeholder={input.placeholder}
+                      onChange={(e) => {
+                        input.onchange(e.target.value);
+                      }}
+                      value={input.value}
+                    />
+                  )
                 )}
               </div>
             ))}
+            <div key={`buton-${formIndex}-${formIndex}`} className={inputForm.class}>
+              {inputForm.inputs.map(
+                (btn, i) =>
+                  btn.type == "submit" && (
+                    <button className={btn.className} key={"btn-" + i}>
+                      {btn.text}
+                    </button>
+                  )
+              )}
+            </div>
           </div>
         ))}
-        <button className="btn btn-guardar" type="submit">
-          Guardar
-        </button>
       </form>
     </div>
   );
@@ -92,5 +103,5 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
 FormInputs.propTypes = {
   formItems: PropTypes.array.isRequired,
   nameForm: PropTypes.string.isRequired,
-  saved: PropTypes.func.isRequired,
+  saved: PropTypes.func,
 };

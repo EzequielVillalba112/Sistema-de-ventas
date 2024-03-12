@@ -22,6 +22,9 @@ export function ProductoProvider({ children }) {
   const [listProductAct, setListProductAct] = useState([]);
   const [listProductDesac, setListProductDesac] = useState([]);
 
+  const [modifiProductInterfaz, setModifiProductInterfaz] = useState(false);
+  const [idProductModifi, setIdProductModifi] = useState();
+
   const listProductDesactivos = async () => {
     try {
       const res = await listProductoDesac();
@@ -65,6 +68,12 @@ export function ProductoProvider({ children }) {
       return false;
     }
   };
+
+  const  modificarProductInterfaz =  (id)=>{
+    setIdProductModifi(id);
+    setModifiProductInterfaz(true);
+  }
+
   return (
     <ProductoContext.Provider
       value={{
@@ -74,6 +83,10 @@ export function ProductoProvider({ children }) {
         listProductAct,
         listProductDesactivos,
         listProductDesac,
+        modificarProductInterfaz,
+        idProductModifi,
+        modifiProductInterfaz,
+        setModifiProductInterfaz
       }}
     >
       {children}
