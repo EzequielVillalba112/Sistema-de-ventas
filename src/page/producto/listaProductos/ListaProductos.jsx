@@ -21,7 +21,7 @@ export default function ListaProductos() {
     listProductDesac,
     modificarProductInterfaz,
     modifiProductInterfaz,
-    setModifiProductInterfaz
+    setModifiProductInterfaz,
   } = useProductos();
 
   const submitAct = (data) => {
@@ -39,10 +39,12 @@ export default function ListaProductos() {
   }, [productActDesc === false]);
 
   return (
-    <div className="container-lista-productos">
-      {modifiProductInterfaz ? (
-        <ModificarProducto closed = {setModifiProductInterfaz}/>
-      ) : (
+    <>
+      {modifiProductInterfaz && (
+        <ModificarProducto closed={setModifiProductInterfaz} />
+      )}
+
+      <div className="container-lista-productos">
         <>
           <h1>Lista de Productos</h1>
           <Buscador
@@ -67,7 +69,7 @@ export default function ListaProductos() {
             )}
           </div>
         </>
-      )}
-    </div>
+      </div>
+    </>
   );
 }

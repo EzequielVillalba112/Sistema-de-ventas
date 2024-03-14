@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { useProductos } from "../../../context/ProductoContext";
 export default function ListaProducto({ productList, listSearch, detail }) {
   const [list, setList] = useState([]);
-
+  const {urlImgProduct} = useProductos();
   useEffect(() => {
     if (listSearch.length == 0) {
       setList(productList);
@@ -17,7 +18,7 @@ export default function ListaProducto({ productList, listSearch, detail }) {
         {list.map((product, i) => (
           <li key={i}>
             <div className="data-list">
-              <img src={"http://localhost:3000/" + product.img_prod} />
+              <img src={urlImgProduct + product.img_prod} />
               <div className="data">
                 <div className="data-item">
                   <p>Nombre: </p>

@@ -84,3 +84,14 @@ select {
 .btn-editar{
     background-color: #34a525;
 }
+
+.btn-cancelar{
+    background-color: #d1bc00;
+}
+
+.description-input{
+    color: rgb(29, 29, 29);
+    margin-bottom: 5px;
+    font-size: 16px;
+    letter-spacing: 1px;
+}

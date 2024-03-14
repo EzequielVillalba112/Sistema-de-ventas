@@ -1,19 +1,16 @@
 import PropTypes from "prop-types";
 import { useProductos } from "../../../context/ProductoContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormInputs from "../../../components/FormInputs/FormINputs";
 import "./modificarProducto.css";
+import BtnGuardEditElim from "../../../components/btnCrud/BtnGuardEditElim";
+import { IoCloseSharp } from "react-icons/io5";
 
 export default function ModificarProducto({ closed }) {
   const nameForm = "Modificar Producto";
 
-  const [categoria, setCategoria] = useState([
-    "Categoria",
-    "Lacteos",
-    "Alcohol",
-    "Higiene",
-    "Prueba",
-  ]);
+  const { dataProductModifi } = useProductos();
+
   const [nombreProd, setNombreProd] = useState("");
   const [precioProd, setPrecioProd] = useState("");
   const [categoriaProd, setCategoriaProd] = useState("");
@@ -22,7 +19,16 @@ export default function ModificarProducto({ closed }) {
   const [descripcionProd, setDescripcionProd] = useState("");
   const [img, setImg] = useState(null);
 
-  console.log(descripcionProd);
+  const [disabledInput, setDisabledInput] = useState(true);
+
+  useEffect(() => {
+    setNombreProd(dataProductModifi.nombre_prod || "");
+    setPrecioProd(dataProductModifi.precio_pro || "");
+    setCategoriaProd(dataProductModifi.categoria_pro || "");
+    setStockProd(dataProductModifi.stock || "");
+    setCodBarProd(dataProductModifi.cod_barra || "");
+    setDescripcionProd(dataProductModifi.descripcion_pro || "");
+  }, [dataProductModifi]);
 
   const formItemsProduc = [
     {
@@ -35,6 +41,7 @@ export default function ModificarProducto({ closed }) {
           onchange: setNombreProd,
           value: nombreProd,
           onKeyDown: "",
+          disabled: disabledInput,
         },
         {
           nameInput: "PrecioProducto",
@@ -43,6 +50,7 @@ export default function ModificarProducto({ closed }) {
           onchange: setPrecioProd,
           value: precioProd,
           onKeyDown: "",
+          disabled: disabledInput,
         },
       ],
     },
@@ -53,10 +61,11 @@ export default function ModificarProducto({ closed }) {
         {
           nameInput: "Categoria",
           type: "select",
-          option: categoria,
+          option: ["Categoria", "Lacteos", "Alcohol", "Higiene", "Prueba"],
           onchange: setCategoriaProd,
           value: categoriaProd,
           onKeyDown: "",
+          disabled: disabledInput,
         },
         {
           nameInput: "Stock",
@@ -65,6 +74,7 @@ export default function ModificarProducto({ closed }) {
           onchange: setStockProd,
           value: stockProd,
           onKeyDown: "",
+          disabled: disabledInput,
         },
       ],
     },
@@ -79,6 +89,7 @@ export default function ModificarProducto({ closed }) {
           onchange: setCodBarProd,
           value: codBarProd,
           onKeyDown: true,
+          disabled: disabledInput,
         },
         {
           nameInput: "DescripcionProducto",
@@ -87,6 +98,7 @@ export default function ModificarProducto({ closed }) {
           onchange: setDescripcionProd,
           value: descripcionProd,
           onKeyDown: "",
+          disabled: disabledInput,
         },
       ],
     },
@@ -98,31 +110,28 @@ export default function ModificarProducto({ closed }) {
           type: "file",
           placeholder: "Ingrese Una imagen",
           onchange: setImg,
+          value: img,
           className: "file-select",
           onKeyDown: "",
+          disabled: disabledInput,
         },
       ],
     },
   ];
 
-  const saved = () => {
-    alert(saved);
-  };
-
   return (
     <div className="container-modificar-producto">
       <button
+        className="btn-cerrar-modifi-produ"
         onClick={() => {
           closed(false);
         }}
       >
-        Cerrar
+        <IoCloseSharp color="#ffff" size="1.5rem"/>
       </button>
-      <FormInputs nameForm={nameForm} formItems={formItemsProduc} />
-      <div className="continer-buttons-modific">
-        <button className="btn btn-guardar">Guardar</button>
-        <button className="btn btn-editar">Editar</button>
-        <button className="btn btn-eliminar">Elimnar</button>
+      <div className="modific-product">
+        <FormInputs nameForm={nameForm} formItems={formItemsProduc} />
+        <BtnGuardEditElim enableInput={setDisabledInput} closed={closed} />
       </div>
     </div>
   );

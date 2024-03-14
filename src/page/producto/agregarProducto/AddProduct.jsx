@@ -35,6 +35,7 @@ export default function AddProduct() {
           onchange: setNombreProd,
           value: nombreProd,
           onKeyDown: "",
+          disabled:false
         },
         {
           nameInput: "PrecioProducto",
@@ -43,6 +44,7 @@ export default function AddProduct() {
           onchange: setPrecioProd,
           value: precioProd,
           onKeyDown: "",
+          disabled:false
         },
       ],
     },
@@ -57,6 +59,7 @@ export default function AddProduct() {
           onchange: setCategoriaProd,
           value: categoriaProd,
           onKeyDown: "",
+          disabled:false
         },
         {
           nameInput: "Stock",
@@ -65,6 +68,7 @@ export default function AddProduct() {
           onchange: setStockProd,
           value: stockProd,
           onKeyDown: "",
+          disabled:false
         },
       ],
     },
@@ -79,6 +83,7 @@ export default function AddProduct() {
           onchange: setCodBarProd,
           value: codBarProd,
           onKeyDown: true,
+          disabled:false
         },
         {
           nameInput: "DescripcionProducto",
@@ -87,6 +92,7 @@ export default function AddProduct() {
           onchange: setDescripcionProd,
           value: descripcionProd,
           onKeyDown: "",
+          disabled:false
         },
       ],
     },
@@ -100,6 +106,7 @@ export default function AddProduct() {
           onchange: setImg,
           className: "file-select",
           onKeyDown: "",
+          disabled:false
         },
       ],
     },
@@ -143,7 +150,7 @@ export default function AddProduct() {
         const response = await createProducto({ body: formData });
         if (response) {
           clear();
-          notSuccess("Producto");
+          notSuccess("Producto agregado");
         }
       } catch (error) {
         console.error("Error al crear producto:", error);

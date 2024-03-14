@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 import {
   crearProducto,
   listProductoAct,
   listProductoDesac,
+  searchDataProduct,
 } from "../api/productos";
 import { useState } from "react";
 
@@ -23,7 +24,9 @@ export function ProductoProvider({ children }) {
   const [listProductDesac, setListProductDesac] = useState([]);
 
   const [modifiProductInterfaz, setModifiProductInterfaz] = useState(false);
-  const [idProductModifi, setIdProductModifi] = useState();
+  const [idProductModifi, setIdProductModifi] = useState("");
+
+  const [dataProductModifi, setDataProductModifi] = useState([]);
 
   const listProductDesactivos = async () => {
     try {
@@ -39,6 +42,8 @@ export function ProductoProvider({ children }) {
       return false;
     }
   };
+
+  const urlImgProduct = "http://localhost:3000/";
 
   const listProductActivos = async () => {
     try {
@@ -69,10 +74,30 @@ export function ProductoProvider({ children }) {
     }
   };
 
-  const  modificarProductInterfaz =  (id)=>{
+  const modificarProductInterfaz = (id) => {
     setIdProductModifi(id);
     setModifiProductInterfaz(true);
-  }
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      const shouldFetch = idProductModifi !== "" && modifiProductInterfaz;
+      if (shouldFetch) {
+        try {
+          const res = await searchDataProduct(idProductModifi);
+          if (res.statusText === "OK") {
+            setDataProductModifi(res.data[0]);
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.error("Error al buscar productos:", error);
+          return false;
+        }
+      }
+    }
+    fetchData();
+  }, [idProductModifi, modifiProductInterfaz]);
 
   return (
     <ProductoContext.Provider
@@ -86,7 +111,9 @@ export function ProductoProvider({ children }) {
         modificarProductInterfaz,
         idProductModifi,
         modifiProductInterfaz,
-        setModifiProductInterfaz
+        setModifiProductInterfaz,
+        dataProductModifi,
+        urlImgProduct,
       }}
     >
       {children}

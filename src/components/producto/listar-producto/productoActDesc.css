@@ -17,6 +17,7 @@
 }
 
 .container-checkbox-prod input[type="checkbox"] {
+    cursor: pointer;
     width: 20px;
 }
 
