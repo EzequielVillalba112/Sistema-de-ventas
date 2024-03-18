@@ -61,6 +61,7 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                         input.onchange(e.target.files[0]);
                       }}
                       disabled={input.disabled}
+                      accept=".png,image/*"
                     />
                   </>
                 ) : input.onKeyDown === true ? (

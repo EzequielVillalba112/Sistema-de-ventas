@@ -1,6 +1,6 @@
-export const validFormProduct = (categoria, nombreProd, precioProd, categoriaProd, stockProd, codBarProd, descripcionProd) => {
+export const validFormProduct = ( nombreProd, precioProd, categoriaProd, stockProd, codBarProd, descripcionProd) => {
      // Verificar que todos los campos obligatorios estén presentes
-     if (!categoria || !nombreProd || !precioProd || !categoriaProd || !stockProd || !codBarProd || !descripcionProd) {
+     if (!nombreProd || !precioProd || !categoriaProd || !stockProd || !codBarProd || !descripcionProd) {
         return "Todos los campos son obligatorios";
     }
 

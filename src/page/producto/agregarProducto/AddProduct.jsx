@@ -124,7 +124,6 @@ export default function AddProduct() {
 
   const guardarProdu = async () => {
     const validationForm = validFormProduct(
-      categoria,
       nombreProd,
       precioProd,
       categoriaProd,

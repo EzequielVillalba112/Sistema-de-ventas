@@ -61,50 +61,35 @@ export const notCancel = (closed)=>{
   });
 }
 
-export const notEliminar = (message) =>{
-  notificacion
-  .fire({
-    title: "Desea eliminar este " + message +" ?",
-    showDenyButton: true,
-    showCancelButton: true,
-    confirmButtonText: "Si",
-    denyButtonText: `no`,
-    confirmButtonColor: "#29C716",
-  })
-  .then((result) => {
-    /* Read more about isConfirmed, isDenied below */
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: message + " Eliminado",
-        icon: "success",
-        confirmButtonColor: "#29C716",
-      });/*
-    Peticion a api
-      Axios.delete(`http://localhost:3000/delete/${id}`)
-        .then(() => {
-          Swal.fire({
-            title: "Empleado Eliminado",
-            icon: "success",
-            background: "#000",
-            color: "#fff",
-            confirmButtonColor: "#29C716",
-          });
-        })
-        .catch(function (error) {
-          notificacion.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "No se pudo eliminar el empleado",
-            background: "#000",
-            color: "#fff",
-          });
-        });*/
-    } else if (result.isDenied) {
-      Swal.fire({
-        title: "No se elimino ningun " + message,
-        icon: "info",
-        confirmButtonColor: "#29C716",
-      });
-    }
+export const notEliminar = (message) => {
+  return new Promise((resolve, reject) => {
+    Swal.fire({
+      title: "Desea eliminar este " + message +" ?",
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: "Si",
+      denyButtonText: `no`,
+      confirmButtonColor: "#29C716",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: message + " Eliminado",
+          icon: "success",
+          confirmButtonColor: "#29C716",
+        });
+        resolve(true);
+      } else if (result.isDenied) {
+        Swal.fire({
+          title: "No se elimino ningun " + message,
+          icon: "info",
+          confirmButtonColor: "#29C716",
+        });
+        resolve(false);
+      } else {
+        resolve(false); // En caso de que se cierre la ventana de diálogo sin hacer clic en ningún botón
+      }
+    }).catch((error) => {
+      reject(error); // Manejar cualquier error que pueda ocurrir durante la ejecución
+    });
   });
-}
+};

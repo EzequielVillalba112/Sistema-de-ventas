@@ -5,11 +5,13 @@ import FormInputs from "../../../components/FormInputs/FormINputs";
 import "./modificarProducto.css";
 import BtnGuardEditElim from "../../../components/btnCrud/BtnGuardEditElim";
 import { IoCloseSharp } from "react-icons/io5";
+import { validFormProduct } from "../../../validation/formProducto/formProductoVal";
+import { notError, notSuccess } from "../../../components/alert/alert";
 
 export default function ModificarProducto({ closed }) {
   const nameForm = "Modificar Producto";
 
-  const { dataProductModifi } = useProductos();
+  const { dataProductModifi, idProductModifi, updateProduct, deleteProduct } = useProductos();
 
   const [nombreProd, setNombreProd] = useState("");
   const [precioProd, setPrecioProd] = useState("");
@@ -18,6 +20,7 @@ export default function ModificarProducto({ closed }) {
   const [codBarProd, setCodBarProd] = useState("");
   const [descripcionProd, setDescripcionProd] = useState("");
   const [img, setImg] = useState(null);
+  const [urlImg, setUrlImg] = useState("")
 
   const [disabledInput, setDisabledInput] = useState(true);
 
@@ -28,6 +31,7 @@ export default function ModificarProducto({ closed }) {
     setStockProd(dataProductModifi.stock || "");
     setCodBarProd(dataProductModifi.cod_barra || "");
     setDescripcionProd(dataProductModifi.descripcion_pro || "");
+    setUrlImg(dataProductModifi.img_prod || "");
   }, [dataProductModifi]);
 
   const formItemsProduc = [
@@ -119,6 +123,51 @@ export default function ModificarProducto({ closed }) {
     },
   ];
 
+  const updateProducto = async () => {
+    const validationForm = validFormProduct(
+      nombreProd,
+      precioProd,
+      categoriaProd,
+      stockProd,
+      codBarProd,
+      descripcionProd
+    );
+
+    if (validationForm === null) {
+      const formData = new FormData();
+      console.log(img);
+      if (img) {
+        formData.append("file", img);
+      }
+      formData.append("nombre", nombreProd);
+      formData.append("precio", precioProd);
+      formData.append("categoria", categoriaProd);
+      formData.append("stock", stockProd);
+      formData.append("codBarra", codBarProd);
+      formData.append("descripcion", descripcionProd);
+      formData.append("id", idProductModifi);
+      formData.append("urlImg", urlImg)
+
+      try {
+        const response = await updateProduct({ body: formData });
+        if (response) {
+          notSuccess("Producto Modificado");
+          closed(false)
+        }
+      } catch (error) {
+        console.error("Error al crear producto:", error);
+      }
+    } else {
+      notError(validationForm);
+    }
+  };
+
+  const eliminarProducto = ()=>{
+    const res =   deleteProduct(idProductModifi);
+
+    console.log(res);
+  }
+
   return (
     <div className="container-modificar-producto">
       <button
@@ -127,11 +176,16 @@ export default function ModificarProducto({ closed }) {
           closed(false);
         }}
       >
-        <IoCloseSharp color="#ffff" size="1.5rem"/>
+        <IoCloseSharp color="#ffff" size="1.5rem" />
       </button>
       <div className="modific-product">
         <FormInputs nameForm={nameForm} formItems={formItemsProduc} />
-        <BtnGuardEditElim enableInput={setDisabledInput} closed={closed} />
+        <BtnGuardEditElim
+          enableInput={setDisabledInput}
+          closed={closed}
+          saved={updateProducto}
+          eliminar = {eliminarProducto}
+        />
       </div>
     </div>
   );

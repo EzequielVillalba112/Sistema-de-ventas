@@ -29,9 +29,7 @@ select {
 
 .input-grup {
     display: flex;
-    flex-direction: column;
     gap: 10px;
-    width: 90%;
 }
 
 .input-grup input {
@@ -47,7 +45,7 @@ select {
 
 
 .input-grup select {
-    width: 100%;
+    width: 220px;
     height: 40px;
     border-style: none;
     border-radius: 6px;

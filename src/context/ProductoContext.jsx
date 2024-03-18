@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 
 import {
   crearProducto,
+  deleteProducto,
   listProductoAct,
   listProductoDesac,
   searchDataProduct,
+  updateProducto
 } from "../api/productos";
 import { useState } from "react";
 
@@ -73,11 +75,40 @@ export function ProductoProvider({ children }) {
       return false;
     }
   };
-
+  const updateProduct = async (product) => {
+    console.log(product.body);
+    try {
+      const res = await updateProducto(product.body);
+      if (res.statusText === "OK") {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al modificar producto:", error);
+      return false;
+    }
+  };
   const modificarProductInterfaz = (id) => {
     setIdProductModifi(id);
     setModifiProductInterfaz(true);
   };
+
+  const deleteProduct = (id) => {
+    try {
+      const res  = deleteProducto(id);
+      if (res.statusText === "OK") {
+        listProductAct()
+
+        return  "Producto eliminado";
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al eliminar producto:", error);
+      return false;
+    }
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -99,6 +130,7 @@ export function ProductoProvider({ children }) {
     fetchData();
   }, [idProductModifi, modifiProductInterfaz]);
 
+
   return (
     <ProductoContext.Provider
       value={{
@@ -114,6 +146,8 @@ export function ProductoProvider({ children }) {
         setModifiProductInterfaz,
         dataProductModifi,
         urlImgProduct,
+        updateProduct,
+        deleteProduct
       }}
     >
       {children}

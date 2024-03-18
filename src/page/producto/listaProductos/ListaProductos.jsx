@@ -32,7 +32,7 @@ export default function ListaProductos() {
 
   useEffect(() => {
     listProductActivos();
-  }, []);
+  }, [listProductAct]);
 
   useEffect(() => {
     listProductDesactivos();

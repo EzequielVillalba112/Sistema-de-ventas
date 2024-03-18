@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { notCancel, notEliminar, notError, notSuccess } from "../alert/alert";
+import { notCancel, notEliminar } from "../alert/alert";
 
-export default function BtnGuardEditElim({ enableInput, closed }) {
+export default function BtnGuardEditElim({ enableInput, closed, saved, eliminar }) {
   const [guardar, setGuardar] = useState(false);
   const [editar, setEditar] = useState(true);
 
@@ -17,14 +17,18 @@ export default function BtnGuardEditElim({ enableInput, closed }) {
   }
 
   const btnEliminar = () =>{
-    const message = "Producto"
-    notEliminar(message)
+    notEliminar("producto").then((resultado) => {
+      if (resultado) {
+        eliminar();
+        closed(false)
+      } 
+    }).catch((error) => {
+      console.error("Error al mostrar la alerta:", error);
+    });
   }
 
   const save = () =>{
-    //const message = "Producto modificado"
-    //notSuccess(message)
-    //notError()
+    saved()
   }
   return (
     <div className="continer-buttons-modific">
@@ -45,5 +49,7 @@ export default function BtnGuardEditElim({ enableInput, closed }) {
 }
 BtnGuardEditElim.propTypes = {
   enableInput: PropTypes.func,
-  closed: PropTypes.func
+  closed: PropTypes.func,
+  saved: PropTypes.func,
+  eliminar: PropTypes.func,
 };
