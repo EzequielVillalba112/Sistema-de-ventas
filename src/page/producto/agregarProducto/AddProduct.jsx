@@ -150,7 +150,9 @@ export default function AddProduct() {
         if (response) {
           clear();
           notSuccess("Producto agregado");
+          
         }
+        
       } catch (error) {
         console.error("Error al crear producto:", error);
       }

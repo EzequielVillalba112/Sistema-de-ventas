@@ -19,6 +19,7 @@ export const notSuccess = (message) => {
     icon: "success",
     confirmButtonText: "Aceptar",
   });
+ 
 };
 
 export const notSearchFalse = (message) =>

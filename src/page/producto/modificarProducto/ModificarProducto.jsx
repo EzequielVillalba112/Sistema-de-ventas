@@ -163,9 +163,8 @@ export default function ModificarProducto({ closed }) {
   };
 
   const eliminarProducto = ()=>{
-    const res =   deleteProduct(idProductModifi);
-
-    console.log(res);
+    deleteProduct(idProductModifi);
+    window.location.reload();
   }
 
   return (
