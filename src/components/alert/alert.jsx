@@ -3,6 +3,7 @@ import withReactContent from "sweetalert2-react-content";
 
 const notificacion = withReactContent(Swal);
 
+
 export const notError = (message) => {
   notificacion.fire({
     title: "¡Error!",

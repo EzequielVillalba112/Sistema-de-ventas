@@ -32,19 +32,17 @@ export default function ListaProductos() {
 
   useEffect(() => {
     listProductActivos();
-  }, [listProductAct]);
-
+  },[]);
+  
   useEffect(() => {
     listProductDesactivos();
   }, [productActDesc === false]);
 
   return (
-    <>
-      {modifiProductInterfaz && (
+    <div className="container-lista-productos">
+      {modifiProductInterfaz ? (
         <ModificarProducto closed={setModifiProductInterfaz} />
-      )}
-
-      <div className="container-lista-productos">
+      ) : (
         <>
           <h1>Lista de Productos</h1>
           <Buscador
@@ -69,7 +67,7 @@ export default function ListaProductos() {
             )}
           </div>
         </>
-      </div>
-    </>
+      )}
+    </div>
   );
 }

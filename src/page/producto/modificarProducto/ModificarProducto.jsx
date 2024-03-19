@@ -162,9 +162,18 @@ export default function ModificarProducto({ closed }) {
     }
   };
 
-  const eliminarProducto = ()=>{
-    deleteProduct(idProductModifi);
-    window.location.reload();
+  const eliminarProducto = async ()=>{
+    try {
+      const resultado = await deleteProduct(idProductModifi);
+
+      if(resultado.error){
+        return resultado.error;
+      }else{
+        return resultado;
+      }
+    } catch (error) {
+      console.error("Error al ejecutar la promesa:", error);
+    }
   }
 
   return (

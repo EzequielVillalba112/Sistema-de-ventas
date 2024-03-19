@@ -7,7 +7,7 @@ import {
   listProductoAct,
   listProductoDesac,
   searchDataProduct,
-  updateProducto
+  updateProducto,
 } from "../api/productos";
 import { useState } from "react";
 
@@ -94,21 +94,29 @@ export function ProductoProvider({ children }) {
     setModifiProductInterfaz(true);
   };
 
-  const deleteProduct = (id) => {
+  const deleteProduct = async (id) => {
     try {
-      const res  = deleteProducto(id);
-      if (res.statusText === "OK") {
-        listProductAct()
+      const res = await deleteProducto(id);
+      console.log(res);
+      if (res.status === 200) {
+        // Verifica el código de estado de la respuesta
+        return "Producto eliminado";
 
-        return  "Producto eliminado";
       } else {
+        console.error(
+          "No se pudo eliminar el producto. Código de estado:",
+          res.status
+        );
         return false;
       }
     } catch (error) {
-      console.error("Error al eliminar producto:", error);
-      return false;
+      if (error.response && error.response.data && error.response.data.error) {
+        return ({error:error.response.data.error, status: 400});
+      } else {
+        return ({error:error.message, status: 400});
+      }
     }
-  }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -116,20 +124,22 @@ export function ProductoProvider({ children }) {
       if (shouldFetch) {
         try {
           const res = await searchDataProduct(idProductModifi);
-          if (res.statusText === "OK") {
+          if (res.status === 200) {
             setDataProductModifi(res.data[0]);
           } else {
-            return false;
+            console.error(
+              "Error al buscar productos. Código de estado:",
+              res.status
+            );
           }
         } catch (error) {
           console.error("Error al buscar productos:", error);
-          return false;
         }
       }
     }
-    fetchData();
-  }, [idProductModifi, modifiProductInterfaz]);
 
+    fetchData();
+  }, [idProductModifi, modifiProductInterfaz, setDataProductModifi]);
 
   return (
     <ProductoContext.Provider
@@ -147,7 +157,7 @@ export function ProductoProvider({ children }) {
         dataProductModifi,
         urlImgProduct,
         updateProduct,
-        deleteProduct
+        deleteProduct,
       }}
     >
       {children}
