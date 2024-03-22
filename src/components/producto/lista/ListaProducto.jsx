@@ -10,7 +10,7 @@ export default function ListaProducto({ productList, listSearch, detail }) {
     } else {
       setList(listSearch);
     }
-  }, [listSearch]);
+  }, [listSearch, productList]);
 
   return (
     <>

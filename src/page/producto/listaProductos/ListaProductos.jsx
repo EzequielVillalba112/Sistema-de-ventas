@@ -32,8 +32,8 @@ export default function ListaProductos() {
 
   useEffect(() => {
     listProductActivos();
-  },[]);
-  
+  }, [productActDesc == true]);
+
   useEffect(() => {
     listProductDesactivos();
   }, [productActDesc === false]);

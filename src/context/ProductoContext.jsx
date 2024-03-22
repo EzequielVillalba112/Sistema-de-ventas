@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {
   crearProducto,
   deleteProducto,
+  desactivateProducto,
   listProductoAct,
   listProductoDesac,
   searchDataProduct,
@@ -44,6 +45,8 @@ export function ProductoProvider({ children }) {
       return false;
     }
   };
+
+ 
 
   const urlImgProduct = "http://localhost:3000/";
 
@@ -96,27 +99,33 @@ export function ProductoProvider({ children }) {
 
   const deleteProduct = async (id) => {
     try {
-      const res = await deleteProducto(id);
-      console.log(res);
-      if (res.status === 200) {
-        // Verifica el código de estado de la respuesta
-        return "Producto eliminado";
-
-      } else {
-        console.error(
-          "No se pudo eliminar el producto. Código de estado:",
-          res.status
-        );
-        return false;
+      if (id != "") {
+        const res = await deleteProducto(id);
+        console.log(res);
+        if (res.status === 200) {
+          // Verifica el código de estado de la respuesta
+          return "Producto eliminado";
+        } else {
+          console.error(
+            "No se pudo eliminar el producto. Código de estado:",
+            res.status
+          );
+          return false;
+        }
       }
     } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
-        return ({error:error.response.data.error, status: 400});
+        return { error: error.response.data.error, status: 400 };
       } else {
-        return ({error:error.message, status: 400});
+        return { error: error.message, status: 400 };
       }
     }
   };
+
+  const desactivateProduct = async (id) =>{
+    const res = desactivateProducto(id);
+    return res;
+  }
 
   useEffect(() => {
     async function fetchData() {
@@ -158,6 +167,7 @@ export function ProductoProvider({ children }) {
         urlImgProduct,
         updateProduct,
         deleteProduct,
+        desactivateProduct
       }}
     >
       {children}
