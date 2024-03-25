@@ -1,10 +1,15 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useProductos } from "../../../context/ProductoContext";
+
+//Muestra la lista de producto segun los valores resibidos
 export default function ListaProducto({ productList, listSearch, detail }) {
   const [list, setList] = useState([]);
+  //Es la url para poder ver la img (se encuetra en ProductoContext.jsx)
   const {urlImgProduct} = useProductos();
+
   useEffect(() => {
+    //Si la lista de busque esta vacia, solo renderiza la lista enviada 
     if (listSearch.length == 0) {
       setList(productList);
     } else {

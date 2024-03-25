@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import "./productoActDesc.css";
 
 export default function ProductoActDesc({ submit, name }) {
+  //Productos Activos
   const [productActiv, setProductActiv] = useState(true);
+  //Productos Desactivos
   const [c, setc] = useState(false);
 
   const handleProductActivChange = () => {
@@ -19,7 +21,6 @@ export default function ProductoActDesc({ submit, name }) {
       setProductActiv(false);
     }
   };
-
 
   return (
     <div className="container-list-act-desc-pro">

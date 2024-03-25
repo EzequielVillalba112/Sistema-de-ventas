@@ -20,9 +20,14 @@ export default function Menu() {
   });
 
   const toggleMenu = (menuKey) => {
-    setMenus((prevMenus) => ({ ...prevMenus, [menuKey]: !prevMenus[menuKey] }));
+    setMenus((prevMenus) => ({ // Actualiza el estado de 'menus' utilizando una función de actualización del estado
+      ...prevMenus, // Copia el estado anterior 'prevMenus'
+      [menuKey]: !prevMenus[menuKey] // Actualiza la clave 'menuKey' en el estado copiado y asigna su valor negado
+    }));
+    
   };
 
+  //Datos necesarios para renderizar el menu
   const menuItems = [
     {
       img: ProductoImg,

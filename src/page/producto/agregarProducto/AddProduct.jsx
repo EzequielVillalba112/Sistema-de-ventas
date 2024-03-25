@@ -22,8 +22,9 @@ export default function AddProduct() {
   const [descripcionProd, setDescripcionProd] = useState("");
   const [img, setImg] = useState(null);
 
-  const { createProducto } = useProductos();
+  const { createProducto, validProductExisting } = useProductos();
 
+  //Es un objeto con los datos necesario para renderizar la interfaz de los formularios
   const formItemsProduc = [
     {
       class: "input-grup",
@@ -35,7 +36,7 @@ export default function AddProduct() {
           onchange: setNombreProd,
           value: nombreProd,
           onKeyDown: "",
-          disabled:false
+          disabled: false,
         },
         {
           nameInput: "PrecioProducto",
@@ -44,7 +45,7 @@ export default function AddProduct() {
           onchange: setPrecioProd,
           value: precioProd,
           onKeyDown: "",
-          disabled:false
+          disabled: false,
         },
       ],
     },
@@ -59,7 +60,7 @@ export default function AddProduct() {
           onchange: setCategoriaProd,
           value: categoriaProd,
           onKeyDown: "",
-          disabled:false
+          disabled: false,
         },
         {
           nameInput: "Stock",
@@ -68,7 +69,7 @@ export default function AddProduct() {
           onchange: setStockProd,
           value: stockProd,
           onKeyDown: "",
-          disabled:false
+          disabled: false,
         },
       ],
     },
@@ -83,7 +84,7 @@ export default function AddProduct() {
           onchange: setCodBarProd,
           value: codBarProd,
           onKeyDown: true,
-          disabled:false
+          disabled: false,
         },
         {
           nameInput: "DescripcionProducto",
@@ -92,7 +93,7 @@ export default function AddProduct() {
           onchange: setDescripcionProd,
           value: descripcionProd,
           onKeyDown: "",
-          disabled:false
+          disabled: false,
         },
       ],
     },
@@ -106,7 +107,7 @@ export default function AddProduct() {
           onchange: setImg,
           className: "file-select",
           onKeyDown: "",
-          disabled:false
+          disabled: false,
         },
       ],
     },
@@ -116,13 +117,14 @@ export default function AddProduct() {
         {
           className: "btn btn-guardar",
           type: "submit",
-          text: "Guardar"
-        }
-      ]
-    }
+          text: "Guardar",
+        },
+      ],
+    },
   ];
 
   const guardarProdu = async () => {
+    //Valida que todos los campos necesarios no esten vacios 
     const validationForm = validFormProduct(
       nombreProd,
       precioProd,
@@ -133,34 +135,45 @@ export default function AddProduct() {
     );
 
     if (validationForm === null) {
-      const formData = new FormData();
+      //Valida que el nombre o cod_barra del producto no existan
+      const resValidExisting = await validProductExisting({
+        nombreProd,
+        codBarProd,
+      });
 
-      if (img) {
-        formData.append("file", img);
-      }
-      formData.append("nombre", nombreProd);
-      formData.append("precio", precioProd);
-      formData.append("categoria", categoriaProd);
-      formData.append("stock", stockProd);
-      formData.append("codBarra", codBarProd);
-      formData.append("descripcion", descripcionProd);
+      if (resValidExisting.status == 200) {
+        const formData = new FormData();
 
-      try {
-        const response = await createProducto({ body: formData });
-        if (response) {
-          clear();
-          notSuccess("Producto agregado");
-          
+        if (img) {
+          formData.append("file", img);
         }
-        
-      } catch (error) {
-        console.error("Error al crear producto:", error);
+        formData.append("nombre", nombreProd);
+        formData.append("precio", precioProd);
+        formData.append("categoria", categoriaProd);
+        formData.append("stock", stockProd);
+        formData.append("codBarra", codBarProd);
+        formData.append("descripcion", descripcionProd);
+
+        try {
+          //llama la funcion de agregar producto del context, este envia un objetos con los datos
+          const response = await createProducto({ body: formData });
+          if (response) {
+            clear();
+            notSuccess("Producto agregado");
+          }
+        } catch (error) {
+          console.error("Error al crear producto:", error);
+        }
+      } else{
+        notError(resValidExisting.error)
       }
+    
     } else {
       notError(validationForm);
     }
   };
 
+  //limpia los input una vez realizada la accion
   const clear = () => {
     setCategoria(["Categoria", "Lacteos", "Alcohol", "Higiene", "Prueba"]);
     setNombreProd("");

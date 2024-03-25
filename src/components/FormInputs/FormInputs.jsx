@@ -64,6 +64,8 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                       accept=".png,image/*"
                     />
                   </>
+                  //Este sector los uso para evitar que se precion la opcion de submit
+                  //cuando se utiliza el escaner de cod_barra
                 ) : input.onKeyDown === true ? (
                   <>
                     <h3 className="description-input">{input.placeholder}</h3>

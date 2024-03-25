@@ -9,6 +9,7 @@ import {
   listProductoDesac,
   searchDataProduct,
   updateProducto,
+  validateProductExisting,
 } from "../api/productos";
 import { useState } from "react";
 
@@ -31,6 +32,10 @@ export function ProductoProvider({ children }) {
 
   const [dataProductModifi, setDataProductModifi] = useState([]);
 
+  //Link con la ubicacion de las img
+  const urlImgProduct = "http://localhost:3000/";
+
+  //Lista los producto desactivados
   const listProductDesactivos = async () => {
     try {
       const res = await listProductoDesac();
@@ -45,11 +50,7 @@ export function ProductoProvider({ children }) {
       return false;
     }
   };
-
- 
-
-  const urlImgProduct = "http://localhost:3000/";
-
+  //Lista los productos que se encuente activos
   const listProductActivos = async () => {
     try {
       const res = await listProductoAct();
@@ -64,7 +65,7 @@ export function ProductoProvider({ children }) {
       return false;
     }
   };
-
+  //Envia un objeto al back con los datos del producto
   const createProducto = async (producto) => {
     try {
       const res = await crearProducto(producto.body);
@@ -78,6 +79,7 @@ export function ProductoProvider({ children }) {
       return false;
     }
   };
+  //Modifica los datos del producto
   const updateProduct = async (product) => {
     console.log(product.body);
     try {
@@ -92,11 +94,12 @@ export function ProductoProvider({ children }) {
       return false;
     }
   };
+  //Modifica el estado del producto para abrir o cerrar la interfaz de moficar producto
   const modificarProductInterfaz = (id) => {
     setIdProductModifi(id);
     setModifiProductInterfaz(true);
   };
-
+  //Elimina los productos para funcionar necesita el id del producto
   const deleteProduct = async (id) => {
     try {
       if (id != "") {
@@ -121,12 +124,25 @@ export function ProductoProvider({ children }) {
       }
     }
   };
-
-  const desactivateProduct = async (id) =>{
-    const res = desactivateProducto(id);
-    return res;
+  //Desactiva los productos que no se puede eliminar porque otro sector de la base de datos lo esta usando
+  const desactivateProduct = async (id) => {
+    try {
+      const res = await desactivateProducto(id);
+      return res;
+    } catch (error) {
+      console.error("Error al desactivar el producto:", error);
+      throw error;
+    }
+  };
+  //Valida si el nombre o cod-barra del producto ya existe, si no existe retorna un valor 200
+  const validProductExisting = async (dataProduct) => {
+    try {
+      const res = await validateProductExisting(dataProduct);
+      return res;
+    } catch (error) {
+      return (error.response.data);
+    }
   }
-
   useEffect(() => {
     async function fetchData() {
       const shouldFetch = idProductModifi !== "" && modifiProductInterfaz;
@@ -167,7 +183,8 @@ export function ProductoProvider({ children }) {
         urlImgProduct,
         updateProduct,
         deleteProduct,
-        desactivateProduct
+        desactivateProduct,
+        validProductExisting
       }}
     >
       {children}

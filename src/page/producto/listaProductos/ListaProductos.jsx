@@ -11,7 +11,7 @@ export default function ListaProductos() {
   const nameTabSearch = "Producto";
 
   const [resultSearch, setResultSearch] = useState([]);
-  const [inputSearch, setInputSearch] = useState("");
+  
   const [productActDesc, setProductActDesc] = useState(true);
 
   const {
@@ -26,10 +26,10 @@ export default function ListaProductos() {
 
   const submitAct = (data) => {
     setProductActDesc(data);
-    setInputSearch("");
     setResultSearch([]);
   };
 
+  //Dependiendeo del valor de productActDesc muestra una lista o otra.
   useEffect(() => {
     listProductActivos();
   }, [productActDesc == true]);
@@ -37,9 +37,12 @@ export default function ListaProductos() {
   useEffect(() => {
     listProductDesactivos();
   }, [productActDesc === false]);
-
+  //
   return (
     <div className="container-lista-productos">
+
+      {/*Verifica si el el usuario preciono la opcion de modificar producto en la lista, si preciono renderiza
+      la interfaz de modificar caso contrario muestra la lista de productos*/}
       {modifiProductInterfaz ? (
         <ModificarProducto closed={setModifiProductInterfaz} />
       ) : (
@@ -49,8 +52,6 @@ export default function ListaProductos() {
             search={setResultSearch}
             placeholder={"Buscar por nombre de producto o cod. barra"}
             status={productActDesc}
-            value={inputSearch}
-            onChange={setInputSearch}
           />
           <ProductoActDesc submit={submitAct} name={nameTabSearch} />
           <div className="lista-productos">

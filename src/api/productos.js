@@ -7,3 +7,4 @@ export const searchDataProduct = (idProduct) => axios.get(`/producto/${idProduct
 export const updateProducto = (productoModif) => axios.post("/update_product", productoModif);
 export const deleteProducto = (idProduct) => axios.delete(`/product_delete/${idProduct}`);
 export const desactivateProducto = (idProduct) => axios.post(`/product_desactive/${idProduct}`);
+export const validateProductExisting = (dataProduct) => axios.post('/validate_product_exxisten', dataProduct);
