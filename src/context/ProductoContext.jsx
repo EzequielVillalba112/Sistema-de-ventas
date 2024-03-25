@@ -24,9 +24,10 @@ export const useProductos = () => {
 };
 
 export function ProductoProvider({ children }) {
+  //Guarda las lista de los productos
   const [listProductAct, setListProductAct] = useState([]);
   const [listProductDesac, setListProductDesac] = useState([]);
-
+  //
   const [modifiProductInterfaz, setModifiProductInterfaz] = useState(false);
   const [idProductModifi, setIdProductModifi] = useState("");
 
