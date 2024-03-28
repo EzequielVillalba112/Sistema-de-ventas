@@ -22,8 +22,7 @@ export default function AddProduct() {
 
   useEffect(()=>{
     listarCategoria();
-    setCategoria(listaCategory)
-    console.log(listaCategory);
+    setCategoria(listaCategory);
   },[])
 
   //Es un objeto con los datos necesario para renderizar la interfaz de los formularios
