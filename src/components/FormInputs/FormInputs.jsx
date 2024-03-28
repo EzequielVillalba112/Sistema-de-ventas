@@ -45,7 +45,7 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                     >
                       {input.option.map((opt, i) => (
                         <option key={i} value={opt}>
-                          {opt}
+                          {opt.nombre}
                         </option>
                       ))}
                     </select>

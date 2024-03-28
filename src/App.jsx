@@ -10,34 +10,37 @@ import AgregarCliente from "./page/cliente/agregar-cliente/AgregarCliente";
 import ListarCliente from "./page/cliente/listar-cliente/ListarCliente";
 import AgregarUsuario from "./page/usuarios/agregar-usuario/AgregarUsuario";
 import { ProductoProvider } from "./context/ProductoContext";
+import { CategoryProvider } from "./context/CategoryContext";
 
 function App() {
   return (
     <>
       <ProductoProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Login />} />
+        <CategoryProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Login />} />
 
-            {/*Routes: validar si el usuario inicio secion, en el caso de que no iniciara secion no puede ingresar a la app */}
-            <Route path="/rutas" element={<Rutas />}>
-              <Route path="vender" element={<Vender />} />
+              {/*Routes: validar si el usuario inicio secion, en el caso de que no iniciara secion no puede ingresar a la app */}
+              <Route path="/rutas" element={<Rutas />}>
+                <Route path="vender" element={<Vender />} />
 
-              <Route path="agregarProducto" element={<AddProduct />} />
-              <Route path="listarProducto" element={<ListaProductos />} />
+                <Route path="agregarProducto" element={<AddProduct />} />
+                <Route path="listarProducto" element={<ListaProductos />} />
 
-              {/*Categoria armar Context */}
-              <Route path="agregarCategoria" element={<AgregarCategoria />} />
+                {/*Categoria armar Context */}
+                <Route path="agregarCategoria" element={<AgregarCategoria />} />
 
-              {/*Cliente armar Context */}
-              <Route path="agregarCliente" element={<AgregarCliente />} />
-              <Route path="listarCliente" element={<ListarCliente />} />
+                {/*Cliente armar Context */}
+                <Route path="agregarCliente" element={<AgregarCliente />} />
+                <Route path="listarCliente" element={<ListarCliente />} />
 
-              {/*Usuario armar Context */}
-              <Route path="agregarUsuario" element={<AgregarUsuario />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
+                {/*Usuario armar Context */}
+                <Route path="agregarUsuario" element={<AgregarUsuario />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </CategoryProvider>
       </ProductoProvider>
     </>
   );

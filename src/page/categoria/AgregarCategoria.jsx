@@ -1,12 +1,17 @@
 import { useState } from "react";
 import ListaCategoria from "../../components/categoria/listar-categoria/ListaCategoria";
 import FormInputs from "../../components/FormInputs/FormINputs";
+import { useCategory } from "../../context/CategoryContext";
+import { notError, notSuccess } from "../../components/alert/alert";
+import { validCategoria } from "../../validation/formCategoria/formaCategory";
 
 export default function AgregarCategoria() {
+  const { listaCategory, addCategoria } = useCategory();
+
   const nameForm = "categoría";
 
-  const [nombreCategoria, setNombreCAtegoria] = useState();
-  const [descripcion, setDescripcion] = useState();
+  const [nombreCategoria, setNombreCAtegoria] = useState("");
+  const [descripcion, setDescripcion] = useState("");
 
   const formItemsCategoria = [
     {
@@ -32,15 +37,26 @@ export default function AgregarCategoria() {
         {
           className: "btn btn-guardar",
           type: "submit",
-          text: "Guardar"
-        }
-      ]
-    }
+          text: "Guardar",
+        },
+      ],
+    },
   ];
 
-  const guardarCategoria = () => {
-    console.log(nombreCategoria);
-    console.log(descripcion);
+  const guardarCategoria = async () => {
+    const validarCategoria = validCategoria(nombreCategoria);
+
+    if (validarCategoria == null) {
+      const res = await addCategoria({ nombreCategoria, descripcion });
+
+      if (res == true) {
+        notSuccess("Categoria");
+      } else {
+        notError("Categoria");
+      }
+    }else{
+      notError(validarCategoria);
+    }
   };
 
   return (
@@ -54,7 +70,7 @@ export default function AgregarCategoria() {
       </div>
 
       <div className="container-form">
-        <ListaCategoria />
+        <ListaCategoria ListaCategoria={listaCategory} />
       </div>
     </>
   );

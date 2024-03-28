@@ -1,19 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormInputs from "../../../components/FormInputs/FormINputs";
 import { useProductos } from "../../../context/ProductoContext";
 import { validFormProduct } from "../../../validation/formProducto/formProductoVal";
 import { notError, notSuccess } from "../../../components/alert/alert.jsx";
+import { useCategory } from "../../../context/CategoryContext.jsx";
 
 export default function AddProduct() {
+  const { createProducto, validProductExisting } = useProductos();
+  const {listaCategory, listarCategoria} = useCategory()
+
   const nameForm = "Agregar Producto";
 
-  const [categoria, setCategoria] = useState([
-    "Categoria",
-    "Lacteos",
-    "Alcohol",
-    "Higiene",
-    "Prueba",
-  ]);
+  const [categoria, setCategoria] = useState([]);
   const [nombreProd, setNombreProd] = useState("");
   const [precioProd, setPrecioProd] = useState("");
   const [categoriaProd, setCategoriaProd] = useState("");
@@ -22,7 +20,11 @@ export default function AddProduct() {
   const [descripcionProd, setDescripcionProd] = useState("");
   const [img, setImg] = useState(null);
 
-  const { createProducto, validProductExisting } = useProductos();
+  useEffect(()=>{
+    listarCategoria();
+    setCategoria(listaCategory)
+    console.log(listaCategory);
+  },[])
 
   //Es un objeto con los datos necesario para renderizar la interfaz de los formularios
   const formItemsProduc = [

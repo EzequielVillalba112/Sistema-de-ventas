@@ -1,20 +1,13 @@
 import "./listaCategoria.css";
-import { useState } from "react";
+import PropTypes from "prop-types";
 
-export default function ListaCategoria() {
-  const [categoriaList, setCategoriaList] = useState([
-    { nombre: "Prueba categoria", descripcion: "Prueba descripcion" },
-    { nombre: "Prueba categoria", descripcion: "Prueba descripcion" },
-    { nombre: "Prueba categoria", descripcion: "Prueba descripcion" },
-    { nombre: "Prueba categoria", descripcion: "Prueba descripcion" },
-    { nombre: "Prueba categoria", descripcion: "Prueba descripcion" },
-  ]);
+export default function ListaCategoria({ListaCategoria}) {
 
   return (
     <div className="container-list-categoria">
       <h1>Lista de categorías</h1>
       <ul>
-        {categoriaList.map((categoria, i) => (
+        {ListaCategoria.map((categoria, i) => (
           <li key={i} className="data-list">
             <div className="data">
               <div className="data-item">
@@ -34,3 +27,7 @@ export default function ListaCategoria() {
     </div>
   );
 }
+
+ListaCategoria.propTypes = {
+  ListaCategoria: PropTypes.array.isRequired,
+};
