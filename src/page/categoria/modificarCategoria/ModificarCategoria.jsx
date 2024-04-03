@@ -5,11 +5,17 @@ import BtnGuardEditElim from "../../../components/btnCrud/BtnGuardEditElim";
 import { useEffect, useState } from "react";
 import { useCategory } from "../../../context/CategoryContext";
 import { validCategoria } from "../../../validation/formCategoria/formaCategory.js";
+import { notError, notSuccess } from "../../../components/alert/alert.jsx";
+import Swal from "sweetalert2";
 export default function ModificarCategoria({ closed }) {
-  const nameForm = "Modificar Categoria";
+  const nameForm = "Modificar categoría ";
 
-  const { dataCategoryModific, updateCategoria } = useCategory();
-
+  const {
+    dataCategoryModific,
+    updateCategoria,
+    idCategoryModifi,
+    deleteCategoria,
+  } = useCategory();
 
   const [disabledInput, setDisabledInput] = useState(true);
   const [nombreCAtegoria, setNombreCAtegoria] = useState("");
@@ -47,11 +53,62 @@ export default function ModificarCategoria({ closed }) {
   const modifiCategoria = async () => {
     const validForm = validCategoria(nombreCAtegoria);
 
-   
+    if (validForm == null) {
+      try {
+        const res = await updateCategoria({
+          nombreCategoria: nombreCAtegoria,
+          descripcion: descripcion,
+          idCategory: idCategoryModifi,
+        });
+        if (res) {
+          notSuccess("Categoría modificada");
+          closed(false);
+        }
+      } catch (error) {
+        console.error("Error al modifica categoria: ", error);
+      }
+    } else {
+      notError(validForm);
+    }
   };
 
-  const deleteCategoria = () => {
-    console.log("Delete");
+  const deletCategoria = () => {
+    try {
+      Swal.fire({
+        title: "Desea eliminar esta categoría ",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Si",
+        denyButtonText: `no`,
+        confirmButtonColor: "#29C716",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const resultado = await deleteCategoria(idCategoryModifi);
+
+          if (resultado === "Categoría  eliminado") {
+            Swal.fire({
+              title: "Categoría  Eliminado Correctamente",
+              icon: "success",
+              confirmButtonColor: "#29C716",
+            }).then((result)=>{
+              if(result.isConfirmed){
+                window.location.reload();
+              }
+            });
+
+            closed(false);
+          }
+        } else if (result.isDenied) {
+          Swal.fire({
+            title: "No se elimino ninguna categoría",
+            icon: "info",
+            confirmButtonColor: "#29C716",
+          });
+        }
+      });
+    } catch (error) {
+      console.error("Error al ejecutar la promesa:", error);
+    }
   };
 
   return (
@@ -70,7 +127,7 @@ export default function ModificarCategoria({ closed }) {
           enableInput={setDisabledInput}
           closed={closed}
           saved={modifiCategoria}
-          eliminar={deleteCategoria}
+          eliminar={deletCategoria}
         />
       </div>
     </div>

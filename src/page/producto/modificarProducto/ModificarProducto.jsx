@@ -153,7 +153,7 @@ export default function ModificarProducto({ closed }) {
 
     if (validationForm === null) {
       const formData = new FormData();
-      console.log(img);
+      
       if (img) {
         formData.append("file", img);
       }
@@ -175,7 +175,7 @@ export default function ModificarProducto({ closed }) {
   
         }
       } catch (error) {
-        console.error("Error al crear producto:", error);
+        console.error("Error al modificar producto:", error);
       }
     } else {
       notError(validationForm);

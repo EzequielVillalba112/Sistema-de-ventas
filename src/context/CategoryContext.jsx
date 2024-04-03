@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   addCategory,
+  deleteCategory,
   listCategory,
   searchCategory,
   updateCategory,
@@ -63,8 +64,9 @@ export function CategoryProvider({ children }) {
   };
 
   const updateCategoria = async (categoria) => {
+    console.log(categoria);
     try {
-      const res = await updateCategory(categoria.body);
+      const res = await updateCategory(categoria);
       if (res.statusText === "OK") {
         return true;
       } else {
@@ -76,10 +78,29 @@ export function CategoryProvider({ children }) {
     }
   };
 
-  useEffect(() => {
-    setIdCategoryModifi("");
-    setDataCategoryModific([]);
-  }, [modifiCategoryInterfaz == false]);
+  const deleteCategoria = async (id) => {
+    try {
+      if (id != "") {
+        const res = await deleteCategory(id);
+        if (res.status === 200) {
+          // Verifica el código de estado de la respuesta
+          return "Categoria eliminado";
+        } else {
+          console.error(
+            "No se pudo eliminar la categoria. Código de estado:",
+            res.status
+          );
+          return false;
+        }
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        return { error: error.response.data.error, status: 400 };
+      } else {
+        return { error: error.message, status: 400 };
+      }
+    }
+  };
 
   useEffect(() => {
     async function dataCategory() {
@@ -119,7 +140,9 @@ export function CategoryProvider({ children }) {
         setModifiCategoryInterfaz,
         modifiCategoryInterface,
         dataCategoryModific,
-        updateCategoria
+        updateCategoria,
+        idCategoryModifi,
+        deleteCategoria
       }}
     >
       {children}
