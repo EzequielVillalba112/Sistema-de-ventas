@@ -4,19 +4,21 @@ import FormInputs from "../../../components/FormInputs/FormINputs";
 import BtnGuardEditElim from "../../../components/btnCrud/BtnGuardEditElim";
 import { useEffect, useState } from "react";
 import { useCategory } from "../../../context/CategoryContext";
+import { validCategoria } from "../../../validation/formCategoria/formaCategory.js";
 export default function ModificarCategoria({ closed }) {
   const nameForm = "Modificar Categoria";
 
-  const { dataCategoryModific } = useCategory();
+  const { dataCategoryModific, updateCategoria } = useCategory();
+
+
+  const [disabledInput, setDisabledInput] = useState(true);
+  const [nombreCAtegoria, setNombreCAtegoria] = useState("");
+  const [descripcion, setDescripcion] = useState("");
 
   useEffect(() => {
     setNombreCAtegoria(dataCategoryModific.nombre || "");
     setDescripcion(dataCategoryModific.descripcion || "");
   }, [dataCategoryModific]);
-
-  const [disabledInput, setDisabledInput] = useState(true);
-  const [nombreCAtegoria, setNombreCAtegoria] = useState("");
-  const [descripcion, setDescripcion] = useState("");
 
   const formItemsCategoria = [
     {
@@ -42,8 +44,10 @@ export default function ModificarCategoria({ closed }) {
     },
   ];
 
-  const updateCategoria = () => {
-    console.log("update");
+  const modifiCategoria = async () => {
+    const validForm = validCategoria(nombreCAtegoria);
+
+   
   };
 
   const deleteCategoria = () => {
@@ -65,7 +69,7 @@ export default function ModificarCategoria({ closed }) {
         <BtnGuardEditElim
           enableInput={setDisabledInput}
           closed={closed}
-          saved={updateCategoria}
+          saved={modifiCategoria}
           eliminar={deleteCategoria}
         />
       </div>

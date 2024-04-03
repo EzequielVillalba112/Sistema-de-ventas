@@ -82,7 +82,6 @@ export function ProductoProvider({ children }) {
   };
   //Modifica los datos del producto
   const updateProduct = async (product) => {
-    console.log(product.body);
     try {
       const res = await updateProducto(product.body);
       if (res.statusText === "OK") {

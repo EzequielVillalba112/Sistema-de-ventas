@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { addCategory, listCategory, searchCategory } from "../api/category";
+import {
+  addCategory,
+  listCategory,
+  searchCategory,
+  updateCategory,
+} from "../api/category";
 
 const CategoriContext = React.createContext();
 
@@ -52,21 +57,35 @@ export function CategoryProvider({ children }) {
     }
   };
 
-  const modifiCategoryInterface = (id) =>{
+  const modifiCategoryInterface = (id) => {
     setIdCategoryModifi(id);
-    setModifiCategoryInterfaz(true)
-  }
+    setModifiCategoryInterfaz(true);
+  };
 
-  useEffect(()=>{
-    setIdCategoryModifi("")
-    setDataCategoryModific([])
-  }, [modifiCategoryInterfaz == false])
+  const updateCategoria = async (categoria) => {
+    try {
+      const res = await updateCategory(categoria.body);
+      if (res.statusText === "OK") {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al modificar categoria:", error);
+      return false;
+    }
+  };
 
-  useEffect(()=>{
-    async function dataCategory(){
+  useEffect(() => {
+    setIdCategoryModifi("");
+    setDataCategoryModific([]);
+  }, [modifiCategoryInterfaz == false]);
+
+  useEffect(() => {
+    async function dataCategory() {
       const validCategory = idCategoryModifi !== "" && modifiCategoryInterfaz;
-      
-      if(validCategory){
+
+      if (validCategory) {
         try {
           const res = await searchCategory(idCategoryModifi);
           if (res.status === 200) {
@@ -83,7 +102,7 @@ export function CategoryProvider({ children }) {
       }
     }
     dataCategory();
-  },[idCategoryModifi, modifiCategoryInterfaz])
+  }, [idCategoryModifi, modifiCategoryInterfaz]);
 
   useEffect(() => {
     listarCategoria();
@@ -99,7 +118,8 @@ export function CategoryProvider({ children }) {
         modifiCategoryInterfaz,
         setModifiCategoryInterfaz,
         modifiCategoryInterface,
-        dataCategoryModific
+        dataCategoryModific,
+        updateCategoria
       }}
     >
       {children}
