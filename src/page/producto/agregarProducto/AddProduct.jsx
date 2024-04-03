@@ -7,11 +7,11 @@ import { useCategory } from "../../../context/CategoryContext.jsx";
 
 export default function AddProduct() {
   const { createProducto, validProductExisting } = useProductos();
-  const {listaCategory, listarCategoria} = useCategory()
+  const { listaCategory, listarCategoria } = useCategory();
 
   const nameForm = "Agregar Producto";
 
-  const [categoria, setCategoria] = useState([]);
+  const [categoria, setCategoria] = useState(listaCategory);
   const [nombreProd, setNombreProd] = useState("");
   const [precioProd, setPrecioProd] = useState("");
   const [categoriaProd, setCategoriaProd] = useState("");
@@ -20,10 +20,9 @@ export default function AddProduct() {
   const [descripcionProd, setDescripcionProd] = useState("");
   const [img, setImg] = useState(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     listarCategoria();
-    setCategoria(listaCategory);
-  },[])
+  }, []);
 
   //Es un objeto con los datos necesario para renderizar la interfaz de los formularios
   const formItemsProduc = [
@@ -125,7 +124,7 @@ export default function AddProduct() {
   ];
 
   const guardarProdu = async () => {
-    //Valida que todos los campos necesarios no esten vacios 
+    //Valida que todos los campos necesarios no esten vacios
     const validationForm = validFormProduct(
       nombreProd,
       precioProd,
@@ -165,10 +164,9 @@ export default function AddProduct() {
         } catch (error) {
           console.error("Error al crear producto:", error);
         }
-      } else{
-        notError(resValidExisting.error)
+      } else {
+        notError(resValidExisting.error);
       }
-    
     } else {
       notError(validationForm);
     }

@@ -43,8 +43,9 @@ export default function FormInputs({ nameForm, formItems, saved = "" }) {
                       value={input.value}
                       disabled={input.disabled}
                     >
+                      {input.value != "" ? (<option>{input.value}</option>):(<option>Selecionar</option>)}
                       {input.option.map((opt, i) => (
-                        <option key={i} value={opt}>
+                        <option key={i} value={opt.nombre}>
                           {opt.nombre}
                         </option>
                       ))}

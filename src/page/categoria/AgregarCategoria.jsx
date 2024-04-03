@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListaCategoria from "../../components/categoria/listar-categoria/ListaCategoria";
 import FormInputs from "../../components/FormInputs/FormINputs";
 import { useCategory } from "../../context/CategoryContext";
 import { notError, notSuccess } from "../../components/alert/alert";
 import { validCategoria } from "../../validation/formCategoria/formaCategory";
+import ModificarCategoria from "./modificarCategoria/ModificarCategoria";
 
 export default function AgregarCategoria() {
-  const { listaCategory, addCategoria } = useCategory();
+  const {
+    listaCategory,
+    addCategoria,
+    modifiCategoryInterfaz,
+    setModifiCategoryInterfaz,
+    //func para poder cambiar la vista a modifi categoria
+    modifiCategoryInterface,
+  } = useCategory();
 
   const nameForm = "categoría";
 
@@ -54,24 +62,34 @@ export default function AgregarCategoria() {
       } else {
         notError("Categoria");
       }
-    }else{
+    } else {
       notError(validarCategoria);
     }
   };
 
   return (
     <>
-      <div className="container-form">
-        <FormInputs
-          nameForm={nameForm}
-          formItems={formItemsCategoria}
-          saved={guardarCategoria}
-        />
-      </div>
-
-      <div className="container-form">
-        <ListaCategoria ListaCategoria={listaCategory} />
-      </div>
+      {modifiCategoryInterfaz ? (
+        <div className="container-form">
+          <ModificarCategoria closed={setModifiCategoryInterfaz} />
+        </div>
+      ) : (
+        <>
+          <div className="container-form">
+            <FormInputs
+              nameForm={nameForm}
+              formItems={formItemsCategoria}
+              saved={guardarCategoria}
+            />
+          </div>
+          <div className="container-form">
+            <ListaCategoria
+              ListaCategoria={listaCategory}
+              detail={modifiCategoryInterface}
+            />
+          </div>
+        </>
+      )}
     </>
   );
 }

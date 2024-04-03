@@ -2,7 +2,7 @@ import Loader from "../../loader/Loader";
 import "./listaCategoria.css";
 import PropTypes from "prop-types";
 
-export default function ListaCategoria({ ListaCategoria }) {
+export default function ListaCategoria({ ListaCategoria, detail }) {
   return (
     <div className="container-list-categoria">
       <h1>Lista de categorías</h1>
@@ -22,7 +22,14 @@ export default function ListaCategoria({ ListaCategoria }) {
                 </div>
               </div>
 
-              <button className="btn-detalles">Detalles</button>
+              <button
+                className="btn-detalles"
+                onClick={() => {
+                  detail(categoria.id_categoria);
+                }}
+              >
+                Detalles
+              </button>
             </li>
           ))}
         </ul>
@@ -35,4 +42,5 @@ export default function ListaCategoria({ ListaCategoria }) {
 
 ListaCategoria.propTypes = {
   ListaCategoria: PropTypes.array.isRequired,
+  detail: PropTypes.func.isRequired,
 };

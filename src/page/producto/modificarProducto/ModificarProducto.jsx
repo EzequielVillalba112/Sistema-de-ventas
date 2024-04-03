@@ -8,6 +8,7 @@ import { IoCloseSharp } from "react-icons/io5";
 import { validFormProduct } from "../../../validation/formProducto/formProductoVal";
 import { notError, notSuccess } from "../../../components/alert/alert";
 import Swal from "sweetalert2";
+import { useCategory } from "../../../context/CategoryContext";
 
 export default function ModificarProducto({ closed }) {
   const nameForm = "Modificar Producto";
@@ -20,9 +21,12 @@ export default function ModificarProducto({ closed }) {
     desactivateProduct,
   } = useProductos();
 
+  const {listaCategory, listarCategoria} = useCategory();
+
   const [nombreProd, setNombreProd] = useState("");
   const [precioProd, setPrecioProd] = useState("");
   const [categoriaProd, setCategoriaProd] = useState("");
+  const [categoriaOption, setCategoriaOption] = useState([])
   const [stockProd, setStockProd] = useState("");
   const [codBarProd, setCodBarProd] = useState("");
   const [descripcionProd, setDescripcionProd] = useState("");
@@ -31,6 +35,11 @@ export default function ModificarProducto({ closed }) {
   const [dependencia, setDependencia] = useState("");
 
   const [disabledInput, setDisabledInput] = useState(true);
+
+  useEffect(()=>{
+    listarCategoria();
+    setCategoriaOption(listaCategory);
+  },[])
 
   useEffect(() => {
     setNombreProd(dataProductModifi.nombre_prod || "");
@@ -74,7 +83,7 @@ export default function ModificarProducto({ closed }) {
         {
           nameInput: "Categoria",
           type: "select",
-          option: ["Categoria", "Lacteos", "Alcohol", "Higiene", "Prueba"],
+          option: categoriaOption,
           onchange: setCategoriaProd,
           value: categoriaProd,
           onKeyDown: "",
@@ -249,16 +258,16 @@ export default function ModificarProducto({ closed }) {
   };
 
   return (
-    <div className="container-modificar-producto">
+    <div className="container-modificar">
       <button
-        className="btn-cerrar-modifi-produ"
+        className="btn-cerrar-modifi"
         onClick={() => {
           closed(false);
         }}
       >
         <IoCloseSharp color="#ffff" size="1.5rem" />
       </button>
-      <div className="modific-product">
+      <div className="modific">
         <FormInputs nameForm={nameForm} formItems={formItemsProduc} />
         <BtnGuardEditElim
           enableInput={setDisabledInput}
