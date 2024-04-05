@@ -3,29 +3,56 @@ import { useProductos } from "../../context/ProductoContext";
 import "./buscador.css";
 import PropTypes from "prop-types";
 import { notSearchFalse } from "../alert/alert";
+import { useCliente } from "../../context/ClienteContext";
 
 //resibe los valores para renderizar el input del buscador
-export default function Buscador({ search = [], placeholder, status }) {
+export default function Buscador({
+  search = [],
+  placeholder,
+  status,
+  nameTabSearch,
+}) {
   const { listProductAct, listProductDesac } = useProductos();
+  const { allClienteAct, allClienteDes } = useCliente();
   const [inputSearch, setInputSearch] = useState("");
 
-  const searchDate = () => {
+  const searchDate = async () => {
     if (inputSearch !== "") {
       const query = inputSearch.toLowerCase();
       //Verfica en que lista de producto tiene que realizar la busqueda
-      const productList = status ? listProductAct : listProductDesac;
 
-      const resultados = productList.filter(
-        (producto) =>
-          producto.nombre_prod.toLowerCase().includes(query) ||
-          producto.cod_barra == inputSearch
-      );
+      if (nameTabSearch == "Cliente") {
+        const listCliente = status
+          ? await allClienteAct()
+          : await allClienteDes();
 
-      if (resultados.length === 0) {
-        //Llama a la notificacion de error
-        notSearchFalse("producto");
-      } else {
-        return search(resultados);
+        const resultados = listCliente.filter(
+          (cliente) =>
+            cliente.nombre_cliente.toLowerCase().includes(query) ||
+            cliente.apellido_cliente.toLowerCase().includes(query)
+        );
+
+        if (resultados.length === 0) {
+          //Llama a la notificacion de error
+          notSearchFalse("cliente");
+        } else {
+          return search(resultados);
+        }
+      } else if (nameTabSearch == "Producto") {
+        const productList = status ? listProductAct : listProductDesac;
+
+        const resultados = productList.filter(
+          (producto) =>
+            producto.nombre_prod.toLowerCase().includes(query) ||
+            producto.cod_barra == inputSearch
+        );
+
+        if (resultados.length === 0) {
+          //Llama a la notificacion de error
+          notSearchFalse("producto");
+        } else {
+          return search(resultados);
+        }
       }
     }
   };
@@ -63,4 +90,5 @@ Buscador.propTypes = {
   search: PropTypes.func.isRequired,
   placeholder: PropTypes.string.isRequired,
   status: PropTypes.bool.isRequired,
+  nameTabSearch: PropTypes.string.isRequired,
 };

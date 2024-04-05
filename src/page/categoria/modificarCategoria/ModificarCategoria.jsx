@@ -1,12 +1,10 @@
 import PropTypes from "prop-types";
-import { IoCloseSharp } from "react-icons/io5";
-import FormInputs from "../../../components/FormInputs/FormINputs";
-import BtnGuardEditElim from "../../../components/btnCrud/BtnGuardEditElim";
 import { useEffect, useState } from "react";
 import { useCategory } from "../../../context/CategoryContext";
 import { validCategoria } from "../../../validation/formCategoria/formaCategory.js";
 import { notError, notSuccess } from "../../../components/alert/alert.jsx";
 import Swal from "sweetalert2";
+import FormModificar from "../../../components/formModificar/FormModificar.jsx";
 export default function ModificarCategoria({ closed }) {
   const nameForm = "Modificar categoría ";
 
@@ -90,8 +88,8 @@ export default function ModificarCategoria({ closed }) {
               title: "Categoría  Eliminado Correctamente",
               icon: "success",
               confirmButtonColor: "#29C716",
-            }).then((result)=>{
-              if(result.isConfirmed){
+            }).then((result) => {
+              if (result.isConfirmed) {
                 window.location.reload();
               }
             });
@@ -112,25 +110,14 @@ export default function ModificarCategoria({ closed }) {
   };
 
   return (
-    <div className="container-modificar">
-      <button
-        className="btn-cerrar-modifi"
-        onClick={() => {
-          closed(false);
-        }}
-      >
-        <IoCloseSharp color="#ffff" size="1.5rem" />
-      </button>
-      <div className="modific">
-        <FormInputs nameForm={nameForm} formItems={formItemsCategoria} />
-        <BtnGuardEditElim
-          enableInput={setDisabledInput}
-          closed={closed}
-          saved={modifiCategoria}
-          eliminar={deletCategoria}
-        />
-      </div>
-    </div>
+    <FormModificar
+      closed={closed}
+      nameForm={nameForm}
+      formItems={formItemsCategoria}
+      enableInput={setDisabledInput}
+      saved={modifiCategoria}
+      eliminar={deletCategoria}
+    />
   );
 }
 

@@ -1,14 +1,11 @@
 import PropTypes from "prop-types";
 import { useProductos } from "../../../context/ProductoContext";
 import { useEffect, useState } from "react";
-import FormInputs from "../../../components/FormInputs/FormINputs";
-import "./modificarProducto.css";
-import BtnGuardEditElim from "../../../components/btnCrud/BtnGuardEditElim";
-import { IoCloseSharp } from "react-icons/io5";
 import { validFormProduct } from "../../../validation/formProducto/formProductoVal";
 import { notError, notSuccess } from "../../../components/alert/alert";
 import Swal from "sweetalert2";
 import { useCategory } from "../../../context/CategoryContext";
+import FormModificar from "../../../components/formModificar/FormModificar";
 
 export default function ModificarProducto({ closed }) {
   const nameForm = "Modificar Producto";
@@ -21,12 +18,12 @@ export default function ModificarProducto({ closed }) {
     desactivateProduct,
   } = useProductos();
 
-  const {listaCategory, listarCategoria} = useCategory();
+  const { listaCategory, listarCategoria } = useCategory();
 
   const [nombreProd, setNombreProd] = useState("");
   const [precioProd, setPrecioProd] = useState("");
   const [categoriaProd, setCategoriaProd] = useState("");
-  const [categoriaOption, setCategoriaOption] = useState([])
+  const [categoriaOption, setCategoriaOption] = useState([]);
   const [stockProd, setStockProd] = useState("");
   const [codBarProd, setCodBarProd] = useState("");
   const [descripcionProd, setDescripcionProd] = useState("");
@@ -36,10 +33,10 @@ export default function ModificarProducto({ closed }) {
 
   const [disabledInput, setDisabledInput] = useState(true);
 
-  useEffect(()=>{
+  useEffect(() => {
     listarCategoria();
     setCategoriaOption(listaCategory);
-  },[])
+  }, []);
 
   useEffect(() => {
     setNombreProd(dataProductModifi.nombre_prod || "");
@@ -153,7 +150,7 @@ export default function ModificarProducto({ closed }) {
 
     if (validationForm === null) {
       const formData = new FormData();
-      
+
       if (img) {
         formData.append("file", img);
       }
@@ -172,7 +169,6 @@ export default function ModificarProducto({ closed }) {
         if (response) {
           notSuccess("Producto Modificado");
           closed(false);
-  
         }
       } catch (error) {
         console.error("Error al modificar producto:", error);
@@ -200,8 +196,8 @@ export default function ModificarProducto({ closed }) {
               title: "Producto Eliminado Correctamente",
               icon: "success",
               confirmButtonColor: "#29C716",
-            }).then((result)=>{
-              if(result.isConfirmed){
+            }).then((result) => {
+              if (result.isConfirmed) {
                 window.location.reload();
               }
             });
@@ -222,15 +218,15 @@ export default function ModificarProducto({ closed }) {
                 if (result.isConfirmed) {
                   const res = await desactivateProduct(idProductModifi);
 
-                  if(res.status == 200){
+                  if (res.status == 200) {
                     Swal.fire({
                       title: "Producto desactivado Correctamente",
                       icon: "success",
                       confirmButtonColor: "#29C716",
-                    }).then((result)=>{
-                      if (result.isConfirmed){
+                    }).then((result) => {
+                      if (result.isConfirmed) {
                         window.location.reload();
-                        closed(!closed)
+                        closed(!closed);
                       }
                     });
                   }
@@ -258,25 +254,16 @@ export default function ModificarProducto({ closed }) {
   };
 
   return (
-    <div className="container-modificar">
-      <button
-        className="btn-cerrar-modifi"
-        onClick={() => {
-          closed(false);
-        }}
-      >
-        <IoCloseSharp color="#ffff" size="1.5rem" />
-      </button>
-      <div className="modific">
-        <FormInputs nameForm={nameForm} formItems={formItemsProduc} />
-        <BtnGuardEditElim
-          enableInput={setDisabledInput}
-          closed={closed}
-          saved={updateProducto}
-          eliminar={eliminarProducto}
-        />
-      </div>
-    </div>
+    <>
+      <FormModificar
+        closed={closed}
+        nameForm={nameForm}
+        formItems={formItemsProduc}
+        enableInput={setDisabledInput}
+        saved={updateProducto}
+        eliminar={eliminarProducto}
+      />
+    </>
   );
 }
 

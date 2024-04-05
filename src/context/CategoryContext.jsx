@@ -13,7 +13,7 @@ const CategoriContext = React.createContext();
 export const useCategory = () => {
   const context = React.useContext(CategoriContext);
   if (!context) {
-    throw new Error("useContexr debe usarse dentro de un CategoryProvider");
+    throw new Error("useContext debe usarse dentro de un CategoryProvider");
   }
   return context;
 };

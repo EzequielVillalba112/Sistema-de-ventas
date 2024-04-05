@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ListaCategoria from "../../components/categoria/listar-categoria/ListaCategoria";
 import FormInputs from "../../components/FormInputs/FormINputs";
 import { useCategory } from "../../context/CategoryContext";

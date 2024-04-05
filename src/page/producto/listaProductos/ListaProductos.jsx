@@ -52,6 +52,7 @@ export default function ListaProductos() {
             search={setResultSearch}
             placeholder={"Buscar por nombre de producto o cod. barra"}
             status={productActDesc}
+            nameTabSearch={nameTabSearch}
           />
           <ProductoActDesc submit={submitAct} name={nameTabSearch} />
           <div className="lista-productos">

@@ -1,9 +1,14 @@
 import { useState } from "react";
 import FormInputs from "../../../components/FormInputs/FormINputs";
+import { validCliente } from "../../../validation/formCliente/formClienteVal";
+import { useCliente } from "../../../context/ClienteContext";
+import { notError, notSuccess } from "../../../components/alert/alert";
 
 export default function AgregarCliente() {
   const nameForm = "Agregar Cliente";
   
+  const {addCliente} = useCliente(); 
+
   const [nombreCliente, setNombreCliente] = useState();
   const [apellidoCliente, setApellidoCliente] = useState();
   const [limitCc, setLimitCc] = useState();
@@ -57,7 +62,19 @@ export default function AgregarCliente() {
     }
   ];
 
-  const guardarCliente = () => {alert("Cliente saved")};
+  const guardarCliente = async () => {
+    const validacionCliente = validCliente(nombreCliente, apellidoCliente, limitCc);
+
+    if(validacionCliente == null){
+      const res = await addCliente({nombreCliente, apellidoCliente, limitCc, telefono});
+
+      if (res == true) {
+        notSuccess("Cliente");
+      } else {
+        notError("Cliente");
+      }
+    }
+  };
 
   return (
     <div className="container-form">
