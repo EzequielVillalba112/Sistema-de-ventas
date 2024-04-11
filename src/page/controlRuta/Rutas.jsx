@@ -11,6 +11,7 @@ export default function Rutas() {
             <div className='container-app'>
                 <FeHr />
                 <div className='outlet'>
+                    {/*se utiliza dentro de un componente de ruta padre para indicar dónde deben renderizarse los componentes secundarios asociados con rutas hijas*/}
                     <Outlet />
                 </div>
             </div>
