@@ -14,6 +14,7 @@ export default function AgregarCategoria() {
     setModifiCategoryInterfaz,
     //func para poder cambiar la vista a modifi categoria
     modifiCategoryInterface,
+    validCategoryExisting
   } = useCategory();
 
   const nameForm = "categoría";
@@ -55,13 +56,19 @@ export default function AgregarCategoria() {
     const validarCategoria = validCategoria(nombreCategoria);
 
     if (validarCategoria == null) {
-      const res = await addCategoria({ nombreCategoria, descripcion });
+      const resValidExisting = await validCategoryExisting({nombreCategoria});
+      if(resValidExisting.status == 200){
+        const res = await addCategoria({ nombreCategoria, descripcion });
 
-      if (res == true) {
-        notSuccess("Categoria");
-      } else {
-        notError("Categoria");
+        if (res == true) {
+          notSuccess("Categoria");
+        } else {
+          notError("Categoria");
+        }
+      }else {
+        notError(resValidExisting.error);
       }
+     
     } else {
       notError(validarCategoria);
     }

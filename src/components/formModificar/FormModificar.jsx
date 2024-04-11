@@ -11,6 +11,7 @@ export default function FormModificar({
   enableInput,
   saved,
   eliminar,
+  estado
 }) {
   return (
     <div className="container-modificar">
@@ -29,6 +30,7 @@ export default function FormModificar({
           closed={closed}
           saved={saved}
           eliminar={eliminar}
+          estado={estado}
         />
       </div>
     </div>
@@ -42,4 +44,5 @@ FormModificar.propTypes = {
   enableInput: PropTypes.func.isRequired,
   saved: PropTypes.func.isRequired,
   eliminar: PropTypes.func.isRequired,
+  estado: PropTypes.number
 };

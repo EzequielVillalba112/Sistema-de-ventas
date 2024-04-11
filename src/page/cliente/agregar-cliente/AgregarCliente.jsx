@@ -73,6 +73,8 @@ export default function AgregarCliente() {
       } else {
         notError("Cliente");
       }
+    }else{
+      notError(validacionCliente);
     }
   };
 

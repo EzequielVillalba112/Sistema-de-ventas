@@ -13,10 +13,11 @@ export default function ModificarCategoria({ closed }) {
     updateCategoria,
     idCategoryModifi,
     deleteCategoria,
+    validCategoryExisting
   } = useCategory();
 
   const [disabledInput, setDisabledInput] = useState(true);
-  const [nombreCAtegoria, setNombreCAtegoria] = useState("");
+  const [nombreCategoria, setNombreCAtegoria] = useState("");
   const [descripcion, setDescripcion] = useState("");
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function ModificarCategoria({ closed }) {
           nameInput: "NombreCategoria",
           type: "text",
           placeholder: "Nombre de categoría",
-          value: nombreCAtegoria,
+          value: nombreCategoria,
           onchange: setNombreCAtegoria,
           disabled: disabledInput,
         },
@@ -49,22 +50,29 @@ export default function ModificarCategoria({ closed }) {
   ];
 
   const modifiCategoria = async () => {
-    const validForm = validCategoria(nombreCAtegoria);
+    const validForm = validCategoria(nombreCategoria);
 
     if (validForm == null) {
-      try {
-        const res = await updateCategoria({
-          nombreCategoria: nombreCAtegoria,
-          descripcion: descripcion,
-          idCategory: idCategoryModifi,
-        });
-        if (res) {
-          notSuccess("Categoría modificada");
-          closed(false);
+      const resValid = await validCategoryExisting({nombreCategoria});
+      
+      if(resValid.status == 200) {
+        try {
+          const res = await updateCategoria({
+            nombreCategoria: nombreCategoria,
+            descripcion: descripcion,
+            idCategory: idCategoryModifi,
+          });
+          if (res) {
+            notSuccess("Categoría modificada");
+            closed(false);
+          }
+        } catch (error) {
+          console.error("Error al modifica categoria: ", error);
         }
-      } catch (error) {
-        console.error("Error al modifica categoria: ", error);
+      }else {
+        notError(resValid.error);
       }
+      
     } else {
       notError(validForm);
     }
@@ -82,10 +90,10 @@ export default function ModificarCategoria({ closed }) {
       }).then(async (result) => {
         if (result.isConfirmed) {
           const resultado = await deleteCategoria(idCategoryModifi);
-
-          if (resultado === "Categoría  eliminado") {
+         
+          if (resultado === "Categoria eliminado") {
             Swal.fire({
-              title: "Categoría  Eliminado Correctamente",
+              title: "Categoría Eliminado Correctamente",
               icon: "success",
               confirmButtonColor: "#29C716",
             }).then((result) => {

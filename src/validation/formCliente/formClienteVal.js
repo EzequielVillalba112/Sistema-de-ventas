@@ -1,16 +1,29 @@
-export const validCliente = (nombreCliente, apellidoCliente, limiteCC) =>{
-    const expRegLetras = /^[A-Za-z]+$/;
-    
+export const validCliente = (nombreCliente, apellidoCliente, limiteCC) => {
+    // Constantes para mensajes de error
+    const ERROR_CAMPOS_REQUERIDOS = "¡El campo nombre, apellido y limiteCC son requeridos!";
+    const ERROR_LIMITE_NO_POSITIVO = "El limite debe ser un número positivo";
+    const ERROR_LETRAS_NOMBRE_APELLIDO = "El nombre y apellido deben contener solo letras sin espacios";
+
+    // Validación de campos requeridos
     if (!nombreCliente || !apellidoCliente || !limiteCC) {
-        return "¡El campo nombre, apellido y limiteCC son requerido!";
+        return ERROR_CAMPOS_REQUERIDOS;
     }
 
-    if(isNaN(limiteCC) || limiteCC <= 0){
-        return "El limite debe ser un número positivo";
-    }
-    if (!expRegLetras.test(nombreCliente) || !expRegLetras.test(apellidoCliente)) {
-        return "El nombre y apellido deben contener solo letras";
+    // Validación de limiteCC
+    if (isNaN(limiteCC) || limiteCC <= 0) {
+        return ERROR_LIMITE_NO_POSITIVO;
     }
 
-    return null;
+    // Validación de nombre y apellido
+    if (!esSoloLetras(nombreCliente) || !esSoloLetras(apellidoCliente)) {
+        return ERROR_LETRAS_NOMBRE_APELLIDO;
+    }
+
+    return null; // No hay errores
+}
+
+// Función auxiliar para validar letras
+function esSoloLetras(texto) {
+    const expRegLetras = /^[A-Za-z]+$/;
+    return expRegLetras.test(texto);
 }

@@ -5,6 +5,9 @@ import {
   crearCliente,
   allClienteDesact,
   searchCliente,
+  updateCliente,
+  deleteCliente,
+  desactivateCliente
 } from "../api/cliente";
 
 const ClienteContext = React.createContext();
@@ -23,6 +26,7 @@ export function ClienteProvider({ children }) {
   const [idCliente, setIdCliete] = useState("");
   const [dataClienteModif, setDataClienteModif] = useState([]);
 
+  //Agrega clientes
   const addCliente = async (clienteData) => {
     try {
       const res = await crearCliente(clienteData);
@@ -37,6 +41,7 @@ export function ClienteProvider({ children }) {
     }
   };
 
+  //Trae todos los clientes Activos
   const allClienteAct = async () => {
     try {
       const res = await allCLienteAct();
@@ -47,6 +52,7 @@ export function ClienteProvider({ children }) {
     }
   };
 
+  //Trae todos los clientes Desactivados
   const allClienteDes = async () => {
     try {
       const res = await allClienteDesact();
@@ -57,11 +63,60 @@ export function ClienteProvider({ children }) {
     }
   };
 
+  //Habilita la interfaz para modificar un cliente
   const modificarClienteInterfaz = (id) => {
     setIdCliete(id);
     setModfiClienteInterfaz(true);
   };
+  
+  const updateClienteData = async (clienteData) => {
+    console.log(clienteData);
+    try {
+      const res = await updateCliente(clienteData);
+      if (res.statusText === "OK") {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      console.error("Error al actualizar Cliente: ", error);
+      return false;
+    }
+  }
 
+  const eliminarCliente = async (id) => {
+    console.log(id);
+    try {
+      if(id != "") {
+        const res = await deleteCliente(id);
+        if(res.status === 200) {
+          return "Cliente eliminado";
+        }else{
+          console.error("No se pudo eliminar el cliente. Código de estado:", res.status);
+          return false;
+        }
+      }
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        return { error: error.response.data.error, status: 400 };
+      } else {
+        return { error: error.message, status: 400 };
+      }
+    }
+  }
+
+
+  const desacCliente = async (id) => {
+    try {
+      const res = await desactivateCliente(id);
+      return res;
+    } catch (error) {
+      console.error("Error al desactivar el cliente:", error);
+      throw error;
+    }
+  }
+
+  //Busca un cliente y guarda los datos del cliente
   useEffect(() => {
     const dataCliente = async () => {
       const validCliente = idCliente !== "" && modfiClienteInterfaz;
@@ -94,7 +149,11 @@ export function ClienteProvider({ children }) {
         modificarClienteInterfaz,
         modfiClienteInterfaz,
         setModfiClienteInterfaz,
-        dataClienteModif
+        dataClienteModif,
+        updateClienteData,
+        idCliente,
+        eliminarCliente,
+        desacCliente
       }}
     >
       {children}

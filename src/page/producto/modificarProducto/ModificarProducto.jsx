@@ -16,6 +16,7 @@ export default function ModificarProducto({ closed }) {
     updateProduct,
     deleteProduct,
     desactivateProduct,
+    validProductExisting
   } = useProductos();
 
   const { listaCategory, listarCategoria } = useCategory();
@@ -149,30 +150,40 @@ export default function ModificarProducto({ closed }) {
     );
 
     if (validationForm === null) {
-      const formData = new FormData();
+      const resValidExisting = await validProductExisting({
+        nombreProd,
+        codBarProd,
+      });
 
-      if (img) {
-        formData.append("file", img);
-      }
-      formData.append("nombre", nombreProd);
-      formData.append("precio", precioProd);
-      formData.append("categoria", categoriaProd);
-      formData.append("stock", stockProd);
-      formData.append("codBarra", codBarProd);
-      formData.append("descripcion", descripcionProd);
-      formData.append("id", idProductModifi);
-      formData.append("urlImg", urlImg);
-      formData.append("dependencia", dependencia);
-
-      try {
-        const response = await updateProduct({ body: formData });
-        if (response) {
-          notSuccess("Producto Modificado");
-          closed(false);
+      if(resValidExisting.status == 200){
+        const formData = new FormData();
+        
+        if (img) {
+          formData.append("file", img);
         }
-      } catch (error) {
-        console.error("Error al modificar producto:", error);
+        formData.append("nombre", nombreProd);
+        formData.append("precio", precioProd);
+        formData.append("categoria", categoriaProd);
+        formData.append("stock", stockProd);
+        formData.append("codBarra", codBarProd);
+        formData.append("descripcion", descripcionProd);
+        formData.append("id", idProductModifi);
+        formData.append("urlImg", urlImg);
+        formData.append("dependencia", dependencia);
+
+        try {
+          const response = await updateProduct({ body: formData });
+          if (response) {
+            notSuccess("Producto Modificado");
+            closed(false);
+          }
+        } catch (error) {
+          console.error("Error al modificar producto:", error);
+        }
+      }else{
+        notError(resValidExisting.error);
       }
+
     } else {
       notError(validationForm);
     }
@@ -262,6 +273,7 @@ export default function ModificarProducto({ closed }) {
         enableInput={setDisabledInput}
         saved={updateProducto}
         eliminar={eliminarProducto}
+        estado={dataProductModifi.estado_pro}
       />
     </>
   );

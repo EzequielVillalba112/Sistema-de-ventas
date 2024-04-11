@@ -6,6 +6,7 @@ import {
   listCategory,
   searchCategory,
   updateCategory,
+  validateCategorieExxisten,
 } from "../api/category";
 
 const CategoriContext = React.createContext();
@@ -64,7 +65,6 @@ export function CategoryProvider({ children }) {
   };
 
   const updateCategoria = async (categoria) => {
-    console.log(categoria);
     try {
       const res = await updateCategory(categoria);
       if (res.statusText === "OK") {
@@ -101,6 +101,15 @@ export function CategoryProvider({ children }) {
       }
     }
   };
+
+  const validCategoryExisting = async (dataCategory) =>{
+    try {
+      const res = await validateCategorieExxisten(dataCategory);
+      return res;
+    } catch (error) {
+      return (error.response.data);
+    }
+  }
 
   useEffect(() => {
     async function dataCategory() {
@@ -142,7 +151,8 @@ export function CategoryProvider({ children }) {
         dataCategoryModific,
         updateCategoria,
         idCategoryModifi,
-        deleteCategoria
+        deleteCategoria,
+        validCategoryExisting
       }}
     >
       {children}

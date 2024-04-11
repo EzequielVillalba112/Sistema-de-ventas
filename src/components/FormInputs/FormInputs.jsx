@@ -1,11 +1,9 @@
 import "./formInputs.css";
 import PropTypes from "prop-types";
-export default function FormInputs({ nameForm, formItems, saved = "" }) {
+export default function FormInputs({ nameForm, formItems, saved}) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (saved != "") {
-      saved();
-    }
+    saved();
   };
 
   const handleBarcodeInput = (event) => {
