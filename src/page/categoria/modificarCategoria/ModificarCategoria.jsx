@@ -125,6 +125,7 @@ export default function ModificarCategoria({ closed }) {
       enableInput={setDisabledInput}
       saved={modifiCategoria}
       eliminar={deletCategoria}
+      estado= {0}
     />
   );
 }

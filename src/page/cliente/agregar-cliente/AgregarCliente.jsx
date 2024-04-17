@@ -7,7 +7,7 @@ import { notError, notSuccess } from "../../../components/alert/alert";
 export default function AgregarCliente() {
   const nameForm = "Agregar Cliente";
   
-  const {addCliente} = useCliente(); 
+  const {addCliente, validClienteExisten} = useCliente(); 
 
   const [nombreCliente, setNombreCliente] = useState();
   const [apellidoCliente, setApellidoCliente] = useState();
@@ -66,13 +66,21 @@ export default function AgregarCliente() {
     const validacionCliente = validCliente(nombreCliente, apellidoCliente, limitCc);
 
     if(validacionCliente == null){
-      const res = await addCliente({nombreCliente, apellidoCliente, limitCc, telefono});
 
-      if (res == true) {
-        notSuccess("Cliente");
-      } else {
-        notError("Cliente");
+      const resValidExisting = await validClienteExisten({nombreCliente,apellidoCliente});
+
+      if(resValidExisting.status == 200){
+        const res = await addCliente({nombreCliente, apellidoCliente, limitCc, telefono});
+
+        if (res == true) {
+          notSuccess("Cliente");
+        } else {
+          notError("Cliente");
+        }
+      }else{
+        notError(resValidExisting.error);
       }
+      
     }else{
       notError(validacionCliente);
     }

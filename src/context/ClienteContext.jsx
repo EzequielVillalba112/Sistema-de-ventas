@@ -7,7 +7,8 @@ import {
   searchCliente,
   updateCliente,
   deleteCliente,
-  desactivateCliente
+  desactivateCliente,
+  validateClienteExisting
 } from "../api/cliente";
 
 const ClienteContext = React.createContext();
@@ -105,7 +106,6 @@ export function ClienteProvider({ children }) {
     }
   }
 
-
   const desacCliente = async (id) => {
     try {
       const res = await desactivateCliente(id);
@@ -113,6 +113,15 @@ export function ClienteProvider({ children }) {
     } catch (error) {
       console.error("Error al desactivar el cliente:", error);
       throw error;
+    }
+  }
+
+  const validClienteExisten = async (dataClient) => {
+    try {
+      const res = await validateClienteExisting(dataClient);
+      return res;
+    } catch (error) {
+      return (error.response.data);
     }
   }
 
@@ -153,7 +162,8 @@ export function ClienteProvider({ children }) {
         updateClienteData,
         idCliente,
         eliminarCliente,
-        desacCliente
+        desacCliente,
+        validClienteExisten
       }}
     >
       {children}

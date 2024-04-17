@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 export default function ModificarCliente({ closed }) {
   const nameForm = "Modificar Cliente ";
 
-  const {dataClienteModif, updateClienteData, idCliente, eliminarCliente, desacCliente} = useCliente();
+  const {dataClienteModif, updateClienteData, idCliente, eliminarCliente, desacCliente, validClienteExisten} = useCliente();
 
   const [nombreCliente, setNombreCliente] = useState("");
   const [apellidoCliente, setApellidoCliente] = useState("");
@@ -74,22 +74,29 @@ export default function ModificarCliente({ closed }) {
     const validForm = validCliente(nombreCliente, apellidoCliente, limitCc);
 
     if(validForm == null){
-      try {
-        const res = await updateClienteData({
-          nombreCliente: nombreCliente,
-          apellidoCliente: apellidoCliente,
-          limitCc: limitCc,
-          telefono: telefono,
-          idCliente: idCliente
-        });
+      const resValidExisting = await validClienteExisten({nombreCliente,apellidoCliente});
 
-        if(res){
-          notSuccess("Cliente Modificado");
-          closed(false);
+      if(resValidExisting.status == 200){
+        try {
+          const res = await updateClienteData({
+            nombreCliente: nombreCliente,
+            apellidoCliente: apellidoCliente,
+            limitCc: limitCc,
+            telefono: telefono,
+            idCliente: idCliente
+          });
+  
+          if(res){
+            notSuccess("Cliente Modificado");
+            closed(false);
+          }
+        } catch (error) {
+          console.error("Error al modificar cliente:", error);
         }
-      } catch (error) {
-        console.error("Error al modificar cliente:", error);
+      }else{
+        notError(resValidExisting.error);
       }
+
     }else{
       notError(validForm);
     }
