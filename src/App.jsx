@@ -12,6 +12,7 @@ import AgregarUsuario from "./page/usuarios/agregar-usuario/AgregarUsuario";
 import { ProductoProvider } from "./context/ProductoContext";
 import { CategoryProvider } from "./context/CategoryContext";
 import { ClienteProvider } from "./context/ClienteContext";
+import Carrito from "./page/carrito/Carrito";
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
 
                   {/*Usuario armar Context */}
                   <Route path="agregarUsuario" element={<AgregarUsuario />} />
+
+                  <Route path="carrito" element={<Carrito/>}/>
                 </Route>
               </Routes>
             </BrowserRouter>
