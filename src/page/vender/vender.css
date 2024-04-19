@@ -1,0 +1,66 @@
+.container-vender{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    border-radius: 10px;
+    height: max-content;
+    background-color: #cfcfcf;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+}
+
+.lista-produc_venta{
+    width: 90%;
+    height: 58vh;
+    background-color: #999999;
+    padding: 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffff;
+    overflow: auto;
+}
+
+.lista-produc_venta ul{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    height: 100%;
+    padding-top: 10px;
+}
+
+.lista-produc_venta li {
+    background-color: #ffff;
+    width: 100%;
+    padding: 10px;
+}
+
+.btn-add_carrito{
+    border-style: none;
+    background-color: #09a730;
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-add_carrito:hover{
+    background-color: #04b430;
+}
+
+.data-item input{
+    width: 40px;
+    height: 20px;
+    gap: 20px;
+    border-style: none;
+    border-radius: 6px;
+    background-color: #4b4b4b;
+    color: #ffff;
+    text-align: center;
+    margin-left: 20px;
+}

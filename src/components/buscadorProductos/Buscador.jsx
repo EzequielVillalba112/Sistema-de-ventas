@@ -51,6 +51,7 @@ export default function Buscador({
           //Llama a la notificacion de error
           notSearchFalse("producto");
         } else {
+          
           return search(resultados);
         }
       }
