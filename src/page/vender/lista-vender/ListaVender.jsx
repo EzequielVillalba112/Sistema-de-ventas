@@ -2,11 +2,13 @@ import PropTypes from "prop-types";
 import { useProductos } from "../../../context/ProductoContext";
 import { useEffect, useState } from "react";
 import { MdAddShoppingCart } from "react-icons/md";
-import { addCarrito, limitStock } from "../../../components/alert/alert";
+import { addCarrito, limitStock, notError } from "../../../components/alert/alert";
+import { useCarrito } from "../../../context/CarritoContext";
 export default function ListaVender({ productList, listSearch }) {
   const { urlImgProduct } = useProductos();
   const [list, setList] = useState([]);
   const [cantidadProducto, setCantidadProducto] = useState(1);
+  const { productCarrito, setProductCarrito, addProductCarrito } = useCarrito();
 
   useEffect(() => {
     if (listSearch.length == 0) {
@@ -20,13 +22,20 @@ export default function ListaVender({ productList, listSearch }) {
     const stock = dataProduct.stock - cantidadProducto;
 
     if (stock < 0) {
-        limitStock();
-        setCantidadProducto(1);
-        return;
-    }else{
+      limitStock();
+      setCantidadProducto(1);
+      return;
+    } else {
+      const res = addProductCarrito(dataProduct.id_producto, cantidadProducto);
+
+      if (res == true) {
         addCarrito();
         setCantidadProducto(1);
-        return
+        return;
+      }else{
+        notError(res);
+        return;
+      }
     }
   };
 

@@ -7,11 +7,11 @@ import { useCategory } from "../../../context/CategoryContext.jsx";
 
 export default function AddProduct() {
   const { createProducto, validProductExisting } = useProductos();
-  const { listaCategory, listarCategoria } = useCategory();
+  const { listarCategoria } = useCategory();
 
   const nameForm = "Agregar Producto";
 
-  const [categoria, setCategoria] = useState(listaCategory);
+  const [categoria, setCategoria] = useState([]);
   const [nombreProd, setNombreProd] = useState("");
   const [precioProd, setPrecioProd] = useState("");
   const [categoriaProd, setCategoriaProd] = useState("");
@@ -21,8 +21,13 @@ export default function AddProduct() {
   const [img, setImg] = useState(null);
 
   useEffect(() => {
-    listarCategoria();
-  }, []);
+    const listCategory = async () => {
+      const res = await listarCategoria();
+      setCategoria(res);
+    };
+
+    listCategory();
+  }, [categoria.length == 0]);
 
   //Es un objeto con los datos necesario para renderizar la interfaz de los formularios
   const formItemsProduc = [
@@ -174,7 +179,6 @@ export default function AddProduct() {
 
   //limpia los input una vez realizada la accion
   const clear = () => {
-    setCategoria(["Categoria", "Lacteos", "Alcohol", "Higiene", "Prueba"]);
     setNombreProd("");
     setPrecioProd("");
     setStockProd("");

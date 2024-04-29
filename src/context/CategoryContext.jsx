@@ -34,7 +34,7 @@ export function CategoryProvider({ children }) {
 
       if (res.statusText === "OK") {
         setListaCategory(res.data);
-        return res.statusText;
+        return res.data;
       } else {
         return false;
       }
@@ -135,9 +135,8 @@ export function CategoryProvider({ children }) {
   }, [idCategoryModifi, modifiCategoryInterfaz]);
 
   useEffect(() => {
-    listarCategoria();
-  }, []);
-
+    listarCategoria()
+  },[])
   return (
     <CategoriContext.Provider
       value={{

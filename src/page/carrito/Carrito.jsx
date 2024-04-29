@@ -4,19 +4,27 @@ import { useCarrito } from "../../context/CarritoContext";
 import "./carrito.css";
 import { IoCloseSharp } from "react-icons/io5";
 import FormClienteVenta from "../../components/formClienteVenta/FormClienteVenta";
+import ListProductCarrito from "../../components/listaProductCarrito/ListProductCarrito";
 
 export default function Carrito() {
   const nameTabSearch = "Cliente";
-  const { actCarrito, setActCarrito, fechaVenta, dataClientSelect, setDataClientSelect } = useCarrito();
+  const {
+    actCarrito,
+    setActCarrito,
+    fechaVenta,
+    dataClientSelect,
+    setDataClientSelect,
+    productCarrito,
+    total
+  } = useCarrito();
   const [resultSearch, setResultSearch] = useState([]);
   const [inputSearch, setInputSearch] = useState("");
-  
+
   const selectClient = (data) => {
     setDataClientSelect(data);
-    setResultSearch([])
+    setResultSearch([]);
   };
 
-  
   return (
     <div className="container-carrito">
       <button
@@ -61,7 +69,19 @@ export default function Carrito() {
           )}
         </div>
 
-        <FormClienteVenta dataCliente={dataClientSelect} limpiarData={setDataClientSelect}/>
+        <FormClienteVenta
+          dataCliente={dataClientSelect}
+          limpiarData={setDataClientSelect}
+        />
+      </div>
+      <div className="lista-product_carrito">
+        <ListProductCarrito productCarrito={productCarrito} />
+      </div>
+      <div className="totalProducCarrito">
+        <div className="data-total">
+          <h3>Total: </h3>
+          <p>${total}</p>
+        </div>
       </div>
     </div>
   );

@@ -19,11 +19,6 @@ export const notSuccess = (message) => {
       text: message + " correctamente",
       icon: "success",
       confirmButtonText: "Aceptar",
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
-        window.location.reload();
-      }
     });
 };
 

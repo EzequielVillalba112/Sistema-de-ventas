@@ -14,7 +14,6 @@ export default function FormClienteVenta({ dataCliente, limpiarData }) {
     setLimitCc(dataCliente.limite_cc || "");
   }, [dataCliente]);
 
-  console.log(nombreCliente);
   return (
     <div className="container-form-cliente_cc">
       <div className="input-data">

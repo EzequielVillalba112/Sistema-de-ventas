@@ -6,6 +6,7 @@
     background-color: rgba(15, 15, 15, 0.897);
     z-index: 100;
     color: #fff;
+    overflow: auto;
 }
 
 .btn-cerrar-carrito{
@@ -99,5 +100,53 @@
     background-color: #6496d6;
     color: #fff;
     cursor: pointer;
+    border-radius: 6px;
+}
+
+.lista-product_carrito{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    border-radius: 10px;
+    height: max-content;
+    background-color: #1a1a1a;
+    flex-direction: column;
+    padding: 10px;
+    height: 500px;
+    overflow: auto;
+}
+
+.totalProducCarrito{
+    width: 95%;
+    height: 50px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin: 10px auto;
+    border-radius: 10px;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+.data-total{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #333333;
+    margin-right: 50px;
+}
+
+.data-total p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    width: 150px;
+    height: 30px;
+    background-color: #1a1a1a;
+    color: #fff;
     border-radius: 6px;
 }

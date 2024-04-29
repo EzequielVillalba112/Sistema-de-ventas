@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 import "moment/locale/es";
+import { useProductos } from "./ProductoContext";
 
 const CarritoContext = React.createContext();
 
@@ -21,6 +22,28 @@ export function CarritoProvider({ children }) {
   );
   const [productCarrito, setProductCarrito] = useState([]);
   const [dataClientSelect, setDataClientSelect] = useState([]);
+  const [total, setTotal] = useState(0);
+
+  const {listProductAct} = useProductos();
+
+  const addProductCarrito = (idProduct, cantidadProducto) => {
+    const check = productCarrito.every(item => {
+        return item.id_producto !== idProduct;
+    })
+    
+    if(check){
+      const data = listProductAct.filter(producto => {
+        return producto.id_producto === idProduct;
+      })
+
+      const dataProduct ={...data[0], cantidad:cantidadProducto}
+
+      setProductCarrito([...productCarrito, dataProduct]);
+      return true;
+    }else{
+      return "El producto ya se encuentra añadido al carrito";
+    }
+  }
 
   return (
     <CarritoContext.Provider
@@ -32,7 +55,10 @@ export function CarritoProvider({ children }) {
         productCarrito,
         setProductCarrito,
         dataClientSelect,
-        setDataClientSelect
+        setDataClientSelect,
+        addProductCarrito,
+        setTotal,
+        total
       }}
     >
       {children}
