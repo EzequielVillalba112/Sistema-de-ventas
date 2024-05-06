@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import Buscador from "../../components/buscadorProductos/Buscador";
 import { useCarrito } from "../../context/CarritoContext";
 import "./carrito.css";
 import { IoCloseSharp } from "react-icons/io5";
 import FormClienteVenta from "../../components/formClienteVenta/FormClienteVenta";
 import ListProductCarrito from "../../components/listaProductCarrito/ListProductCarrito";
+import BtnVenta from "../../components/btnVenta/BtnVenta";
 
 export default function Carrito() {
   const nameTabSearch = "Cliente";
@@ -14,7 +15,6 @@ export default function Carrito() {
     fechaVenta,
     dataClientSelect,
     setDataClientSelect,
-    productCarrito,
     total
   } = useCarrito();
   const [resultSearch, setResultSearch] = useState([]);
@@ -75,14 +75,15 @@ export default function Carrito() {
         />
       </div>
       <div className="lista-product_carrito">
-        <ListProductCarrito productCarrito={productCarrito} />
+        <ListProductCarrito />
       </div>
-      <div className="totalProducCarrito">
+      <div className="container-boton-carrito">
         <div className="data-total">
           <h3>Total: </h3>
           <p>${total}</p>
         </div>
       </div>
+      <BtnVenta/>
     </div>
   );
 }

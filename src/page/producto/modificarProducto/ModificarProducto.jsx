@@ -16,7 +16,7 @@ export default function ModificarProducto({ closed }) {
     updateProduct,
     deleteProduct,
     desactivateProduct,
-    validProductExisting
+    validProductExisting,
   } = useProductos();
 
   const { listaCategory, listarCategoria } = useCategory();
@@ -155,9 +155,9 @@ export default function ModificarProducto({ closed }) {
         codBarProd,
       });
 
-      if(resValidExisting.status == 200){
+      if (resValidExisting.status == 200) {
         const formData = new FormData();
-        
+
         if (img) {
           formData.append("file", img);
         }
@@ -180,10 +180,9 @@ export default function ModificarProducto({ closed }) {
         } catch (error) {
           console.error("Error al modificar producto:", error);
         }
-      }else{
+      } else {
         notError(resValidExisting.error);
       }
-
     } else {
       notError(validationForm);
     }
@@ -202,7 +201,7 @@ export default function ModificarProducto({ closed }) {
         if (result.isConfirmed) {
           const resultado = await deleteProduct(idProductModifi);
 
-          if (resultado === "Producto eliminado") {
+          if (resultado == "Producto eliminado") {
             Swal.fire({
               title: "Producto Eliminado Correctamente",
               icon: "success",
@@ -214,42 +213,40 @@ export default function ModificarProducto({ closed }) {
             });
 
             closed(false);
-          } else {
-            if (resultado != "") {
-              Swal.fire({
-                icon: "error",
-                title: "¿Desea solo desactivar el producto?",
-                text: resultado.error,
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: "Si",
-                denyButtonText: `no`,
-                confirmButtonColor: "#29C716",
-              }).then(async (result) => {
-                if (result.isConfirmed) {
-                  const res = await desactivateProduct(idProductModifi);
+          } else if (resultado != "") {
+            Swal.fire({
+              icon: "error",
+              title: "¿Desea solo desactivar el producto?",
+              text: resultado.error,
+              showDenyButton: true,
+              showCancelButton: true,
+              confirmButtonText: "Si",
+              denyButtonText: `no`,
+              confirmButtonColor: "#29C716",
+            }).then(async (result) => {
+              if (result.isConfirmed) {
+                const res = await desactivateProduct(idProductModifi);
 
-                  if (res.status == 200) {
-                    Swal.fire({
-                      title: "Producto desactivado Correctamente",
-                      icon: "success",
-                      confirmButtonColor: "#29C716",
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        window.location.reload();
-                        closed(!closed);
-                      }
-                    });
-                  }
-                } else if (result.isDenied) {
+                if (res.status == 200) {
                   Swal.fire({
-                    title: "No se desactivo el Producto",
-                    icon: "info",
+                    title: "Producto desactivado Correctamente",
+                    icon: "success",
                     confirmButtonColor: "#29C716",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      window.location.reload();
+                      closed(!closed);
+                    }
                   });
                 }
-              });
-            }
+              } else if (result.isDenied) {
+                Swal.fire({
+                  title: "No se desactivo el Producto",
+                  icon: "info",
+                  confirmButtonColor: "#29C716",
+                });
+              }
+            });
           }
         } else if (result.isDenied) {
           Swal.fire({

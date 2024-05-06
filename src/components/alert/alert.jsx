@@ -59,7 +59,7 @@ export const notSearchFalse = (message) =>
     toast: true,
     position: "top-end",
     showConfirmButton: false,
-    timer: 2000,
+    timer: 900,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.onmouseenter = Swal.stopTimer;
@@ -88,7 +88,6 @@ export const notCancel = (closed) => {
       confirmButtonColor: "#29C716",
     })
     .then((result) => {
-      /* Read more about isConfirmed, isDenied below */
       if (result.value) {
         closed(false);
       }
@@ -129,3 +128,23 @@ export const notEliminar = (message) => {
       });
   });
 };
+
+export const deleteProductCarrito = (funcDelete, message) => {
+  Swal.fire({
+    title:message,
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Si",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      funcDelete();
+      Swal.fire({
+        title: "Eliminado!",
+        text: "Su archivo ha sido eliminado.",
+        icon: "success",
+      });
+    }
+  });
+}

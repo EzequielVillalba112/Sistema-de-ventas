@@ -118,7 +118,7 @@
     overflow: auto;
 }
 
-.totalProducCarrito{
+.container-boton-carrito{
     width: 95%;
     height: 60px;
     display: flex;

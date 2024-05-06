@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import "moment/locale/es";
 import { useProductos } from "./ProductoContext";
+import { deleteProductCarrito, limitStock } from "../components/alert/alert";
+import Swal from "sweetalert2";
 
 const CarritoContext = React.createContext();
 
@@ -20,12 +22,17 @@ export function CarritoProvider({ children }) {
   const [fechaVenta, setFechaVenta] = useState(
     moment().format("YYYY-MM-DD HH:mm")
   );
-  const [productCarrito, setProductCarrito] = useState([]);
-  const [dataClientSelect, setDataClientSelect] = useState([]);
+
+  //Datos para el carrito
+  const listProductCarrito = JSON.parse(localStorage.getItem("listProductCarrito")) ?? [];
+  const dataCliente = JSON.parse(localStorage.getItem("dataClienteCarrito")) ?? [];  
+  const [productCarrito, setProductCarrito] = useState(listProductCarrito);
+  const [dataClientSelect, setDataClientSelect] = useState(dataCliente);
   const [total, setTotal] = useState(0);
 
   const {listProductAct} = useProductos();
 
+  //Agrega un producto al carrito, en el objeto "productCarrito"
   const addProductCarrito = (idProduct, cantidadProducto) => {
     const check = productCarrito.every(item => {
         return item.id_producto !== idProduct;
@@ -44,7 +51,90 @@ export function CarritoProvider({ children }) {
       return "El producto ya se encuentra añadido al carrito";
     }
   }
+  //Suma una unidad mas al producto que se encuentra en el carrito
+  const sumarProducto = (id) => {
+    productCarrito.forEach((item) => {
+      if (item.id_producto === id) {
+        if (item.stock > item.cantidad){
+          item.cantidad += 1;
+        }else{
+          limitStock();
+        }
+      }
+      setProductCarrito([...productCarrito]);
+    });
+  };
 
+   //Resta una unidad mas al producto que se encuentra en el carrito
+  const restarProducto = (id) => {
+    productCarrito.forEach((item) => {
+      if (item.id_producto === id) {
+        if (item.cantidad > 1) {
+          item.cantidad -= 1;
+        }
+        setProductCarrito([...productCarrito]);
+      }
+    });
+  };
+
+  //Elimina un producto del carrito
+  const eliminarProducto = (id) => {
+    const message =  "¿Estas seguro de eliminar este producto del carrito?";
+    const funcEliminar = () =>{
+      productCarrito.forEach((item, index) => {
+        if (item.id_producto === id) {
+          productCarrito.splice(index, 1);
+        }
+      });
+      setProductCarrito([...productCarrito]);
+    }
+    
+    deleteProductCarrito(funcEliminar, message);
+  };
+
+  const clearCarrito = () =>{
+    const message =  "¿Estas seguro de vaciar el carrito?";
+    const functClear = () =>{setProductCarrito([])}
+    deleteProductCarrito(functClear, message)
+  }
+  
+  const vender = () =>{
+    const message =  "¿Estas seguro de realizar la venta?";
+
+    if(dataClientSelect != ""){
+      calLimitCuentaCC();
+      console.log("Cliente act");
+    }else{
+      console.log("Cliente no act");
+    }
+  }
+
+  //Calcula el total de la compra del carrito
+  useEffect(()=>{
+    let suma = 0;
+    for(let key in productCarrito) {
+        suma += (productCarrito[key].precio_pro * productCarrito[key].cantidad);
+    }
+    setTotal(suma);
+  },[productCarrito])
+
+  //Cada vez que cambia los valores del carrito lo guarda al localStorage
+  useEffect(()=>{
+    localStorage.setItem("listProductCarrito", JSON.stringify(productCarrito));
+  },[productCarrito])
+
+  //Cada vez que cambia los valores del Cliente CC lo guarda al localStorage
+  useEffect(()=>{
+    localStorage.setItem("dataClienteCarrito", JSON.stringify(dataClientSelect));
+  },[dataClientSelect])
+
+  //Cuando el limite de la cuenta es superado muestra una notificacion 
+  const calLimitCuentaCC = () =>{
+    if(dataClientSelect.limite_cc < total){
+      alert("Limite superado");
+    }
+  }
+  
   return (
     <CarritoContext.Provider
       value={{
@@ -57,8 +147,12 @@ export function CarritoProvider({ children }) {
         dataClientSelect,
         setDataClientSelect,
         addProductCarrito,
-        setTotal,
-        total
+        total,
+        sumarProducto,
+        restarProducto,
+        eliminarProducto,
+        clearCarrito,
+        vender,
       }}
     >
       {children}

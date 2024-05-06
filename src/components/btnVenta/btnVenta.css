@@ -1,0 +1,32 @@
+.container-btn_venta{
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.btn_venta {
+    width: 170px;
+    height: 40px;
+    border-style: none;
+    border-radius: 6px;
+    font-size: 17px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.btn_venta:hover {
+    scale: 1.1;
+}
+
+.clear-carrito{
+    background-color: #c40b0b;
+    color: #ffff;
+}
+
+.vender{
+    background-color: #20a10f;
+    color: #ffff;
+}

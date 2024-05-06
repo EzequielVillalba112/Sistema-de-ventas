@@ -10,6 +10,12 @@
     height: 90%;
 }
 
+.container-list_carrito h1{
+    color: #ffff;
+    font-size: 40px;
+    letter-spacing: 1px;
+}
+
 .container-list_carrito ul{
     display: flex;
     flex-direction: column;
@@ -46,6 +52,7 @@
     width: 90px;
     height: 90px;
     object-fit: cover;
+    margin-left: 20px;
 }
 
 .data-item_carrito{
@@ -69,4 +76,13 @@
 
 .btn_prod:hover{
     background-color: #d61b1b;
+}
+
+.btn-eliminar-producto_carrito{
+    width: 40px;
+    height: 40px;
+    background-color: #bd0c0c;
+    border-radius: 6px;
+    border-style: none;
+    margin-right: 20px;
 }

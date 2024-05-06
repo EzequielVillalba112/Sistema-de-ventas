@@ -8,7 +8,7 @@ export default function ListaVender({ productList, listSearch }) {
   const { urlImgProduct } = useProductos();
   const [list, setList] = useState([]);
   const [cantidadProducto, setCantidadProducto] = useState(1);
-  const { productCarrito, setProductCarrito, addProductCarrito } = useCarrito();
+  const {addProductCarrito } = useCarrito();
 
   useEffect(() => {
     if (listSearch.length == 0) {
