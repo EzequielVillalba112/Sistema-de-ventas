@@ -7,7 +7,7 @@ export default function FormLogin() {
     const navigate = useNavigate();
 
     const inicio = () =>{
-        navigate("/rutas")
+        navigate("/rutas/vender")
     }
 
     return (
