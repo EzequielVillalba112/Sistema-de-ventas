@@ -13,13 +13,12 @@ export const notError = (message) => {
 };
 
 export const notSuccess = (message) => {
-  notificacion
-    .fire({
-      title: "Correcto",
-      text: message + " correctamente",
-      icon: "success",
-      confirmButtonText: "Aceptar",
-    });
+  notificacion.fire({
+    title: "Correcto",
+    text: message + " correctamente",
+    icon: "success",
+    confirmButtonText: "Aceptar",
+  });
 };
 
 export const notSearchFalse = (message) =>
@@ -38,7 +37,7 @@ export const notSearchFalse = (message) =>
     title: `"No se encontró el ${message}"`,
   });
 
-  export const limitStock = () =>
+export const limitStock = () =>
   Swal.mixin({
     toast: true,
     position: "top-end",
@@ -54,7 +53,7 @@ export const notSearchFalse = (message) =>
     title: "No hay suficiente stock!",
   });
 
-  export const addCarrito = () =>
+export const addCarrito = () =>
   Swal.mixin({
     toast: true,
     position: "top-end",
@@ -69,7 +68,6 @@ export const notSearchFalse = (message) =>
     icon: "success",
     title: "Producto agregado al carrito!",
   });
-
 
 export const notCancel = (closed) => {
   Swal.mixin({
@@ -131,7 +129,7 @@ export const notEliminar = (message) => {
 
 export const deleteProductCarrito = (funcDelete, message) => {
   Swal.fire({
-    title:message,
+    title: message,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
@@ -147,4 +145,24 @@ export const deleteProductCarrito = (funcDelete, message) => {
       });
     }
   });
-}
+};
+
+export const makeSale = (message) => {
+  return new Promise((resolve, reject) => {
+    Swal.fire({
+      title: message,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#37CA16",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Vender!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        resolve(true); // Resuelve la Promesa con true si se confirma la venta
+      } else {
+        resolve(false); // Resuelve la Promesa con false si se cancela la venta
+      }
+    });
+  });
+};
+

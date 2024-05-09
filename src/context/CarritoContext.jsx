@@ -3,8 +3,14 @@ import PropTypes from "prop-types";
 import moment from "moment";
 import "moment/locale/es";
 import { useProductos } from "./ProductoContext";
-import { deleteProductCarrito, limitStock } from "../components/alert/alert";
-import Swal from "sweetalert2";
+import {
+  deleteProductCarrito,
+  limitStock,
+  makeSale,
+  notError,
+  notSuccess,
+} from "../components/alert/alert";
+import { addSaleProd } from "../api/vender";
 
 const CarritoContext = React.createContext();
 
@@ -24,40 +30,42 @@ export function CarritoProvider({ children }) {
   );
 
   //Datos para el carrito
-  const listProductCarrito = JSON.parse(localStorage.getItem("listProductCarrito")) ?? [];
-  const dataCliente = JSON.parse(localStorage.getItem("dataClienteCarrito")) ?? [];  
+  const listProductCarrito =
+    JSON.parse(localStorage.getItem("listProductCarrito")) ?? [];
+  const dataCliente =
+    JSON.parse(localStorage.getItem("dataClienteCarrito")) ?? [];
   const [productCarrito, setProductCarrito] = useState(listProductCarrito);
   const [dataClientSelect, setDataClientSelect] = useState(dataCliente);
   const [total, setTotal] = useState(0);
 
-  const {listProductAct} = useProductos();
+  const { listProductAct } = useProductos();
 
   //Agrega un producto al carrito, en el objeto "productCarrito"
   const addProductCarrito = (idProduct, cantidadProducto) => {
-    const check = productCarrito.every(item => {
-        return item.id_producto !== idProduct;
-    })
-    
-    if(check){
-      const data = listProductAct.filter(producto => {
-        return producto.id_producto === idProduct;
-      })
+    const check = productCarrito.every((item) => {
+      return item.id_producto !== idProduct;
+    });
 
-      const dataProduct ={...data[0], cantidad:cantidadProducto}
+    if (check) {
+      const data = listProductAct.filter((producto) => {
+        return producto.id_producto === idProduct;
+      });
+
+      const dataProduct = { ...data[0], cantidad: cantidadProducto };
 
       setProductCarrito([...productCarrito, dataProduct]);
       return true;
-    }else{
+    } else {
       return "El producto ya se encuentra añadido al carrito";
     }
-  }
+  };
   //Suma una unidad mas al producto que se encuentra en el carrito
   const sumarProducto = (id) => {
     productCarrito.forEach((item) => {
       if (item.id_producto === id) {
-        if (item.stock > item.cantidad){
+        if (item.stock > item.cantidad) {
           item.cantidad += 1;
-        }else{
+        } else {
           limitStock();
         }
       }
@@ -65,7 +73,7 @@ export function CarritoProvider({ children }) {
     });
   };
 
-   //Resta una unidad mas al producto que se encuentra en el carrito
+  //Resta una unidad mas al producto que se encuentra en el carrito
   const restarProducto = (id) => {
     productCarrito.forEach((item) => {
       if (item.id_producto === id) {
@@ -79,62 +87,92 @@ export function CarritoProvider({ children }) {
 
   //Elimina un producto del carrito
   const eliminarProducto = (id) => {
-    const message =  "¿Estas seguro de eliminar este producto del carrito?";
-    const funcEliminar = () =>{
+    const message = "¿Estas seguro de eliminar este producto del carrito?";
+    const funcEliminar = () => {
       productCarrito.forEach((item, index) => {
         if (item.id_producto === id) {
           productCarrito.splice(index, 1);
         }
       });
       setProductCarrito([...productCarrito]);
-    }
-    
+    };
+
     deleteProductCarrito(funcEliminar, message);
   };
 
-  const clearCarrito = () =>{
-    const message =  "¿Estas seguro de vaciar el carrito?";
-    const functClear = () =>{setProductCarrito([])}
-    deleteProductCarrito(functClear, message)
-  }
-  
-  const vender = () =>{
-    const message =  "¿Estas seguro de realizar la venta?";
+  const clearCarrito = () => {
+    const message = "¿Estas seguro de vaciar el carrito?";
+    const functClear = () => {
+      setProductCarrito([]);
+    };
+    deleteProductCarrito(functClear, message);
+  };
 
-    if(dataClientSelect != ""){
-      calLimitCuentaCC();
-      console.log("Cliente act");
-    }else{
-      console.log("Cliente no act");
+  const vender = () => {
+    if (dataClientSelect == "") {
+      ventaStandar();
+      return;
+    } else {
+      alert("Hay client");
     }
-  }
+  };
+
+  const ventaStandar = async () => {
+    const message = "¿Estas seguro de realizar la venta?";
+    const messageErrorCarrito =
+      "El carrito está vacío, no se puede realizar la venta.";
+
+    if (productCarrito.length > 0) {
+      const makeMessage = await makeSale(message);
+      if (makeMessage) {
+        const res = await addSaleProd({
+          productCarrito,
+          fecha_venta: fechaVenta,
+          total_venta: total,
+        });
+
+        if (res.status === 200) {
+          notSuccess("Venta realizada ");
+          setProductCarrito([])
+        } else {
+          notError(res.error);
+        }
+      } 
+    } else {
+      notError(messageErrorCarrito);
+      return;
+    }
+  };
 
   //Calcula el total de la compra del carrito
-  useEffect(()=>{
+  useEffect(() => {
     let suma = 0;
-    for(let key in productCarrito) {
-        suma += (productCarrito[key].precio_pro * productCarrito[key].cantidad);
+    for (let key in productCarrito) {
+      suma += productCarrito[key].precio_pro * productCarrito[key].cantidad;
     }
     setTotal(suma);
-  },[productCarrito])
+  }, [productCarrito]);
 
   //Cada vez que cambia los valores del carrito lo guarda al localStorage
-  useEffect(()=>{
+  useEffect(() => {
     localStorage.setItem("listProductCarrito", JSON.stringify(productCarrito));
-  },[productCarrito])
+  }, [productCarrito]);
 
   //Cada vez que cambia los valores del Cliente CC lo guarda al localStorage
-  useEffect(()=>{
-    localStorage.setItem("dataClienteCarrito", JSON.stringify(dataClientSelect));
-  },[dataClientSelect])
+  useEffect(() => {
+    localStorage.setItem(
+      "dataClienteCarrito",
+      JSON.stringify(dataClientSelect)
+    );
+  }, [dataClientSelect]);
 
-  //Cuando el limite de la cuenta es superado muestra una notificacion 
-  const calLimitCuentaCC = () =>{
-    if(dataClientSelect.limite_cc < total){
+  //Cuando el limite de la cuenta es superado muestra una notificacion
+  const calLimitCuentaCC = () => {
+    if (dataClientSelect.limite_cc < total) {
       alert("Limite superado");
     }
-  }
-  
+  };
+
   return (
     <CarritoContext.Provider
       value={{
