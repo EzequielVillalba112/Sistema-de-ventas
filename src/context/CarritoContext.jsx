@@ -10,7 +10,7 @@ import {
   notError,
   notSuccess,
 } from "../components/alert/alert";
-import { addSaleProd } from "../api/vender";
+import { addSaleCC, addSaleProd } from "../api/vender";
 
 const CarritoContext = React.createContext();
 
@@ -113,7 +113,7 @@ export function CarritoProvider({ children }) {
       ventaStandar();
       return;
     } else {
-      alert("Hay client");
+      ventaCC();
     }
   };
 
@@ -121,9 +121,10 @@ export function CarritoProvider({ children }) {
     const message = "¿Estas seguro de realizar la venta?";
     const messageErrorCarrito =
       "El carrito está vacío, no se puede realizar la venta.";
+    const messageBtn = "Vender";
 
     if (productCarrito.length > 0) {
-      const makeMessage = await makeSale(message);
+      const makeMessage = await makeSale(message, messageBtn);
       if (makeMessage) {
         const res = await addSaleProd({
           productCarrito,
@@ -133,14 +134,50 @@ export function CarritoProvider({ children }) {
 
         if (res.status === 200) {
           notSuccess("Venta realizada ");
-          setProductCarrito([])
+          setProductCarrito([]);
         } else {
           notError(res.error);
         }
-      } 
+      }
     } else {
       notError(messageErrorCarrito);
       return;
+    }
+  };
+
+  const ventaCC = async () => {
+    const message = "Cliente CC, SUPERO LÍMITE DE COMPRA, ¿desea continuar?";
+    const messageBtn = "Continuar";
+
+    if (total > dataClientSelect.limite_cc) {
+      const makeMessage = await makeSale(message, messageBtn);
+      if (makeMessage) {
+        makeSaleCC();
+      }
+    } else {
+      makeSaleCC();
+    }
+  };
+
+  const makeSaleCC = async () => {
+    try {
+      const res = await addSaleCC({
+        dataClientSelect,
+        productCarrito,
+        fechaVenta,
+        total,
+      });
+
+      if (res.status === 200) {
+        notSuccess("Venta realizada ");
+        setProductCarrito([]);
+        setDataClientSelect([]);
+      } else {
+        notError(res.error);
+      }
+    } catch (error) {
+      console.error("Error al realizar la venta: ", error);
+      throw error;
     }
   };
 

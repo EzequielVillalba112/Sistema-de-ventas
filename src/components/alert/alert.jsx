@@ -147,7 +147,7 @@ export const deleteProductCarrito = (funcDelete, message) => {
   });
 };
 
-export const makeSale = (message) => {
+export const makeSale = (message, messageBtn) => {
   return new Promise((resolve, reject) => {
     Swal.fire({
       title: message,
@@ -155,7 +155,7 @@ export const makeSale = (message) => {
       showCancelButton: true,
       confirmButtonColor: "#37CA16",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Vender!",
+      confirmButtonText: messageBtn,
     }).then((result) => {
       if (result.isConfirmed) {
         resolve(true); // Resuelve la Promesa con true si se confirma la venta

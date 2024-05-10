@@ -71,7 +71,7 @@ export function ClienteProvider({ children }) {
   };
   
   const updateClienteData = async (clienteData) => {
-    console.log(clienteData);
+    
     try {
       const res = await updateCliente(clienteData);
       if (res.statusText === "OK") {
@@ -86,7 +86,7 @@ export function ClienteProvider({ children }) {
   }
 
   const eliminarCliente = async (id) => {
-    console.log(id);
+  
     try {
       if(id != "") {
         const res = await deleteCliente(id);
@@ -108,8 +108,7 @@ export function ClienteProvider({ children }) {
 
   const desacCliente = async (id) => {
     try {
-      const res = await desactivateCliente(id);
-      return res;
+      return await desactivateCliente(id);
     } catch (error) {
       console.error("Error al desactivar el cliente:", error);
       throw error;
@@ -118,8 +117,7 @@ export function ClienteProvider({ children }) {
 
   const validClienteExisten = async (dataClient) => {
     try {
-      const res = await validateClienteExisting(dataClient);
-      return res;
+      return await validateClienteExisting(dataClient);
     } catch (error) {
       return (error.response.data);
     }
