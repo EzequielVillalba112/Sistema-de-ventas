@@ -200,7 +200,7 @@ export default function ModificarProducto({ closed }) {
   };
 
   const eliminarProducto = async () => {
-    eliminarProducto(deleteProduct(idProductModifi),  desactivateProduct(idProductModifi))
+    
   };
 
   return (
