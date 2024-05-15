@@ -139,6 +139,33 @@ export default function ModificarProducto({ closed }) {
     },
   ];
 
+  const formDataUpdate = async () => {
+    const formData = new FormData();
+
+    if (img) {
+      formData.append("file", img);
+    }
+    formData.append("nombre", nombreProd);
+    formData.append("precio", precioProd);
+    formData.append("categoria", categoriaProd);
+    formData.append("stock", stockProd);
+    formData.append("codBarra", codBarProd);
+    formData.append("descripcion", descripcionProd);
+    formData.append("id", idProductModifi);
+    formData.append("urlImg", urlImg);
+    formData.append("dependencia", dependencia);
+
+    try {
+      const response = await updateProduct({ body: formData });
+      if (response) {
+        notSuccess("Producto Modificado");
+        closed(false);
+      }
+    } catch (error) {
+      console.error("Error al modificar producto:", error);
+    }
+  };
+
   const updateProducto = async () => {
     const validationForm = validFormProduct(
       nombreProd,
@@ -150,38 +177,22 @@ export default function ModificarProducto({ closed }) {
     );
 
     if (validationForm === null) {
-      const resValidExisting = await validProductExisting({
-        nombreProd,
-        codBarProd,
-      });
-
-      if (resValidExisting.status == 200) {
-        const formData = new FormData();
-
-        if (img) {
-          formData.append("file", img);
-        }
-        formData.append("nombre", nombreProd);
-        formData.append("precio", precioProd);
-        formData.append("categoria", categoriaProd);
-        formData.append("stock", stockProd);
-        formData.append("codBarra", codBarProd);
-        formData.append("descripcion", descripcionProd);
-        formData.append("id", idProductModifi);
-        formData.append("urlImg", urlImg);
-        formData.append("dependencia", dependencia);
-
-        try {
-          const response = await updateProduct({ body: formData });
-          if (response) {
-            notSuccess("Producto Modificado");
-            closed(false);
-          }
-        } catch (error) {
-          console.error("Error al modificar producto:", error);
-        }
+      if (
+        dataProductModifi.nombre_prod == nombreProd &&
+        dataProductModifi.cod_barra == codBarProd
+      ) {  console.log("entro");
+        formDataUpdate();
       } else {
-        notError(resValidExisting.error);
+        const resValidExisting = await validProductExisting({
+          nombreProd,
+          codBarProd,
+        });
+
+        if (resValidExisting.status == 200) {
+          formDataUpdate();
+        } else {
+          notError(resValidExisting.error);
+        }
       }
     } else {
       notError(validationForm);
@@ -189,76 +200,7 @@ export default function ModificarProducto({ closed }) {
   };
 
   const eliminarProducto = async () => {
-    try {
-      Swal.fire({
-        title: "Desea eliminar este Producto",
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: "Si",
-        denyButtonText: `no`,
-        confirmButtonColor: "#29C716",
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          const resultado = await deleteProduct(idProductModifi);
-
-          if (resultado == "Producto eliminado") {
-            Swal.fire({
-              title: "Producto Eliminado Correctamente",
-              icon: "success",
-              confirmButtonColor: "#29C716",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                window.location.reload();
-              }
-            });
-
-            closed(false);
-          } else if (resultado != "") {
-            Swal.fire({
-              icon: "error",
-              title: "¿Desea solo desactivar el producto?",
-              text: resultado.error,
-              showDenyButton: true,
-              showCancelButton: true,
-              confirmButtonText: "Si",
-              denyButtonText: `no`,
-              confirmButtonColor: "#29C716",
-            }).then(async (result) => {
-              if (result.isConfirmed) {
-                const res = await desactivateProduct(idProductModifi);
-
-                if (res.status == 200) {
-                  Swal.fire({
-                    title: "Producto desactivado Correctamente",
-                    icon: "success",
-                    confirmButtonColor: "#29C716",
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                      window.location.reload();
-                      closed(!closed);
-                    }
-                  });
-                }
-              } else if (result.isDenied) {
-                Swal.fire({
-                  title: "No se desactivo el Producto",
-                  icon: "info",
-                  confirmButtonColor: "#29C716",
-                });
-              }
-            });
-          }
-        } else if (result.isDenied) {
-          Swal.fire({
-            title: "No se elimino ningun Producto",
-            icon: "info",
-            confirmButtonColor: "#29C716",
-          });
-        }
-      });
-    } catch (error) {
-      console.error("Error al ejecutar la promesa:", error);
-    }
+    eliminarProducto(deleteProduct(idProductModifi),  desactivateProduct(idProductModifi))
   };
 
   return (
