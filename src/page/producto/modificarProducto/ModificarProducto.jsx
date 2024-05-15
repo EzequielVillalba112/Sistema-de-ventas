@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import { useProductos } from "../../../context/ProductoContext";
 import { useEffect, useState } from "react";
 import { validFormProduct } from "../../../validation/formProducto/formProductoVal";
-import { notError, notSuccess } from "../../../components/alert/alert";
-import Swal from "sweetalert2";
+import { eliminarProductoBD, notError, notSuccess } from "../../../components/alert/alert";
 import { useCategory } from "../../../context/CategoryContext";
 import FormModificar from "../../../components/formModificar/FormModificar";
 
@@ -200,7 +199,7 @@ export default function ModificarProducto({ closed }) {
   };
 
   const eliminarProducto = async () => {
-    
+    eliminarProductoBD(desactivateProduct, deleteProduct, idProductModifi)
   };
 
   return (

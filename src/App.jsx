@@ -14,6 +14,8 @@ import { CategoryProvider } from "./context/CategoryContext";
 import { ClienteProvider } from "./context/ClienteContext";
 import Carrito from "./page/carrito/Carrito";
 import { CarritoProvider } from "./context/CarritoContext";
+import RegCC from "./page/registro/CuentaCorriente/RegCC";
+import { CuentaCorrienteProvider } from "./context/CuentaCorriente";
 
 function App() {
   return (
@@ -22,34 +24,37 @@ function App() {
         <CategoryProvider>
           <ClienteProvider>
             <CarritoProvider>
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<Login />} />
-
-                  {/*Routes: validar si el usuario inicio secion, en el caso de que no iniciara secion no puede ingresar a la app */}
-                  <Route path="/rutas" element={<Rutas />}>
-                    <Route path="vender" element={<Vender />} />
-
-                    <Route path="agregarProducto" element={<AddProduct />} />
-                    <Route path="listarProducto" element={<ListaProductos />} />
-
-                    {/*Categoria armar Context */}
-                    <Route
-                      path="agregarCategoria"
-                      element={<AgregarCategoria />}
-                    />
-
-                    {/*Cliente armar Context */}
-                    <Route path="agregarCliente" element={<AgregarCliente />} />
-                    <Route path="listarCliente" element={<ListarCliente />} />
-
-                    {/*Usuario armar Context */}
-                    <Route path="agregarUsuario" element={<AgregarUsuario />} />
-
-                    <Route path="carrito" element={<Carrito />} />
-                  </Route>
-                </Routes>
-              </BrowserRouter>
+              <CuentaCorrienteProvider>
+                <BrowserRouter>
+                  <Routes>
+                    <Route path="/" element={<Login />} />
+                    {/*Routes: validar si el usuario inicio secion, en el caso de que no iniciara secion no puede ingresar a la app */}
+                    <Route path="/rutas" element={<Rutas />}>
+                      <Route path="vender" element={<Vender />} />
+                      <Route path="agregarProducto" element={<AddProduct />} />
+                      <Route
+                        path="listarProducto"
+                        element={<ListaProductos />}
+                      />
+                      <Route
+                        path="agregarCategoria"
+                        element={<AgregarCategoria />}
+                      />
+                      <Route
+                        path="agregarCliente"
+                        element={<AgregarCliente />}
+                      />
+                      <Route path="listarCliente" element={<ListarCliente />} />
+                      <Route
+                        path="agregarUsuario"
+                        element={<AgregarUsuario />}
+                      />
+                      <Route path="carrito" element={<Carrito />} />
+                      <Route path="regCuentaCorriente" element={<RegCC />} />
+                    </Route>
+                  </Routes>
+                </BrowserRouter>
+              </CuentaCorrienteProvider>
             </CarritoProvider>
           </ClienteProvider>
         </CategoryProvider>

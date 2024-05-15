@@ -59,7 +59,7 @@ export default function Menu() {
       label: "Registros",
       links: [
         { name: "Ventas", url: "" },
-        { name: "Cuenta Corriente", url: "" },
+        { name: "Cuenta Corriente", url: "/rutas/regCuentaCorriente" },
       ],
     },
     {

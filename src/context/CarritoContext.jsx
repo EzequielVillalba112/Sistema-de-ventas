@@ -155,7 +155,13 @@ export function CarritoProvider({ children }) {
         makeSaleCC();
       }
     } else {
-      makeSaleCC();
+      const message = "¿Estas seguro de realizar el registro a cuenta CC?";
+      const messageBtn = "Vender";
+      const makeMessage = await makeSale(message, messageBtn);
+      if (makeMessage) {
+        makeSaleCC();
+      }
+     
     }
   };
 

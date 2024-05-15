@@ -104,7 +104,6 @@ export function ProductoProvider({ children }) {
     try {
       if (id != "") {
         const res = await deleteProducto(id);
-        console.log(res);
         if (res.status === 200) {
           // Verifica el código de estado de la respuesta
           return "Producto eliminado";
@@ -127,8 +126,7 @@ export function ProductoProvider({ children }) {
   //Desactiva los productos que no se puede eliminar porque otro sector de la base de datos lo esta usando
   const desactivateProduct = async (id) => {
     try {
-      const res = await desactivateProducto(id);
-      return res;
+      return await desactivateProducto(id);
     } catch (error) {
       console.error("Error al desactivar el producto:", error);
       throw error;
