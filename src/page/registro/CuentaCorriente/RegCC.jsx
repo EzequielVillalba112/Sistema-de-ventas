@@ -8,14 +8,11 @@ export default function RegCC() {
   const nameTabSearch = "Cliente";
   const [resultSearch, setResultSearch] = useState([]);
   const [inputSearch, setInputSearch] = useState("");
-
   const [clienteList, setClienteList] = useState([]);
   const [idClientSelect, setIdClientSelect] = useState("");
-
   const [openCloseListProd, setOpenCloseListProd] = useState(false);
-
   const { allClienteAct } = useCliente();
-
+ 
   useEffect(() => {
     const listarClienteAct = async () => {
       const res = await allClienteAct();

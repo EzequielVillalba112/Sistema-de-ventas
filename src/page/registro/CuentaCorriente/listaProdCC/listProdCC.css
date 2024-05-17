@@ -1,0 +1,122 @@
+.btn-cerrar_cc{
+    position: absolute;
+    background-color: #d40e0e;
+    border-radius: 50%;
+    border-style: none;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    right: 10px;
+    top: 108px;
+    cursor: pointer;
+}
+
+.btn-cerrar_cc:hover{
+    scale: 1.1;
+}
+
+.container-list_cc{
+    width: 100%;
+    overflow: auto;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+    background-color: #999999;
+}
+
+.list-cc_item{
+    background-color: #ffffff;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.data-list_cc{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px;
+    padding: 5px;
+    gap: 10px;
+}
+
+.data-item_cc{
+    width: 80%;
+    text-align: center;
+    gap: 5px;
+}
+
+.data-item_cc p{
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    font-size: 16px;
+}
+
+.data-prin_cc{
+    color: #ffffff;
+    padding: 10px;
+    background-color: #292929;
+    font-size: 15px;
+    border-radius: 6px;
+}
+
+.container-cierre-total_cc{
+    width: 100%;
+    height: 150px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    border-radius: 6px;
+    gap: 10px;
+    padding: 10px;
+}
+
+.container_cierre{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+}
+
+.cierre_p {
+    color: #292929;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+}
+
+.total-prin_cc{
+    text-align: center;
+    width: 200px;
+    margin-right: 10px;
+    background-color: #292929;
+    color: #ffffff;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.container_saldar{
+    width: 100%;
+    height: 60px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    border-radius: 6px;
+    gap: 10px;
+    padding: 20px;
+}
