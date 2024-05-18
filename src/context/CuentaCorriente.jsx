@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { listProdCC } from "../api/cuentaCorriente";
+import { listProdCC, payOffCC } from "../api/cuentaCorriente";
 import { makeSale, notError, notSuccess } from "../components/alert/alert";
 
 const CuentaCorrienteContext = React.createContext();
@@ -20,7 +20,7 @@ export function CuentaCorrienteProvider({ children }) {
     notSuccess(message);
   };
 
-  const saldarCuentaCC = async (entrega, total, vuelto) => {
+  const saldarCuentaCC = async (entrega, total, vuelto, idClientSelect) => {
     try {
       if (entrega === 0) {
         const message = "No hay un monto de entrega";
@@ -33,6 +33,7 @@ export function CuentaCorrienteProvider({ children }) {
         const messageBtn = "Continuar";
         const res = await makeSale(message, messageBtn);
         if (res) {
+          const res = await payOffCC({entrega, totalist, vuelto, idClientSelect})
           cuentaSaldada();
         } else {
           console.log("cancelado");

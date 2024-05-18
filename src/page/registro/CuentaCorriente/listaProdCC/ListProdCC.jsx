@@ -81,7 +81,7 @@ export default function ListProdCC({
         <button
           className="btn btn-editar"
           onClick={() => {
-            saldarCuentaCC(entrega, totalist, vuelto);
+            saldarCuentaCC(entrega, totalist, vuelto, idClientSelect);
           }}
         >
           Saldar
