@@ -36,6 +36,7 @@ export default function ListProdCC({
     setVuelto(entrega > totalist ? Math.abs(totalist - entrega) : 0);
   }, [entrega]);
 
+  
   return (
     <>
       <button
@@ -48,28 +49,36 @@ export default function ListProdCC({
         <IoCloseSharp color="#ffff" size="1.5rem" />
       </button>
       <ul className="container-list_cc">
-        {listProductClient.map((product, i) => (
-          <li key={i} className="list-cc_item">
-            <div className="data-list_cc">
-              <div className="data-item_cc">
-                <p>Producto: </p>
-                <p className="data-prin_cc">{product.nombre_prod}</p>
+       {
+        listProductClient.length > 0 ? (
+          <>
+            {listProductClient.map((product, i) => (
+            <li key={i} className="list-cc_item">
+              <div className="data-list_cc">
+                <div className="data-item_cc">
+                  <p>Producto: </p>
+                  <p className="data-prin_cc">{product.nombre_prod == null ? "Saldo" : product.nombre_prod}</p>
+                </div>
+                <div className="data-item_cc">
+                  <p>Cantidad: </p>
+                  <p className="data-prin_cc">{product.cantidad_producto}</p>
+                </div>
+                <div className="data-item_cc">
+                  <p>Total: </p>
+                  <p className="data-prin_cc">{product.total_producto}</p>
+                </div>
+                <div className="data-item_cc">
+                  <p>Fecha: </p>
+                  <p className="data-prin_cc">{product.fecha_venta}</p>
+                </div>
               </div>
-              <div className="data-item_cc">
-                <p>Cantidad: </p>
-                <p className="data-prin_cc">{product.cantidad_producto}</p>
-              </div>
-              <div className="data-item_cc">
-                <p>Total: </p>
-                <p className="data-prin_cc">{product.total_producto}</p>
-              </div>
-              <div className="data-item_cc">
-                <p>Fecha: </p>
-                <p className="data-prin_cc">{product.fecha_venta}</p>
-              </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          ))}
+          </>
+        ) : (
+          <h1 className="no_data_prod">No hay productos</h1>
+        )
+       }
       </ul>
       <CierreTotalCC
         totalist={totalist}
@@ -81,7 +90,7 @@ export default function ListProdCC({
         <button
           className="btn btn-editar"
           onClick={() => {
-            saldarCuentaCC(entrega, totalist, vuelto, idClientSelect);
+            saldarCuentaCC({entrega, totalist, vuelto, idClientSelect});
           }}
         >
           Saldar

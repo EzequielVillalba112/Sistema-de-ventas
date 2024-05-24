@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { listProdCC, payOffCC } from "../api/cuentaCorriente";
+import { customerBalance, listProdCC, payOffCC } from "../api/cuentaCorriente";
 import { makeSale, notError, notSuccess } from "../components/alert/alert";
 
 const CuentaCorrienteContext = React.createContext();
@@ -20,33 +20,45 @@ export function CuentaCorrienteProvider({ children }) {
     notSuccess(message);
   };
 
-  const saldarCuentaCC = async (entrega, total, vuelto, idClientSelect) => {
+  const payOffccContext = async (idCliente) => {
+    const res = await payOffCC(idCliente);
+    if (res.status === 200) {
+      cuentaSaldada();
+    } else {
+      console.log(res);
+    }
+  };
+
+  const saldarCuentaCC = async (data) => {
+    console.log(data);
     try {
-      if (entrega === 0) {
+      if (data.entrega === 0) {
         const message = "No hay un monto de entrega";
         notError(message);
-      } else if (total > entrega) {
+      } else if (data.totalist > data.entrega) {
         const message =
           "Entrega inferior al total, queda un saldo de $" +
-          (total - entrega) +
+          (data.totalist -  data.entrega) +
           " ¿desea continuar?";
         const messageBtn = "Continuar";
         const res = await makeSale(message, messageBtn);
         if (res) {
-          const res = await payOffCC({entrega, totalist, vuelto, idClientSelect})
+          console.log(res);
+          const resApi = await customerBalance(data);
+          console.log(resApi);
           cuentaSaldada();
         } else {
           console.log("cancelado");
         }
-      } else if (vuelto > 0) {
-        const message = "Tiene un vuelto de $" + vuelto;
+      } else if (data.vuelto > 0) {
+        const message = "Tiene un vuelto de $" + data.vuelto;
         const messageBtn = "Continuar";
         const res = await makeSale(message, messageBtn);
         if (res) {
-          cuentaSaldada();
+          payOffccContext(data.idCliente)
         }
       } else {
-        cuentaSaldada();
+        payOffccContext(data.idClientSelect)
       }
     } catch (error) {
       console.error(error);

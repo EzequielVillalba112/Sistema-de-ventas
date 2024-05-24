@@ -135,8 +135,7 @@ export function ProductoProvider({ children }) {
   //Valida si el nombre o cod-barra del producto ya existe, si no existe retorna un valor 200
   const validProductExisting = async (dataProduct) => {
     try {
-      const res = await validateProductExisting(dataProduct);
-      return res;
+      return await validateProductExisting(dataProduct);
     } catch (error) {
       return (error.response.data);
     }

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-export default function CierreTotalCC({totalist, setEntrega, vuelto}) {
+export default function CierreTotalCC({ totalist, setEntrega, vuelto }) {
   return (
     <>
       <div className="container-cierre-total_cc">
@@ -12,8 +12,8 @@ export default function CierreTotalCC({totalist, setEntrega, vuelto}) {
           <input
             type="number"
             className="total-prin_cc"
-            onChange={(e) => setEntrega(e.target.value)}
-          />
+            onChange={(e) => setEntrega(parseFloat(e.target.value))}
+          />  
         </div>
         <div className="container_cierre">
           <p className="cierre_p">Vuelto: </p>
@@ -24,10 +24,8 @@ export default function CierreTotalCC({totalist, setEntrega, vuelto}) {
   );
 }
 
-
 CierreTotalCC.propTypes = {
-    totalist: PropTypes.number.isRequired,
-    setEntrega: PropTypes.func.isRequired,
-    vuelto: PropTypes.number.isRequired,
-  };
-  
+  totalist: PropTypes.number.isRequired,
+  setEntrega: PropTypes.func.isRequired,
+  vuelto: PropTypes.number.isRequired,
+};
