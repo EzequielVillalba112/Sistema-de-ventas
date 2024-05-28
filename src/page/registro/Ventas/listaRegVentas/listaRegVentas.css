@@ -1,0 +1,26 @@
+.container-list_regVentas{
+    width: 100%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    background-color: #999999;
+    border-radius: 6px;
+}
+.container-list_regVentas ul{
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    gap: 10px;
+    height: 100%;
+    padding-top: 10px;
+}
+
+.container-list_regVentas ul li{
+    background-color: #ffff;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+}

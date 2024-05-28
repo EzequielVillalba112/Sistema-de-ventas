@@ -1,0 +1,48 @@
+.search_date{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 90px;
+    background-color: #999999;
+    padding: 20px;
+    color: #ffffff;
+    border-radius: 6px;
+}
+
+.input_date{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_date input{
+    width: 200px;
+    text-align: center;
+    height: 30px;
+    border-style: none;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 6px;
+}
+
+.btn-buscar_date{
+    height: 40px;
+    width: 80px;
+    border-style: none;
+    background-color: #0085FF;
+    color: #ffffff;
+    font-size: 15px;
+    border-radius: 6px;
+    letter-spacing: 1px;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-buscar_date:hover{
+    background-color: #2b8de8;
+    cursor: pointer;
+}
