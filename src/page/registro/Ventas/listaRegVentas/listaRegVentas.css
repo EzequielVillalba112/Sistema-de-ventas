@@ -12,7 +12,7 @@
 .container-list_regVentas ul{
     display: flex;
     flex-direction: column;
-    width: 95%;
+    width: 98%;
     gap: 10px;
     height: 100%;
     padding-top: 10px;
@@ -23,4 +23,15 @@
     width: 100%;
     padding: 10px;
     border-radius: 6px;
+}
+
+.reg_venta h1{
+    text-align: center;
+    padding: 10px;
+    color: #ffff;
+    letter-spacing: 1px;
+}
+
+.detail_sale{
+    height: 50px !important;
 }

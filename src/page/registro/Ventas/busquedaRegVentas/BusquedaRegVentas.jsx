@@ -26,29 +26,33 @@ export default function BusquedaRegVentas({ regVentas, setRegVentasSearch }) {
     setRegVentasSearch(filtradas);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setRegVentasSearch([]);
-  },[desde === "", hasta === ""])
+  }, [desde === "", hasta === ""]);
 
   return (
-    <div className="search_date">
-      <div className="input_date">
-        <label>Desde: </label>
-        <input
-          type="date"
-          value={desde}
-          onChange={(e) => setDesde(e.target.value)}
-        />
+    <div className="container_search_date">
+      <div className="search_date">
+        <div className="input_date">
+          <label>Desde: </label>
+          <input
+            type="date"
+            value={desde}
+            onChange={(e) => setDesde(e.target.value)}
+          />
+        </div>
+        <div className="input_date">
+          <label>Hasta: </label>
+          <input
+            type="date"
+            value={hasta}
+            onChange={(e) => setHasta(e.target.value)}
+          />
+        </div>
+        <button onClick={filtrarVentas} className="btn-buscar_date">
+          Buscar
+        </button>
       </div>
-      <div className="input_date">
-        <label>Hasta: </label>
-        <input
-          type="date"
-          value={hasta}
-          onChange={(e) => setHasta(e.target.value)}
-        />  
-      </div>
-      <button onClick={filtrarVentas} className="btn-buscar_date">Buscar</button>
     </div>
   );
 }

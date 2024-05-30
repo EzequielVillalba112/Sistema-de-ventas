@@ -1,6 +1,13 @@
+import { useRegVentas } from "../../../../context/RegVentasContext";
 import "./listaRegVentas.css";
 
-export default function ListaRegVentas({ regVentas }) {
+export default function ListaRegVentas({ regVentas, idDetail, setOpenClose }) {
+
+  const windowDetail= (id) => {
+    setOpenClose(true);
+    idDetail(id);
+  }
+
   return (
     <div className="container-list_regVentas">
       {regVentas.length > 0 ? (
@@ -22,12 +29,12 @@ export default function ListaRegVentas({ regVentas }) {
                 </div>
               </div>
 
-              <button className="btn-detalles"onClick={() => {console.log(regVenta.id_venta);}}>Detalles</button>
+              <button className="btn-detalles"onClick={() => {windowDetail(regVenta.id_venta);}}>Detalles</button>
             </li>
           ))}
         </ul>
       ) : (
-        <h1>Noy registro de Ventas</h1>
+        <h1>No hay registro de Ventas</h1>
       )}
     </div>
   );
