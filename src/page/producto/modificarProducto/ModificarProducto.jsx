@@ -179,7 +179,7 @@ export default function ModificarProducto({ closed }) {
       if (
         dataProductModifi.nombre_prod == nombreProd &&
         dataProductModifi.cod_barra == codBarProd
-      ) {  console.log("entro");
+      ) {
         formDataUpdate();
       } else {
         const resValidExisting = await validProductExisting({

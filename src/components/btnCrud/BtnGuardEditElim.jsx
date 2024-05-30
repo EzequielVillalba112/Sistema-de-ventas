@@ -7,7 +7,7 @@ export default function BtnGuardEditElim({
   closed,
   saved,
   eliminar,
-  estado
+  estado,
 }) {
   const [guardar, setGuardar] = useState(false);
   const [editar, setEditar] = useState(true);
@@ -46,12 +46,15 @@ export default function BtnGuardEditElim({
         </button>
       )}
 
-      {(estado != 1 && estado != undefined) && (
+      {estado != 1 && estado != undefined ? (
         <button className="btn btn-eliminar" onClick={btnEliminar}>
           Eliminar
         </button>
+      ) : (
+        <button className="btn btn-reactivar" onClick={btnEliminar}>
+          Reactivar
+        </button>
       )}
-     
     </div>
   );
 }
@@ -60,5 +63,5 @@ BtnGuardEditElim.propTypes = {
   closed: PropTypes.func,
   saved: PropTypes.func,
   eliminar: PropTypes.func,
-  estado: PropTypes.number
+  estado: PropTypes.number,
 };

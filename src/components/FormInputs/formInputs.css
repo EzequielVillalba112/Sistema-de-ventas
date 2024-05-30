@@ -88,6 +88,10 @@ select {
     background-color: #d1bc00;
 }
 
+.btn-reactivar{
+    background-color: #20c10a;
+}
+
 .description-input{
     color: rgb(29, 29, 29);
     margin-bottom: 5px;
