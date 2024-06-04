@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { useProductos } from "../../../context/ProductoContext";
 import { useEffect, useState } from "react";
 import { validFormProduct } from "../../../validation/formProducto/formProductoVal";
-import { eliminarProductoBD, notError, notSuccess } from "../../../components/alert/alert";
+import { eliminarProductoBD, makeSale, notError, notSuccess } from "../../../components/alert/alert";
 import { useCategory } from "../../../context/CategoryContext";
 import FormModificar from "../../../components/formModificar/FormModificar";
 
@@ -16,6 +16,7 @@ export default function ModificarProducto({ closed }) {
     deleteProduct,
     desactivateProduct,
     validProductExisting,
+    reactivateProduct
   } = useProductos();
 
   const { listaCategory, listarCategoria } = useCategory();
@@ -198,6 +199,26 @@ export default function ModificarProducto({ closed }) {
     }
   };
 
+  const activateProduct = async () =>{
+    try {
+      const MESSAGE = "¿Estas seguro de activar el producto?";
+      const BTNMESSAGE = "Activar";
+      const OPTION = await makeSale(MESSAGE, BTNMESSAGE);
+     
+      if(OPTION){
+        const res = await reactivateProduct(idProductModifi);
+        
+        if(res === 200){
+          notSuccess("Producto Activado");
+          closed(false);
+        }
+      }
+     
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const eliminarProducto = async () => {
     eliminarProductoBD(desactivateProduct, deleteProduct, idProductModifi)
   };
@@ -212,6 +233,7 @@ export default function ModificarProducto({ closed }) {
         saved={updateProducto}
         eliminar={eliminarProducto}
         estado={dataProductModifi.estado_pro}
+        activate={activateProduct}
       />
     </>
   );

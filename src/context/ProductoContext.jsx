@@ -7,6 +7,7 @@ import {
   desactivateProducto,
   listProductoAct,
   listProductoDesac,
+  reactivateProductApi,
   searchDataProduct,
   updateProducto,
   validateProductExisting,
@@ -132,6 +133,17 @@ export function ProductoProvider({ children }) {
       throw error;
     }
   };
+
+  //Reactiva los productos desactivados en la base de datos
+  const reactivateProduct = async (id) => {
+    try {
+      const res = await reactivateProductApi(id);
+      return res.status;
+    } catch (error) {
+      return(error)
+    }
+  }
+
   //Valida si el nombre o cod-barra del producto ya existe, si no existe retorna un valor 200
   const validProductExisting = async (dataProduct) => {
     try {
@@ -181,7 +193,8 @@ export function ProductoProvider({ children }) {
         updateProduct,
         deleteProduct,
         desactivateProduct,
-        validProductExisting
+        validProductExisting,
+        reactivateProduct
       }}
     >
       {children}

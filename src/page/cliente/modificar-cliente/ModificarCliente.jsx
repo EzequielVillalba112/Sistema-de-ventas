@@ -3,13 +3,21 @@ import FormModificar from "../../../components/formModificar/FormModificar";
 import PropTypes from "prop-types";
 import { useCliente } from "../../../context/ClienteContext";
 import { validCliente } from "../../../validation/formCliente/formClienteVal";
-import { notError, notSuccess } from "../../../components/alert/alert";
+import { makeSale, notError, notSuccess } from "../../../components/alert/alert";
 import Swal from "sweetalert2";
 
 export default function ModificarCliente({ closed }) {
   const nameForm = "Modificar Cliente ";
 
-  const {dataClienteModif, updateClienteData, idCliente, eliminarCliente, desacCliente, validClienteExisten} = useCliente();
+  const {
+    dataClienteModif,
+    updateClienteData,
+    idCliente,
+    eliminarCliente,
+    desacCliente,
+    validClienteExisten,
+    activateCliente,
+  } = useCliente();
 
   const [nombreCliente, setNombreCliente] = useState("");
   const [apellidoCliente, setApellidoCliente] = useState("");
@@ -18,12 +26,12 @@ export default function ModificarCliente({ closed }) {
 
   const [disabledInput, setDisabledInput] = useState(true);
 
-  useEffect(()=>{
-    setNombreCliente(dataClienteModif.nombre_cliente || "")
-    setApellidoCliente(dataClienteModif.apellido_cliente || "")
-    setLimitCc(dataClienteModif.limite_cc || "")
-    setTelefono(dataClienteModif.numero_telefono || "")
-  },[dataClienteModif])
+  useEffect(() => {
+    setNombreCliente(dataClienteModif.nombre_cliente || "");
+    setApellidoCliente(dataClienteModif.apellido_cliente || "");
+    setLimitCc(dataClienteModif.limite_cc || "");
+    setTelefono(dataClienteModif.numero_telefono || "");
+  }, [dataClienteModif]);
 
   const formItemsClient = [
     {
@@ -73,31 +81,33 @@ export default function ModificarCliente({ closed }) {
   const modificarCliente = async () => {
     const validForm = validCliente(nombreCliente, apellidoCliente, limitCc);
 
-    if(validForm == null){
-      const resValidExisting = await validClienteExisten({nombreCliente,apellidoCliente});
+    if (validForm == null) {
+      const resValidExisting = await validClienteExisten({
+        nombreCliente,
+        apellidoCliente,
+      });
 
-      if(resValidExisting.status == 200){
+      if (resValidExisting.status == 200) {
         try {
           const res = await updateClienteData({
             nombreCliente: nombreCliente,
             apellidoCliente: apellidoCliente,
             limitCc: limitCc,
             telefono: telefono,
-            idCliente: idCliente
+            idCliente: idCliente,
           });
-  
-          if(res){
+
+          if (res) {
             notSuccess("Cliente Modificado");
             closed(false);
           }
         } catch (error) {
           console.error("Error al modificar cliente:", error);
         }
-      }else{
+      } else {
         notError(resValidExisting.error);
       }
-
-    }else{
+    } else {
       notError(validForm);
     }
   };
@@ -105,7 +115,7 @@ export default function ModificarCliente({ closed }) {
   const elimiCliente = () => {
     try {
       Swal.fire({
-        title: "Desea eliminar este Producto",
+        title: "Desea eliminar este Cliente",
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Si",
@@ -177,6 +187,25 @@ export default function ModificarCliente({ closed }) {
     }
   };
 
+  const activateClient = async () => {
+    try {
+      const MESSAGE = "¿Estas seguro de activar el cliente?";
+      const BTNMESSAGE = "Activar";
+      const OPTION = await makeSale(MESSAGE, BTNMESSAGE);
+
+      if (OPTION) {
+        const res = await activateCliente(idCliente);
+
+        if (res.status === 200) {
+          notSuccess("Cliente Activado");
+          closed(false);
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <FormModificar
       closed={closed}
@@ -186,6 +215,7 @@ export default function ModificarCliente({ closed }) {
       saved={modificarCliente}
       eliminar={elimiCliente}
       estado={dataClienteModif.estado_cliente}
+      activate={activateClient}
     />
   );
 }

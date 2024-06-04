@@ -8,6 +8,7 @@ export default function BtnGuardEditElim({
   saved,
   eliminar,
   estado,
+  activate
 }) {
   const [guardar, setGuardar] = useState(false);
   const [editar, setEditar] = useState(true);
@@ -29,6 +30,11 @@ export default function BtnGuardEditElim({
   const save = () => {
     saved();
   };
+
+  const activateElem = () => {
+    activate();
+  }
+
   return (
     <div className="continer-buttons-modific">
       {guardar == true && (
@@ -51,7 +57,7 @@ export default function BtnGuardEditElim({
           Eliminar
         </button>
       ) : (
-        <button className="btn btn-reactivar" onClick={btnEliminar}>
+        <button className="btn btn-reactivar" onClick={activateElem}>
           Reactivar
         </button>
       )}
@@ -63,5 +69,6 @@ BtnGuardEditElim.propTypes = {
   closed: PropTypes.func,
   saved: PropTypes.func,
   eliminar: PropTypes.func,
+  activate: PropTypes.func,
   estado: PropTypes.number,
 };

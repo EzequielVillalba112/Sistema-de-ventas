@@ -8,7 +8,8 @@ import {
   updateCliente,
   deleteCliente,
   desactivateCliente,
-  validateClienteExisting
+  validateClienteExisting,
+  activateClientApi
 } from "../api/cliente";
 
 const ClienteContext = React.createContext();
@@ -115,6 +116,15 @@ export function ClienteProvider({ children }) {
     }
   }
 
+  const activateCliente = async (id) => {
+    try {
+      return await activateClientApi(id);
+    } catch (error) {
+      console.error("Error al desactivar el cliente:", error);
+      throw error;
+    }
+  }
+
   const validClienteExisten = async (dataClient) => {
     try {
       return await validateClienteExisting(dataClient);
@@ -161,7 +171,8 @@ export function ClienteProvider({ children }) {
         idCliente,
         eliminarCliente,
         desacCliente,
-        validClienteExisten
+        validClienteExisten,
+        activateCliente
       }}
     >
       {children}

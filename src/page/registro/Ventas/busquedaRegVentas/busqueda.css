@@ -8,10 +8,11 @@
 }
 
 .search_date {
-  width: 50%;
+  width: 80%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 20px;
   height: 90px;
   padding: 20px;
   color: #ffffff;
