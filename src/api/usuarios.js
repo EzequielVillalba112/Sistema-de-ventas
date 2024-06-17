@@ -1,3 +1,5 @@
 import axios from "./axios";
 
-export const allRange = () => axios.get('/all_range')
+export const allRange = () => axios.get('/all_range');
+export const addUserApi = (user) => axios.post('/add_user',user);
+export const validUserApi = (nameUser) => axios.post('/valid_user', nameUser);

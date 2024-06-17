@@ -1,5 +1,5 @@
 import React from "react";
-import { allRange } from "../api/usuarios";
+import { addUserApi, allRange, validUserApi } from "../api/usuarios";
 
 const UsuarioContext = React.createContext();
 
@@ -12,22 +12,47 @@ export const useUsuario = () => {
 };
 
 export function UsuarioProvider({ children }) {
-
-    const allRangeUser = async () =>{
-        try {
-            return await allRange();
-        } catch (error) {
-            console.error("Error al traer la lista: ", error);
-        }
+  const allRangeUser = async () => {
+    try {
+      return await allRange();
+    } catch (error) {
+      console.error("Error al traer la lista: ", error);
     }
+  };
+
+  const addUser = async (user) => {
+    try {
+      if(user){
+        return await addUserApi(user);
+      }else{
+        error("Faltan datos");
+      }
+    } catch (error) {
+      console.error("Error al cargar usuario: ", error);
+    }
+  }
+
+  const validUserExistent = async (user) => {
+    try {
+      if(user){
+        return await validUserApi(user);
+      }else{
+        error("Faltan datos");
+      }
+    } catch (error) {
+      console.error("Error al cargar usuario: ", error);
+    }
+  }
 
   return (
-    <UsuarioContext.Provider 
-        value={{
-            allRangeUser,
-        }}
+    <UsuarioContext.Provider
+      value={{
+        allRangeUser,
+        addUser,
+        validUserExistent
+      }}
     >
-        {children}
+      {children}
     </UsuarioContext.Provider>
   );
 }
