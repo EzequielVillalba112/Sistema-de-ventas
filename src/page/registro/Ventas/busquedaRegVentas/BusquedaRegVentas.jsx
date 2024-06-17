@@ -23,7 +23,12 @@ export default function BusquedaRegVentas({ regVentas, setRegVentasSearch }) {
       return fechaVenta >= desdeFecha && fechaVenta <= hastaFecha;
     });
 
-    setRegVentasSearch(filtradas);
+    if (filtradas.length > 0){
+      setRegVentasSearch(filtradas);
+    }else{
+      notError("No se encontraron ventas en esta fecha");
+    }
+    
   };
 
   useEffect(() => {
