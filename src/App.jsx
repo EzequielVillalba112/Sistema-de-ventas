@@ -19,6 +19,7 @@ import { CuentaCorrienteProvider } from "./context/CuentaCorriente";
 import RegVentas from "./page/registro/Ventas/RegVentas";
 import { RegVentasProvider } from "./context/RegVentasContext";
 import { UsuarioProvider } from "./context/UsuarioContext";
+import Usuarios from "./page/usuarios/listaUsuario/Usuarios";
 
 function App() {
   return (
@@ -66,6 +67,10 @@ function App() {
                             element={<RegCC />}
                           />
                           <Route path="regVentas" element={<RegVentas />} />
+                          <Route
+                            path="listarUsuario"
+                            element={<Usuarios />}
+                          />
                         </Route>
                       </Routes>
                     </BrowserRouter>

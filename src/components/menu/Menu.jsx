@@ -68,7 +68,7 @@ export default function Menu() {
       label: "Usuarios",
       links: [
         { name: "Agregar Usuario", url: "/rutas/agregarUsuario" },
-        { name: "Listar Usuario", url: "" },
+        { name: "Listar Usuario", url: "/rutas/listarUsuario" },
       ],
     },
   ];

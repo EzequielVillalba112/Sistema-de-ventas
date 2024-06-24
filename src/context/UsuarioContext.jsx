@@ -1,5 +1,5 @@
 import React from "react";
-import { addUserApi, allRange, validUserApi } from "../api/usuarios";
+import { addUserApi, allRange, allUserApi, validUserApi } from "../api/usuarios";
 
 const UsuarioContext = React.createContext();
 
@@ -44,12 +44,27 @@ export function UsuarioProvider({ children }) {
     }
   }
 
+  const allUsers = async () => {
+    try {
+      const res = await allUserApi();
+      
+      if(res.data.length > 0){
+        return res.data;
+      }else{
+        return "No hay usuarios";
+      }
+    } catch (error) {
+      console.error("Error al traer la lista: ", error);
+    }
+  }
+
   return (
     <UsuarioContext.Provider
       value={{
         allRangeUser,
         addUser,
-        validUserExistent
+        validUserExistent,
+        allUsers
       }}
     >
       {children}
