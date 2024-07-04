@@ -12,7 +12,7 @@ export default function FormModificar({
   saved,
   eliminar,
   estado,
-  activate
+  activate,
 }) {
   return (
     <div className="container-modificar">
@@ -47,5 +47,5 @@ FormModificar.propTypes = {
   saved: PropTypes.func.isRequired,
   eliminar: PropTypes.func.isRequired,
   estado: PropTypes.number,
-  activate: PropTypes.func.isRequired,
+  activate: PropTypes.func,
 };

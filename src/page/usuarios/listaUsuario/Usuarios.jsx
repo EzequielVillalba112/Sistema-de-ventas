@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ListaUsr from "./ListaUsr";
 import { useUsuario } from "../../../context/UsuarioContext";
+import ModificarUser from "../modificar-usuario/ModificarUser";
 
 export default function ListaUsuario() {
   const [users, setUsers] = useState([]);
+  
 
-  const { allUsers } = useUsuario();
+  const { allUsers, setOpenModal, openModal, modifyUserInterface } = useUsuario();
 
   useEffect(() => {
     const allUser = async () => {
@@ -14,14 +16,22 @@ export default function ListaUsuario() {
     };
     allUser();
   }, []);
-
+;
 
   return (
     <>
-      <div className="container-form">
-        <h1>Lista de usuarios</h1>
-        <ListaUsr listItems={users} />
-      </div>
+      {openModal ? (
+        <div className="container-form">
+          <ModificarUser closed={setOpenModal}/>
+        </div>
+      ) : (
+        <>
+          <div className="container-form">
+            <h1>Lista de usuarios</h1>
+            <ListaUsr listItems={users} detail={modifyUserInterface} />
+          </div>
+        </>
+      )}
     </>
   );
 }

@@ -13,15 +13,12 @@ export default function AgregarUsuario() {
   const [rangoUser, setRangoUser] = useState([]);
   const [rango, setRango] = useState("");
 
-  const { allRangeUser, addUser, validUserExistent } = useUsuario();
+  const { allRangeUser, addUser, validUserExistent, allRangeData } = useUsuario();
 
   useEffect(() => {
-    const allRange = async () => {
-      const res = await allRangeUser();
-      setRangoUser(res.data);
-    };
-    allRange();
-  }, [rangoUser.length === 0]);
+    allRangeUser();
+    setRangoUser(allRangeData);
+  }, [allRangeData.length > 0 ]);
 
   const formItemsUser = [
     {

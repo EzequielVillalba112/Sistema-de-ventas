@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ListaUsr({listItems}) {
+export default function ListaUsr({listItems, detail}) {
   return (
     <div className="container-list-items">
       <ul>
